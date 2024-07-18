@@ -1,4 +1,4 @@
-export default function TransactionsLayout({
+export default function PricingLayout({
   children,
 }: {
   children: React.ReactNode;

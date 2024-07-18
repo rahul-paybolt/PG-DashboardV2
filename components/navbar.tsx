@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { BsArrowRight } from "react-icons/bs";
 import HelpIcon from "@/public/assests/Icon/HelpIcon";
 import FeedBackIcon from "@/public/assests/Icon/FeedBackIcon";
+import Profile from "./Profile/profile";
 
 export const Navbar = () => {
   const pathName = usePathname();
@@ -104,13 +105,7 @@ export const Navbar = () => {
         <div className="mt-auto w-full px-2 ">
           <div className="flex items-center gap-x-4 max-w-fit p-2 rounded-md text-gray-700 dark:text-gray-300 border border-gray-300 shadow-sm bg-white dark:bg-gray-800">
             <div className="flex items-center gap-2  ">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
-                OS
-              </div>
-              <div>
-                <p className="font-medium">Onky Soerya</p>
-                <p className="text-sm">onkyux@gmail.com</p>
-              </div>
+              <Profile />
               <div className="ml-auto">
                 <BsArrowRight />
               </div>
