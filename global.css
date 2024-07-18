@@ -1,0 +1,22 @@
+/* global.css or component-specific CSS */
+
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/*  */
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+nav {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  text-decoration: none;
+}

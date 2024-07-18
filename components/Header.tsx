@@ -1,28 +1,60 @@
-import { Input } from '@nextui-org/input'
-import React from 'react'
-import { SearchIcon } from './icons'
-import {Divider} from "@nextui-org/divider";
+"use client"
+import { Input } from '@nextui-org/input';
+import React from 'react';
+import { SearchIcon } from './icons';
+import { Divider } from "@nextui-org/divider";
+import DateRangeFilter from './DateFilter/DateFilter';
+import { usePathname } from 'next/navigation';
+
 const Header = () => {
+  const pathName = usePathname();
+
+  const getPageTitle = () => {
+    switch (pathName) {
+      case '/':
+        return 'Dashboard';
+      case '/transactions':
+        return 'Transactions List';
+      case '/analytics':
+        return 'Analytics';
+      case '/payment':
+        return 'Payment';
+      case '/deposits':
+        return 'Deposits';
+      case '/history':
+        return 'History';
+      case '/about':
+        return 'About';
+      case '/help':
+        return 'Help';
+      default:
+        return 'FeedBack';
+    }
+  };
+
   return (
     <div>
-      <div className='flex items-center justify-between px-4 py-4 flex-grow ml-[250px]'>
-        <span>DashBoard</span>
-        <Input
+      <div className='flex items-center justify-between px-2 py-2 '>
+        <span className='text-2xl text-primary font-semibold'>{getPageTitle()}</span>
+        <div className=' flex items-center gap-x-4'>
+          <Input
             classNames={{
-              base: "max-w-full sm:max-w-[16rem] h-10 ",
+              base: "max-w-full sm:max-w-[32rem] h-12",
               mainWrapper: "h-full",
-              input: "text-small",
+              input: "text-base",
               inputWrapper: "h-full font-normal bg-white text-default-500 border-[1px] rounded-md",
             }}
-            placeholder="Type to search..."
-            size="sm"
+            placeholder="Search merchant.."
+            size="lg"
             startContent={<SearchIcon size={18} />}
             type="search"
           />
+          <DateRangeFilter />
+        </div>
       </div>
-          <Divider className='my-4 dark:bg-slate-50'/>
+      <Divider className='my-4 dark:bg-slate-50'/>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

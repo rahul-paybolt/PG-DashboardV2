@@ -1,3 +1,11 @@
+import AnalyticsIcon from "@/public/assests/Icon/AnalyticsIcon";
+import AvatarIcon from "@/public/assests/Icon/Avatar";
+import DashBoardIcon from "@/public/assests/Icon/DashBoardIcon";
+import DepositIcon from "@/public/assests/Icon/DepositIcon";
+import HistoryIcon from "@/public/assests/Icon/HistoryIcon";
+import PaymentIcon from "@/public/assests/Icon/Payments";
+import TransactionIcons from "@/public/assests/Icon/TransactionsIcon";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -7,30 +15,37 @@ export const siteConfig = {
     {
       label: "DashBoard",
       href: "/",
+      icon: DashBoardIcon
     },
     {
       label: "Transactions",
-      href: "/docs",
+      href: "/transactions",
+      icon:TransactionIcons
     },
     {
       label: "Analytics",
-      href: "/pricing",
+      href: "/analytics",
+      icon: AnalyticsIcon
     },
     {
       label: "Payment",
-      href: "/blog",
+      href: "/payment",
+      icon: PaymentIcon
     },
     {
       label: "Deposit",
-      href: "/about",
+      href: "/deposits",
+      icon: DepositIcon
     },
     {
       label: "History",
-      href: "/about",
+      href: "/history",
+      icon: HistoryIcon
     },
     {
       label: "Account",
-      href: "/about",
+      href: "/account",
+      icon: AvatarIcon
     },
   ],
   navMenuItems: [

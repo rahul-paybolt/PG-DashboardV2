@@ -7,9 +7,8 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
 import Header from "@/components/Header";
-
+import { Navbar } from "@/components/navbar";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -38,14 +37,18 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased  relative",
+          "min-h-screen bg-background font-sans antialiased relative",
           fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <Header />
-          <Navbar/>
-          {children}
+          <div className="flex min-h-screen">
+            <Navbar  /> 
+            <div className="flex-1 ml-64">
+              <Header />
+              <main>{children}</main>
+            </div>
+          </div>
         </Providers>
       </body>
     </html>
