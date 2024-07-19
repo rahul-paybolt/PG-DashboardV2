@@ -5,47 +5,41 @@ import { Card, CardBody } from "@nextui-org/card";
 import { tabsProps } from "@/constants/TransactionTabs/TransactionsTabs";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-
 interface TabsComponentProps {
   tabsData: tabsProps[];
 }
 
 export default function TabsComponent({ tabsData }: TabsComponentProps) {
   const router = useRouter();
-  const currentPathName = usePathname();
-  const [selectedTab, setSelectedTab] = useState(currentPathName);
+  const [selectedTab, setSelectedTab] = useState("/transactions");
 
   useEffect(() => {
-    setSelectedTab(currentPathName);
-  }, [currentPathName]);
+    router.push(selectedTab);
+  }, [selectedTab]);
 
-  const handleTabChange = (key: string) => {
-    setSelectedTab(key);
-    router.push(key);
-  };
+  console.log(selectedTab);
 
   return (
     <div className="flex w-full flex-col">
       <Tabs
         aria-label="Dynamic tabs"
-        fullWidth
-        selectedKey={selectedTab}
-        onSelectionChange={handleTabChange}
+        items={tabsData}
+        fullWidth={true}
         classNames={{
-          tabList: "py-2",
+          base:"px-4",
         }}
+        selectedKey={selectedTab}
+        onSelectionChange={setSelectedTab}
       >
-        {tabsData.map((item) => (
+        {(item) => (
           <Tab key={item.id} title={item.label} className="py-6">
-            <Link href={item.id}>
-              <Card>
-                <CardBody>
-                  <p>{item.label}</p>
-                </CardBody>
-              </Card>
-            </Link>
+            <Card>
+              <CardBody>
+                <p>{item.label}</p>
+              </CardBody>
+            </Card>
           </Tab>
-        ))}
+        )}
       </Tabs>
     </div>
   );

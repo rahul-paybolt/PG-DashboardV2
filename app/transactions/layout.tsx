@@ -1,3 +1,6 @@
+import TabsComponent from "@/components/Tabs/Tabs";
+import TransactionsTabs from "@/constants/TransactionTabs/TransactionsTabs";
+
 export default function TransactionLayout({
   children,
 }: {
@@ -5,6 +8,7 @@ export default function TransactionLayout({
 }) {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+      <TabsComponent tabsData={TransactionsTabs}/>
         {children}
     </section>
   );

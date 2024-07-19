@@ -5,27 +5,27 @@ export interface tabsProps {
 }
 const TransactionsTabs: tabsProps[] = [
   {
-    id: "trans",
+    id: "/transactions",
     label: "Transactions",
     value: "/transactions",
   },
   {
-    id: "recent-trans",
+    id: "/transactions/recent-transactions",
     label: "Recent Transactions",
     value: "/recent-transactions",
   },
   {
-    id: "update-trans",
+    id: "/transactions/update-transactions",
     label: "Update Transactions",
     value: "/update-transactions",
   },
   {
-    id: "search",
+    id: "/transactions/search",
     label: "Search",
     value: "/search",
   },
   {
-    id: "download",
+    id: "/transactions/transaction-download",
     label: "Transaction Download",
     value: "/transaction-download",
   },
