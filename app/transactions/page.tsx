@@ -1,38 +1,14 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Card, CardBody } from "@nextui-org/card";
-export default function App() {
-  let tabs = [
-    {
-      id: "photos",
-      label: "Photos",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    },
-    {
-      id: "music",
-      label: "Music",
-      content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-    },
-    {
-      id: "videos",
-      label: "Videos",
-      content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    }
-  ];
+import TransactionsTabs from "@/constants/TransactionTabs/TransactionsTabs";
+import TabsComponent from "@/components/Tabs/Tabs";
+export default function Transactions() {
 
   return (
-    <div className="flex w-full flex-col">
-      <Tabs aria-label="Dynamic tabs" items={tabs}>
-        {(item) => (
-          <Tab key={item.id} title={item.label}>
-            <Card>
-              <CardBody>
-                {item.content}
-              </CardBody>
-            </Card>  
-          </Tab>
-        )}
-      </Tabs>
+    <div className="flex w-full flex-col px-4 py-4">
+       <TabsComponent tabsData={TransactionsTabs}/>
     </div>  
   );
 }

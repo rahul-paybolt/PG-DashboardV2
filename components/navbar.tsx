@@ -40,13 +40,13 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
       >
         <NavbarContent className="flex flex-col w-full">
           <NavbarBrand as="li" className="flex py-4 items-center">
-            <NextLink className="flex items-center" href="/">
+            <NextLink className="flex items-center gap-x-4" href="/">
               <Image
-                src="/assests/images/favicon.jpeg"
+                src="/assests/images/favicon_3.png"
                 alt="Logo"
                 height={40}
-                width={60}
-                className="rounded-full cursor-pointer"
+                width={40}
+                className="rounded cursor-pointer"
                 onClick={toggleNavbar}
               />
               {!isCollapsed && (

@@ -108,7 +108,7 @@ export default function Home() {
             </CardBody>
           </Card>
         ))}
-        <div className="flex flex-wrap items-center justify-around gap-4 mb-12 w-full min-h-[400px]">
+        <div className="flex flex-wrap items-center px-2 gap-4 mb-12 w-full min-h-[400px]">
           <div className="flex-1 shadow-md bg-zinc-50 px-2 py-4 dark:bg-default-50 rounded-md">
             <AnnualChart />
           </div>
