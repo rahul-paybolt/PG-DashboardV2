@@ -1,6 +1,7 @@
 import React from "react";
-import {User} from "@nextui-org/user";
-export default function Profile(isCollapsed:boolean) {
+import { User } from "@nextui-org/user";
+
+export default function Profile({ isCollapsed }: { isCollapsed: boolean }) {
   return (
     <User   
       name={isCollapsed ? "" : "Rahul"} 

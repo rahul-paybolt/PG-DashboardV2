@@ -12,8 +12,6 @@ import Header from "@/components/Header";
 export default function Home() {
   const expenesData = () => {
     return (
-     
-      
       <div className="flex items-center justify-between flex-wrap ">
         <div className="flex flex-col mb-4">
           <div className="flex items-center gap-x-2">
@@ -21,7 +19,7 @@ export default function Home() {
             <span className="w-[12px] h-[4px] bg-yellow-500 rounded-md px-2"></span>
           </div>
           <div className="flex items-center gap-x-2 mb-4">
-            <span className="text-sm text-gray-400">&#x20b9;{" "}</span>
+            <span className="text-sm text-gray-400">&#x20b9; </span>
             <p className="text-sm">12,304</p>
           </div>
           <div className="flex bg-yellow-500 border min-h-[40px] min-w-[50px] rounded-md"></div>
@@ -32,7 +30,7 @@ export default function Home() {
             <span className="w-[12px] h-[4px] bg-green-500 rounded-md px-2"></span>
           </div>
           <div className="flex items-center mb-4">
-            <span className="text-sm text-gray-400">&#x20b9;{" "}</span>
+            <span className="text-sm text-gray-400">&#x20b9; </span>
             <p className="text-sm">12,304</p>
           </div>
           <div className="flex bg-green-500 border min-h-[40px] min-w-[50px] rounded-md"></div>
@@ -43,7 +41,7 @@ export default function Home() {
             <span className="w-[12px] h-[4px] bg-green-200 rounded-md px-2"></span>
           </div>
           <div className="flex items-center gap-x-2 mb-4">
-            <span className="text-sm text-gray-400">&#x20b9;{" "}</span>
+            <span className="text-sm text-gray-400">&#x20b9; </span>
             <p className="text-sm">12,304</p>
           </div>
           <div className="flex bg-green-200 border min-h-[40px] min-w-[50px] rounded-md"></div>
@@ -56,12 +54,16 @@ export default function Home() {
     <>
       <Header />
       <section className="flex flex-wrap items-start justify-center gap-4  h-lvh">
-      
         {BalanceOverViewData.map((balData: BalanaceOverviewProps, idx) => (
-          <Card className="w-[300px] min-h-[400px] pt-6 bg-zinc-50 dark:bg-default-100" key={idx}>
+          <Card
+            className="w-[300px] min-h-[400px] pt-6 bg-zinc-50 dark:bg-default-100"
+            key={idx}
+          >
             <CardBody>
               <div className="flex items-center justify-between mb-4">
-                <p className="font-normal text-black dark:text-white">{balData.heading}</p>
+                <p className="font-normal text-black dark:text-white">
+                  {balData.heading}
+                </p>
                 <ShowShortMessage
                   Icon={TbDots}
                   header={balData.heading}
@@ -86,14 +88,18 @@ export default function Home() {
                 <div className="text-sm text-gray-400 text-center">Value</div>
               </div>
               <div className="flex items-center justify-between mb-4">
-                <div className="text-sm text-gray-600">Average annual profit</div>
+                <div className="text-sm text-gray-600">
+                  Average annual profit
+                </div>
                 <div className="flex items-center gap-x-2">
                   <div className="text-sm">6.7%</div>
                   <IoIosArrowRoundUp />
                 </div>
               </div>
               <div className="flex items-center justify-between mb-4">
-                <div className="text-sm text-gray-600">Average annual return</div>
+                <div className="text-sm text-gray-600">
+                  Average annual return
+                </div>
                 <div className="flex items-center gap-x-2">
                   <div className="text-sm">3.2%</div>
                   <IoIosArrowRoundDown color="red" />
@@ -102,7 +108,7 @@ export default function Home() {
             </CardBody>
           </Card>
         ))}
-        <div className="flex w-full flex-row items-center justify-around gap-x-4 mb-12 ">
+        <div className="flex flex-wrap items-center justify-around gap-4 mb-12 w-full min-h-[400px]">
           <div className="flex-1 shadow-md bg-zinc-50 px-2 py-4 dark:bg-default-50 rounded-md">
             <AnnualChart />
           </div>

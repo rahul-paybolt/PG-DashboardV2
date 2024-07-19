@@ -31,7 +31,7 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
         maxWidth="md"
         position="sticky"
         className={clsx(
-          "absolute top-0 flex flex-col min-h-screen items-start justify-start dark:shadow-lg border-r bg-zinc-50 dark:bg-gray-900 transition-all duration-300",
+          "absolute top-0 flex flex-col min-h-screen items-start justify-start dark:shadow-lg border-r bg-zinc-50 dark:bg-gray-900 transition-all duration-500",
           {
             "w-24": isCollapsed,
             "w-64": !isCollapsed,
