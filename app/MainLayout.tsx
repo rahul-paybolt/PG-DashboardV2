@@ -4,12 +4,12 @@ import clsx from "clsx";
 import { useNavbar } from "../components/NavBarContext";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
-  const { isCollapsed } = useNavbar();
-  console.log("isCollapsed", isCollapsed)
+  const { isCollapsed, toggleNavbar } = useNavbar();
+  console.log("isCollapsed", isCollapsed);
 
   return (
     <div className="flex max-h-screen transition-all">
-      <Navbar />
+      <Navbar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
       <div
         className={clsx(
           "flex-1 transition-all duration-300",
