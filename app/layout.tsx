@@ -1,37 +1,20 @@
+"use client"
 import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
-
-import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
+import { NavbarProvider } from "@/components/NavBarContext";
 import Header from "@/components/Header";
-import { Navbar } from "@/components/navbar";
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+import { Navbar } from "@/components/NavBar";
+import { ReactNode, useState } from "react";
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+  const toggleNavbar = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
   return (
     <html suppressHydrationWarning lang="en">
       <head />
@@ -42,12 +25,19 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="flex max-h-screen">
-            <Navbar />
-            <div className="flex-1 ml-64">
-              <main>{children}</main>
+          <NavbarProvider>
+            <div className="flex max-h-screen">
+              <Navbar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
+              <div
+                className={clsx("flex-1 transition-all", {
+                  "pl-24": isCollapsed,
+                  "pl-64": !isCollapsed,
+                })}
+              >
+                <main>{children}</main>
+              </div>
             </div>
-          </div>
+          </NavbarProvider>
         </Providers>
       </body>
     </html>

@@ -5,6 +5,14 @@ import DepositIcon from "@/public/assests/Icon/DepositIcon";
 import HistoryIcon from "@/public/assests/Icon/HistoryIcon";
 import PaymentIcon from "@/public/assests/Icon/Payments";
 import TransactionIcons from "@/public/assests/Icon/TransactionsIcon";
+import { VscHistory } from "react-icons/vsc";
+import { GrTransaction } from "react-icons/gr";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { MdOutlinePayments } from "react-icons/md";
+import { PiHandDepositBold } from "react-icons/pi";
+import { RxAvatar } from "react-icons/rx";
+import { RxDashboard } from "react-icons/rx";
+
 
 export type SiteConfig = typeof siteConfig;
 
@@ -15,37 +23,37 @@ export const siteConfig = {
     {
       label: "DashBoard",
       href: "/",
-      icon: DashBoardIcon
+      icon: RxDashboard
     },
     {
       label: "Transactions",
       href: "/transactions",
-      icon:TransactionIcons
+      icon:GrTransaction
     },
     {
       label: "Analytics",
       href: "/analytics",
-      icon: AnalyticsIcon
+      icon: IoAnalyticsOutline
     },
     {
       label: "Payment",
       href: "/payment",
-      icon: PaymentIcon
+      icon: MdOutlinePayments
     },
     {
       label: "Deposit",
       href: "/deposits",
-      icon: DepositIcon
+      icon: PiHandDepositBold
     },
     {
       label: "History",
       href: "/history",
-      icon: HistoryIcon
+      icon: VscHistory
     },
     {
       label: "Account",
       href: "/account",
-      icon: AvatarIcon
+      icon: RxAvatar
     },
   ],
   navMenuItems: [
