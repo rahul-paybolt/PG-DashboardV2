@@ -3,13 +3,19 @@ import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
 import { Button } from "@nextui-org/button";
 import { IconType } from "react-icons";
 
-export default function ShowShortMessage(
-  { Icon, header, content }: { Icon: IconType, header: string, content: string }
-) {
+export default function ShowShortMessage({
+  Icon,
+  header,
+  content,
+}: {
+  Icon: IconType;
+  header: string;
+  content: string;
+}) {
   return (
-    <Popover placement="top" showArrow={true} className="bg-none">
+    <Popover placement="top" showArrow={true} className="bg-nonex">
       <PopoverTrigger>
-        <Button className="custom-button">
+        <Button className="custom-button min-w-4 h-4">
           <Icon />
         </Button>
       </PopoverTrigger>

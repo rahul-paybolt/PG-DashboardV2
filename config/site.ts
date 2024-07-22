@@ -12,7 +12,7 @@ import { MdOutlinePayments } from "react-icons/md";
 import { PiHandDepositBold } from "react-icons/pi";
 import { RxAvatar } from "react-icons/rx";
 import { RxDashboard } from "react-icons/rx";
-
+import { CgFileDocument } from "react-icons/cg";
 
 export type SiteConfig = typeof siteConfig;
 
@@ -23,37 +23,42 @@ export const siteConfig = {
     {
       label: "DashBoard",
       href: "/",
-      icon: RxDashboard
+      icon: RxDashboard,
     },
     {
       label: "Transactions",
       href: "/transactions",
-      icon:GrTransaction
+      icon: GrTransaction,
     },
     {
       label: "Analytics",
       href: "/analytics",
-      icon: IoAnalyticsOutline
+      icon: IoAnalyticsOutline,
     },
     {
       label: "Payment",
       href: "/payment",
-      icon: MdOutlinePayments
+      icon: MdOutlinePayments,
     },
     {
       label: "Deposit",
       href: "/deposits",
-      icon: PiHandDepositBold
+      icon: PiHandDepositBold,
     },
     {
       label: "History",
       href: "/history",
-      icon: VscHistory
+      icon: VscHistory,
     },
     {
       label: "Account",
       href: "/account",
-      icon: RxAvatar
+      icon: RxAvatar,
+    },
+    {
+      label: "Docs",
+      href: "/docs",
+      icon: CgFileDocument,
     },
   ],
   navMenuItems: [
