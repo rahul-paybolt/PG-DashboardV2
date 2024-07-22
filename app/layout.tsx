@@ -1,18 +1,22 @@
-"use client"
-import "@/styles/globals.css";
+"use client";
+
+import { ReactNode, useState } from "react";
 import clsx from "clsx";
+
 import { Providers } from "./providers";
+
 import { fontSans } from "@/config/fonts";
 import { NavbarProvider } from "@/components/NavBarContext";
-import Header from "@/components/Header";
 import { Navbar } from "@/components/NavBar";
-import { ReactNode, useState } from "react";
+import Header from "@/components/Header";
+
+import "@/styles/globals.css";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleNavbar = () => {
-    setIsCollapsed((prev) => !prev);
+    setIsCollapsed(prev => !prev);
   };
 
   return (
@@ -22,8 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className={clsx(
           "min-h-screen bg-background font-sans antialiased relative",
           fontSans.variable
-        )}
-      >
+        )}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <NavbarProvider>
             <div className="flex max-h-screen">
@@ -32,9 +35,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 className={clsx("flex-1 transition-all", {
                   "pl-24": isCollapsed,
                   "pl-64": !isCollapsed,
-                })}
-              >
-                <main>{children}</main>
+                })}>
+                <main className="h-dvh overflow-y-scroll">
+                  <Header />
+                  {children}
+                </main>
               </div>
             </div>
           </NavbarProvider>

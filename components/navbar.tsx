@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Navbar as NextUINavbar,
@@ -14,8 +14,8 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiHelpCircle } from "react-icons/fi";
-import { VscFeedback } from "react-icons/vsc";
 import Profile from "./Profile/profile";
+import { useTheme } from "next-themes";
 
 interface NavbarProps {
   isCollapsed: boolean;
@@ -24,6 +24,7 @@ interface NavbarProps {
 
 export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
   const pathName = usePathname();
+  const { theme } = useTheme();
 
   return (
     <div className="relative">
@@ -36,11 +37,10 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
             "w-24": isCollapsed,
             "w-64": !isCollapsed,
           }
-        )}
-      >
+        )}>
         <NavbarContent className="flex flex-col w-full">
           <NavbarBrand as="li" className="flex py-4 items-center">
-            <NextLink className="flex items-center gap-x-4" href="/">
+            <div className="flex items-center gap-x-4">
               <Image
                 src="/assests/images/favicon_3.png"
                 alt="Logo"
@@ -54,42 +54,40 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
                   Paybolt
                 </p>
               )}
-            </NextLink>
+            </div>
           </NavbarBrand>
           <ul className="flex flex-col gap-4 justify-start w-full">
-            {siteConfig.navItems.map((item) => {
+            {siteConfig.navItems.map(item => {
               const isActive = pathName === item.href;
+
               return (
-                <li
-                  key={item.href}
-                  className={clsx("w-full", {
-                    "border border-gray-300 rounded-md bg-white dark:bg-gray-700":
-                      isActive && !isCollapsed,
-                  })}
-                >
+                <div key={item.href} className={clsx("w-full")}>
                   <NextLink href={item.href} passHref>
                     <NavbarItem
                       className={clsx(
-                        "flex items-center gap-x-4 p-2 rounded-md transition-colors duration-200",
+                        "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300",
                         {
-                          "text-gray-900 dark:text-white": isActive,
-                          "text-gray-700 dark:text-gray-300": !isActive,
+                          "text-gray-900 dark:text-white border border-gray-300 rounded-md bg-white dark:bg-gray-700":
+                            isActive,
+                          "w-fit": isCollapsed,
                         }
-                      )}
-                    >
-                      <item.icon className="text-gray-500 dark:text-gray-400 h-[24px] w-[24px]" />
+                      )}>
+                      <item.icon
+                        className={
+                          "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]"
+                        }
+                      />
                       {!isCollapsed && (
                         <span
                           className={clsx("flex-1", {
                             "font-medium text-primary": isActive,
-                          })}
-                        >
+                          })}>
                           {item.label}
                         </span>
                       )}
                     </NavbarItem>
                   </NextLink>
-                </li>
+                </div>
               );
             })}
           </ul>
@@ -98,7 +96,7 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
             {[
               { label: "Help", link: "/help" },
               { label: "Feedback", link: "/feedback" },
-            ].map((item) => (
+            ].map(item => (
               <NextLink href={item.link} passHref key={item.label}>
                 <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
                   <FiHelpCircle className="w-[24px] h-[24px]" />
@@ -107,18 +105,19 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
               </NextLink>
             ))}
           </ul>
-          <div className="mt-auto w-full px-2">
+          <div className="mt-auto w-full px-2 flex flex-col justify-center items-start">
             <div
-              className={clsx("", {
+              className={clsx("w-full", {
                 "flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300 border border-gray-300 shadow-sm bg-white dark:bg-gray-800":
                   !isCollapsed,
-              })}
-            >
+              })}>
               <Profile isCollapsed={isCollapsed} />
             </div>
             <div className="mt-4 flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
               <ThemeSwitch />
-              {!isCollapsed && <span>Light Mode</span>}
+              {!isCollapsed && (
+                <span>{theme === "dark" ? "Light" : "Dark"} Mode</span>
+              )}
             </div>
           </div>
         </NavbarContent>
