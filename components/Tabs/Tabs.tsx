@@ -17,8 +17,6 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
     router.push(selectedTab);
   }, [selectedTab]);
 
-  console.log(selectedTab);
-
   return (
     <div className="flex w-full flex-col">
       <Tabs
@@ -26,12 +24,11 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
         items={tabsData}
         fullWidth={true}
         classNames={{
-          base:"px-4",
+          base: "px-4",
         }}
         selectedKey={selectedTab}
-        onSelectionChange={setSelectedTab}
-      >
-        {(item) => (
+        onSelectionChange={key => setSelectedTab(key as string)}>
+        {item => (
           <Tab key={item.id} title={item.label} className="py-6">
             <Card>
               <CardBody>

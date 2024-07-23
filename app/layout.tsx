@@ -32,12 +32,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <div className="flex max-h-screen">
               <Navbar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
               <div
-                className={clsx("flex-1 transition-all", {
-                  "pl-24": isCollapsed,
-                  "pl-64": !isCollapsed,
-                })}>
+                className={clsx(
+                  "flex-1 transition-all bg-zinc-50 dark:bg-default-50",
+                  {
+                    "pl-24": isCollapsed,
+                    "pl-64": !isCollapsed,
+                  }
+                )}>
                 <main className="h-dvh overflow-y-scroll">
-                  <Header />
+                  <Header isCollapsed={isCollapsed} />
                   {children}
                 </main>
               </div>

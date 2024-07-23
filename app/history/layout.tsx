@@ -1,4 +1,4 @@
-export default function DepositsLayout({
+export default function SettlementsLayout({
   children,
 }: {
   children: React.ReactNode;
