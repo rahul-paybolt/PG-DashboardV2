@@ -1,19 +1,18 @@
-"use client"
+"use client";
 import React from "react";
-import {DateRangePicker} from "@nextui-org/date-picker";
-import { parseDate } from "@internationalized/date";
+import { DateRangePicker } from "@nextui-org/date-picker";
+
 export default function App() {
   return (
-    <DateRangePicker 
-      label="Stay duration" 
+    <DateRangePicker
+      label="Stay duration"
       isRequired
-      defaultValue={{
-        start: parseDate("2024-04-01"),
-        end: parseDate("2024-04-08"),
-      }}
       className="max-w-xs shadow-md rounded-full"
       color="default"
+      classNames={{
+        inputWrapper:
+          "bg-zinc-50 dark:bg-default-100 border dark:border-none rounded-md",
+      }}
     />
   );
 }
-

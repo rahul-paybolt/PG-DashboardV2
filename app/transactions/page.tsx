@@ -6,11 +6,21 @@ import { useRef, useState } from "react";
 import CustomDateRangePicker from "@/components/DateRangePicker/DateRangePicker";
 import CustomSelect from "@/components/SelectOptions/SelectOptions";
 import CustomTable from "@/components/CustomTable/Table";
+import Services from "@/services/Services";
+import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
 const Transactions = () => {
   const inputRef = useRef(null);
 
   const [inputField, setInputField] = useState("");
   const [selectedMerchants, setSelectedMerchants] = useState("");
+
+  const { hasMore, isLoading, list } = Services.paginatedData();
+  const [loaderRef, scrollerRef] = useInfiniteScroll({
+    hasMore,
+    onLoadMore: list.loadMore,
+  });
+
+
 
   const handleSelection = (value: string) => {
     setSelectedMerchants(value);
@@ -27,10 +37,37 @@ const Transactions = () => {
       />
     );
   };
+
+  const TableTopContent = () => {
+    return (
+        <div className="flex items-center justify-between px-4 py-4">
+          <Input
+            ref={inputRef}
+            label="Search Merchants"
+            placeholder="Type to search..."
+            type="search"
+            startContent={<SerchIcon />}
+            onChange={(e) => handleChange(e)}
+          />
+
+          <CustomDateRangePicker />
+          <CustomSelect
+            label="Merchants"
+            placeholder="Select Merchants"
+            value={selectedMerchants}
+            onChange={(value) => handleSelection(value)}
+          />
+        </div>
+    )
+  }
   return (
     <>
-      <h1>Hello!!</h1>
-      <Input
+
+      <CustomTable 
+        TableTopContent={<TableTopContent />}
+      /> 
+      
+      {/* <Input
         ref={inputRef}
         label="Search"
         type="search"
@@ -45,7 +82,7 @@ const Transactions = () => {
         value={selectedMerchants}
         onChange={(value) => handleSelection(value)}
       />
-      <CustomTable />
+      */}
     </>
   );
 };

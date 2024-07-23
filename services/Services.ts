@@ -27,23 +27,21 @@ const paginatedData = () =>{
   return {hasMore,isLoading, list};
 }
 
-const filterData = () =>{
-  const list = useAsyncList({
-    async load({ signal, filterText }) {
-      let res = await fetch(
-        `https://swapi.py4e.com/api/people/?search=${filterText}`,
-        { signal }
-      );
-      let json = await res.json();
-  
-      return {
-        items: json.results
-      };
-    }
-  });
-  return list;
+const ButtonPagination = (users) =>{
+  console.log("users", users);
+  const [page, setPage] = React.useState(1);
+  const rowsPerPage = 4;
+  const pages = Math.ceil(users.length / rowsPerPage);
+  const items = React.useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return users.slice(start, end);
+  }, [page, users]);
+  return {items, page, pages, setPage};
 }
 
 export default {
   paginatedData,
+  ButtonPagination
 }

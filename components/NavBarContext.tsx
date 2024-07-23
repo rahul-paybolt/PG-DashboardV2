@@ -1,5 +1,5 @@
 // NavbarContext.tsx
-"use client"
+"use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface NavbarContextProps {
@@ -13,10 +13,8 @@ export const NavbarProvider = ({ children }: { children: ReactNode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleNavbar = () => {
-    setIsCollapsed((prev) => !prev);
+    setIsCollapsed(prev => !prev);
   };
-
-  console.log("while clicking--->", isCollapsed)
 
   return (
     <NavbarContext.Provider value={{ isCollapsed, toggleNavbar }}>

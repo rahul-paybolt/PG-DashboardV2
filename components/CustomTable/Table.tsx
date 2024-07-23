@@ -12,42 +12,57 @@ import {
 import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
 import { Spinner } from "@nextui-org/spinner";
 import Input from "../InputContainer/Input";
+import { Button } from "@nextui-org/button";
+interface Column<T> {
+  key: keyof T;
+  label: string;
+}
 
-const CustomTable = () => {
+interface TableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  TableTopContent: React.ReactNode;
+}
+
+const CustomTable = <T,>({ columns, data , TableTopContent}: TableProps<T>) => {
   const { hasMore, isLoading, list } = Services.paginatedData();
   const [loaderRef, scrollerRef] = useInfiniteScroll({
     hasMore,
     onLoadMore: list.loadMore,
   });
+  const [showPaginatedButton, setShowPaginatedButton] = useState(false);
+
 
   const handleInputChange = (e) => {
     list.setFilterText(e.target.value);
   };
 
+  const renderTopContent = () =>{
+    return (
+      <div className="mt-10">{showPaginatedButton ? "Show Button Pagination" : "Infinte-scroll"}</div>
+    )
+  }
+
   return (
-    <div className="px-2 py-2">
-      <Input 
-        type="text" 
-        value={list.filterText} 
-        onChange={handleInputChange} 
-        placeholder="Search Star Wars Characters"
-      />
+    <div className="flex items-center justify-center px-4 py-4 lg:w-full md:max-[400px] shadow-large">
       <Table
         isStriped
         isHeaderSticky
-        aria-label="Example table with infinite pagination"
+        aria-label="Infinite pagination"
         baseRef={scrollerRef}
         selectionMode="multiple"
+        topContent={TableTopContent}
         bottomContent={
           hasMore ? (
             <div className="flex w-full justify-center">
-              <Spinner ref={loaderRef} color="white" />
+              <Spinner ref={loaderRef} color="secondary" />
             </div>
           ) : null
         }
+        
         classNames={{
-          base: "max-h-[520px] overflow-scroll",
-          table: "min-h-[400px]",
+          base: "max-h-[600px] overflow-scroll",
+          table: "min-h-[600px]",
         }}
       >
         <TableHeader>

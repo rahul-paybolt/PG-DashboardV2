@@ -1,13 +1,14 @@
 import React from "react";
 import { User } from "@nextui-org/user";
 
-export default function Profile({ isCollapsed }: { isCollapsed: boolean }) {
+export default function Profile() {
   return (
-    <User   
-      name={isCollapsed ? "" : "Rahul"} 
-      description={isCollapsed ? "" : "rahul@paybolt.in"} 
+    <User
+      name={"Rahul"}
+      description={"rahul@paybolt.in"}
       avatarProps={{
-        src: "https://i.pravatar.cc/150?u=a04258114e29026702d"
+        src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+        className: "rounded-full h-8 w-8",
       }}
     />
   );

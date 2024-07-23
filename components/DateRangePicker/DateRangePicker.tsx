@@ -122,7 +122,7 @@ const  CustomDateRangePicker = () => {
         onChange={setValue}
         label="Event date"
       />
-      <p className="text-default-500 text-sm">
+      {/* <p className="text-default-500 text-sm">
         Selected date:{" "}
         {value
           ? formatter.formatRange(
@@ -130,7 +130,7 @@ const  CustomDateRangePicker = () => {
               value.end.toDate(getLocalTimeZone()),
             )
           : "--"}
-      </p>
+      </p> */}
     </div>
   );
 };

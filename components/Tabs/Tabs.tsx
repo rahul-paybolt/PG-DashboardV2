@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Tabs, Tab } from "@nextui-org/tabs";
-import { Card, CardBody } from "@nextui-org/card";
+import { Tabs,Tab } from "@nextui-org/tabs";
 import { tabsProps } from "@/constants/TransactionTabs/TransactionsTabs";
 import { useRouter } from "next/navigation";
 interface TabsComponentProps {
@@ -16,8 +15,6 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
     router.push(selectedTab);
   }, [selectedTab]);
 
-  console.log(selectedTab);
-
   return (
     <div className="flex w-full flex-col">
       <Tabs
@@ -25,12 +22,11 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
         items={tabsData}
         fullWidth={true}
         classNames={{
-          base:"px-4",
+          base: "px-4",
         }}
         selectedKey={selectedTab}
-        onSelectionChange={setSelectedTab}
-      >
-        {(item) => (
+        onSelectionChange={key => setSelectedTab(key as string)}>
+        {item => (
           <Tab key={item.id} title={item.label} className="py-6">
           </Tab>
         )}
