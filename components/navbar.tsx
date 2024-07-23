@@ -10,12 +10,13 @@ import { Divider } from "@nextui-org/divider";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiHelpCircle } from "react-icons/fi";
-import Profile from "./Profile/profile";
-import { useTheme } from "next-themes";
+import { useState } from "react";
+import { FaAngleDown } from "react-icons/fa6";
+import { cn } from "@nextui-org/theme";
+import { Tooltip } from "@nextui-org/tooltip";
 
 interface NavbarProps {
   isCollapsed: boolean;
@@ -24,7 +25,11 @@ interface NavbarProps {
 
 export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
   const pathName = usePathname();
-  const { theme } = useTheme();
+  const [subMenuOpenOf, setSubMenuOpenOf] = useState("/");
+
+  const toggleSubmenu = (href: string) => {
+    setSubMenuOpenOf(prev => (prev === href ? "/" : href));
+  };
 
   return (
     <div className="relative">
@@ -32,14 +37,16 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
         maxWidth="md"
         position="sticky"
         className={clsx(
-          "absolute top-0 flex flex-col min-h-screen items-start justify-start dark:shadow-lg border-r bg-zinc-50 dark:bg-gray-900 transition-all duration-500",
+          "absolute top-0 flex flex-col min-h-screen items-start justify-start border-r bg-zinc-50 dark:bg-default-50 transition-all duration-500 overflow-y-auto shadow-medium",
           {
             "w-24": isCollapsed,
             "w-64": !isCollapsed,
           }
         )}>
         <NavbarContent className="flex flex-col w-full">
-          <NavbarBrand as="li" className="flex py-4 items-center">
+          <NavbarBrand
+            as="li"
+            className="flex py-4 items-center w-full justify-start">
             <div className="flex items-center gap-x-4">
               <Image
                 src="/assests/images/favicon_3.png"
@@ -50,8 +57,8 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
                 onClick={toggleNavbar}
               />
               {!isCollapsed && (
-                <p className="font-bold text-lg text-gray-900 dark:text-white">
-                  Paybolt
+                <p className="font-black text-2xl uppercase text-gray-900 dark:text-white">
+                  PayBolt
                 </p>
               )}
             </div>
@@ -59,34 +66,75 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
           <ul className="flex flex-col gap-4 justify-start w-full">
             {siteConfig.navItems.map(item => {
               const isActive = pathName === item.href;
+              const hasSubMenu = item?.subMenu && item.subMenu.length > 0;
 
               return (
-                <div key={item.href} className={clsx("w-full")}>
-                  <NextLink href={item.href} passHref>
-                    <NavbarItem
-                      className={clsx(
-                        "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300",
-                        {
-                          "text-gray-900 dark:text-white border border-gray-300 rounded-md bg-white dark:bg-gray-700":
-                            isActive,
-                          "w-fit": isCollapsed,
-                        }
-                      )}>
-                      <item.icon
-                        className={
-                          "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]"
-                        }
-                      />
-                      {!isCollapsed && (
-                        <span
-                          className={clsx("flex-1", {
-                            "font-medium text-primary": isActive,
-                          })}>
-                          {item.label}
-                        </span>
-                      )}
-                    </NavbarItem>
-                  </NextLink>
+                <div className={clsx("w-full")} key={item.href}>
+                  <Tooltip content={item.label}>
+                    <NextLink
+                      href={hasSubMenu ? item.subMenu[0].href : item.href}
+                      passHref
+                      onClick={() => hasSubMenu && toggleSubmenu(item.href)}>
+                      <NavbarItem
+                        className={clsx(
+                          "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300 border border-transparent",
+                          {
+                            "text-gray-900 dark:text-white border-gray-300 rounded-md bg-background dark:bg-default-100 shadow":
+                              isActive,
+                            "w-fit": isCollapsed,
+                          }
+                        )}>
+                        <item.icon
+                          className={
+                            "text-gray-500 dark:text-gray-400 h-[24px] w-[24px] min-h-[24px]"
+                          }
+                        />
+                        {!isCollapsed && (
+                          <div
+                            className={clsx(
+                              "w-full flex items-center justify-between",
+                              {
+                                "font-medium text-primary": isActive,
+                              }
+                            )}>
+                            <span>{item.label}</span>
+                            {hasSubMenu && (
+                              <FaAngleDown
+                                className={cn("transition-all duration-300", {
+                                  "rotate-180": subMenuOpenOf === item.href,
+                                })}
+                              />
+                            )}
+                          </div>
+                        )}
+                      </NavbarItem>
+                    </NextLink>
+                  </Tooltip>
+                  {subMenuOpenOf === item.href && hasSubMenu && (
+                    <div className="w-full pl-3 flex flex-col my-1">
+                      {item.subMenu.map(sub => (
+                        <Tooltip content={sub.label} key={sub.label}>
+                          <NextLink
+                            href={sub.href}
+                            className={clsx(
+                              "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300 border border-transparent",
+                              {
+                                "text-gray-900 dark:text-white !border-gray-300 rounded-md bg-white dark:bg-gray-700":
+                                  pathName === sub.href,
+                                "w-fit": isCollapsed,
+                              }
+                            )}>
+                            <sub.icon
+                              className={
+                                "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]"
+                              }
+                            />
+                            {!isCollapsed && sub.label}
+                          </NextLink>
+                        </Tooltip>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -97,29 +145,18 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
               { label: "Help", link: "/help" },
               { label: "Feedback", link: "/feedback" },
             ].map(item => (
-              <NextLink href={item.link} passHref key={item.label}>
-                <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
-                  <FiHelpCircle className="w-[24px] h-[24px]" />
-                  {!isCollapsed && <span className="flex-1">{item.label}</span>}
-                </NavbarItem>
-              </NextLink>
+              <Tooltip key={item.link} content={item.label}>
+                <NextLink href={item.link} passHref>
+                  <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
+                    <FiHelpCircle className="w-[24px] h-[24px]" />
+                    {!isCollapsed && (
+                      <span className="flex-1">{item.label}</span>
+                    )}
+                  </NavbarItem>
+                </NextLink>
+              </Tooltip>
             ))}
           </ul>
-          <div className="mt-auto w-full px-2 flex flex-col justify-center items-start">
-            <div
-              className={clsx("w-full", {
-                "flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300 border border-gray-300 shadow-sm bg-white dark:bg-gray-800":
-                  !isCollapsed,
-              })}>
-              <Profile isCollapsed={isCollapsed} />
-            </div>
-            <div className="mt-4 flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
-              <ThemeSwitch />
-              {!isCollapsed && (
-                <span>{theme === "dark" ? "Light" : "Dark"} Mode</span>
-              )}
-            </div>
-          </div>
         </NavbarContent>
       </NextUINavbar>
     </div>

@@ -13,6 +13,8 @@ import { PiHandDepositBold } from "react-icons/pi";
 import { RxAvatar } from "react-icons/rx";
 import { RxDashboard } from "react-icons/rx";
 import { CgFileDocument } from "react-icons/cg";
+import { FaHandshake } from "react-icons/fa";
+import { CiMoneyCheck1 } from "react-icons/ci";
 
 export type SiteConfig = typeof siteConfig;
 
@@ -41,9 +43,26 @@ export const siteConfig = {
       icon: MdOutlinePayments,
     },
     {
-      label: "Deposit",
-      href: "/deposits",
-      icon: PiHandDepositBold,
+      label: "Settlements",
+      href: "/settlements",
+      icon: FaHandshake,
+      subMenu: [
+        {
+          href: "/settlements/charges",
+          label: "Charges",
+          icon: CiMoneyCheck1,
+        },
+        {
+          href: "/settlements/settle-data",
+          label: "Refunds",
+          icon: PiHandDepositBold,
+        },
+        {
+          href: "/settlements/transactions",
+          label: "Transactions",
+          icon: GrTransaction,
+        },
+      ],
     },
     {
       label: "History",
