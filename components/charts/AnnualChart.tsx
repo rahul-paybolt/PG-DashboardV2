@@ -7,7 +7,7 @@ export default class AnnualChart extends PureComponent {
 
   render() {
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={300} >
         <LineChart
           data={LineChartData}
           margin={{

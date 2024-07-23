@@ -52,8 +52,9 @@ export default function Home() {
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {BalanceOverViewData.map((balData: BalanaceOverviewProps, idx) => (
             <Card
-              className="min-w-[280px] w-full px-4 py-2 bg-zinc-50 dark:bg-default-100 rounded-md"
-              key={idx}>
+              className="min-w-[280px] w-full px-4 py-2 dark:bg-default-100 rounded-md shadow-medium"
+              key={idx}
+            >
               <CardBody>
                 <div className="flex items-center justify-between mb-4">
                   <p className="font-normal text-black dark:text-white">
@@ -105,10 +106,10 @@ export default function Home() {
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-5 pb-5 w-full min-h-[300px]">
-          <div className="flex-1 shadow-md bg-zinc-50 px-2 py-4 dark:bg-default-50 rounded-md">
+          <div className="flex-1 shadow-medium  px-2 py-4 dark:bg-default-50 rounded-md">
             <AnnualChart />
           </div>
-          <div className="flex-1 shadow-md bg-zinc-50 px-2 py-4 dark:bg-default-50 rounded-md">
+          <div className="flex-1 shadow-medium  px-2 py-4 dark:bg-default-50 rounded-md">
             <AnnualChart />
           </div>
         </div>

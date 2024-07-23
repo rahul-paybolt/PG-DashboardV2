@@ -34,8 +34,8 @@ const Header = () => {
   };
 
   return (
-    <div className="">
-      <div className="flex items-center justify-between p-5 ">
+    <div>
+      <div className="flex items-center justify-between p-5 shadow-medium ">
         <span className="text-2xl text-primary font-semibold">
           {getPageTitle()}
         </span>

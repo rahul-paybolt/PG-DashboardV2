@@ -2,9 +2,7 @@
 
 import { ReactNode, useState } from "react";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
-
 import { fontSans } from "@/config/fonts";
 import { NavbarProvider } from "@/components/NavBarContext";
 import { Navbar } from "@/components/NavBar";
@@ -24,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased relative",
+          "min-h-screen font-sans antialiased relative",
           fontSans.variable
         )}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
@@ -36,8 +34,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   "pl-24": isCollapsed,
                   "pl-64": !isCollapsed,
                 })}>
-                <main className="h-dvh overflow-y-scroll">
-                  <Header />
+                <main className="h-dvh overflow-y-scroll ">
+                  {/* <Header /> */}
                   {children}
                 </main>
               </div>

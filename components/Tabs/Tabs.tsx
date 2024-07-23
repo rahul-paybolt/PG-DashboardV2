@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Card, CardBody } from "@nextui-org/card";
 import { tabsProps } from "@/constants/TransactionTabs/TransactionsTabs";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 interface TabsComponentProps {
   tabsData: tabsProps[];
 }
@@ -33,11 +32,6 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
       >
         {(item) => (
           <Tab key={item.id} title={item.label} className="py-6">
-            <Card>
-              <CardBody>
-                <p>{item.label}</p>
-              </CardBody>
-            </Card>
           </Tab>
         )}
       </Tabs>
