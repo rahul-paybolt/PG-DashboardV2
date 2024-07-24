@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Card, CardBody } from "@nextui-org/card";
+import { useRouter } from "next/navigation";
+
 import { tabsProps } from "@/constants/TransactionTabs/TransactionsTabs";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 interface TabsComponentProps {
   tabsData: tabsProps[];
 }
@@ -21,15 +21,17 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
     <div className="flex w-full flex-col">
       <Tabs
         aria-label="Dynamic tabs"
-        items={tabsData}
-        fullWidth={true}
         classNames={{
           base: "px-4",
+          tabContent:
+            "group-data-[selected=true]:text-secondary dark:group-data-[selected=true]:text-primary",
         }}
+        fullWidth={true}
+        items={tabsData}
         selectedKey={selectedTab}
         onSelectionChange={key => setSelectedTab(key as string)}>
         {item => (
-          <Tab key={item.id} title={item.label} className="py-6">
+          <Tab key={item.id} className="py-6" title={item.label}>
             <Card>
               <CardBody>
                 <p>{item.label}</p>

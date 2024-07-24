@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Tab, Tabs } from "@nextui-org/tabs";
 
 import {
@@ -9,7 +9,7 @@ import {
   chargeRows,
   refundColumns,
   refundRows,
-  transactionsTabs,
+  settleTabs,
 } from "@/utils/settlement.constant";
 import { TableComponent } from "@/components/Table";
 
@@ -22,10 +22,12 @@ const ChargePage = () => {
     <div className="flex w-full flex-col">
       <Tabs
         aria-label="tabs"
-        items={transactionsTabs}
+        items={settleTabs}
         fullWidth={true}
         classNames={{
           base: "px-5 w-fit",
+          tabContent:
+            "group-data-[selected=true]:text-secondary dark:group-data-[selected=true]:text-primary",
         }}
         selectedKey={selectedTab}
         onSelectionChange={key => setSelectedTab(key as string)}>
