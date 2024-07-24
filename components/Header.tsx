@@ -22,7 +22,6 @@ const Simmer = () => {
 
 const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
   const pathName = usePathname();
-  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
   const getPageTitle = () => {
@@ -53,18 +52,17 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
   };
 
   return (
-    <div className="shadow-md">
+    <div className="shadow-md mb-5 border-b dark:border-primary border-secondary">
       {isLoading ? (
         <Simmer />
       ) : (
         <div className="flex items-center justify-between p-5">
-          <span className="text-2xl text-primary font-semibold">
+          <span className="text-2xl dark:text-primary text-secondary font-semibold">
             {getPageTitle()}
           </span>
 
           <div className="flex justify-center items-center gap-5">
             <ThemeSwitch />
-
             <div
               className={
                 "w-full flex items-center gap-x-4 py-1 px-5 rounded-md text-gray-700 dark:text-gray-300 border shadow-sm bg-white dark:bg-default-100 dark:border-default-300"
@@ -74,8 +72,6 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
           </div>
         </div>
       )}
-
-      <Divider className="mb-5 dark:bg-slate-50" />
     </div>
   );
 };

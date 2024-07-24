@@ -1,10 +1,9 @@
-
-export interface BalanaceOverviewProps{
+export interface BalanceOverviewProps {
   heading: string;
-  amount: string;
+  amount: number;
   updated: string;
 }
 
-export interface SuccessFulTransactionsProps{
+export interface SuccessFulTransactionsProps {
   header: string;
 }

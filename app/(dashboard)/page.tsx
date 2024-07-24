@@ -1,13 +1,14 @@
 "use client";
 
 import { BalanceOverViewData } from "@/constants/balance-overview.constants";
-import { BalanaceOverviewProps as BalanceOverviewProps } from "@/interfaces/balance-overview";
+import { BalanceOverviewProps as BalanceOverviewProps } from "@/interfaces/balance-overview";
 import { Card, CardBody } from "@nextui-org/card";
 import { TbDots } from "react-icons/tb";
 import AnnualChart from "@/components/charts/AnnualChart";
 import ShowShortMessage from "@/components/PopOver/PopOver";
 import { useState } from "react";
 import { Skeleton } from "@nextui-org/skeleton";
+import { formatAmount } from "@/utils/utils";
 
 const Simmer = () => {
   return (
@@ -31,22 +32,23 @@ const SummaryCard = (balData: BalanceOverviewProps) => {
     <Card className="min-w-[280px] w-full px-4 py-2 bg-background dark:bg-default-100 rounded-md">
       <CardBody>
         <div className="flex items-center justify-between mb-4">
-          <p className="font-normal text-black dark:text-white">
+          <p className="font-normal text-secondary dark:text-primary">
             {balData.heading}
           </p>
           <ShowShortMessage
             Icon={TbDots}
             header={balData.heading}
-            content={balData.amount}
+            content={formatAmount(balData.amount)}
           />
         </div>
         <div className="flex flex-col items-start">
-          <div className="flex items-center gap-x-2">
-            <span className="text-sm text-gray-400">&#x20b9; </span>
-            <p className="text-[24px]">{balData.amount}</p>
+          <div className="flex items-center gap-x-1 text-secondary dark:text-primary">
+            <p className="text-[24px] font-semibold">
+              {formatAmount(balData.amount)}
+            </p>
           </div>
           <div className="flex gap-x-4 items-center">
-            <span className="text-gray-400 font-sans text-sm">
+            <span className="text-secondary-300 dark:text-primary-300 font-sans text-sm">
               {balData.updated}
             </span>
           </div>

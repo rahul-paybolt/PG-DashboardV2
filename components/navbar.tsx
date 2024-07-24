@@ -37,7 +37,7 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
         maxWidth="md"
         position="sticky"
         className={clsx(
-          "absolute top-0 flex flex-col min-h-screen items-start justify-start border-r bg-zinc-50 dark:bg-default-50 transition-all duration-500 overflow-y-auto shadow-medium",
+          "absolute top-0 flex flex-col min-h-screen items-start justify-start border-r dark:border-primary border-secondary bg-zinc-50 dark:bg-default-50 transition-all duration-500 overflow-y-auto shadow-md",
           {
             "w-24": isCollapsed,
             "w-64": !isCollapsed,
@@ -57,7 +57,7 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
                 onClick={toggleNavbar}
               />
               {!isCollapsed && (
-                <p className="font-black text-2xl uppercase text-gray-900 dark:text-white">
+                <p className="font-black text-2xl uppercase dark:text-primary text-secondary">
                   PayBolt
                 </p>
               )}
@@ -85,16 +85,20 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
                           }
                         )}>
                         <item.icon
-                          className={
-                            "text-gray-500 dark:text-gray-400 h-[24px] w-[24px] min-h-[24px]"
-                          }
+                          className={cn(
+                            "text-gray-500 dark:text-gray-400 h-[24px] w-[24px] min-h-[24px]",
+                            {
+                              "text-secondary dark:text-primary": isActive,
+                            }
+                          )}
                         />
                         {!isCollapsed && (
                           <div
                             className={clsx(
                               "w-full flex items-center justify-between",
                               {
-                                "font-medium text-primary": isActive,
+                                "font-medium dark:text-primary text-secondary":
+                                  isActive,
                               }
                             )}>
                             <span>{item.label}</span>
@@ -119,15 +123,19 @@ export const Navbar = ({ isCollapsed, toggleNavbar }: NavbarProps) => {
                             className={clsx(
                               "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300 border border-transparent",
                               {
-                                "text-gray-900 dark:text-white !border-gray-300 rounded-md bg-white dark:bg-gray-700":
+                                "text-secondary dark:text-primary !border-gray-300 rounded-md bg-white dark:bg-gray-700":
                                   pathName === sub.href,
                                 "w-fit": isCollapsed,
                               }
                             )}>
                             <sub.icon
-                              className={
-                                "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]"
-                              }
+                              className={cn(
+                                "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]",
+                                {
+                                  "text-secondary dark:text-primary":
+                                    pathName === sub.href,
+                                }
+                              )}
                             />
                             {!isCollapsed && sub.label}
                           </NextLink>
