@@ -25,7 +25,6 @@ const Transactions = () => {
     onLoadMore: list.loadMore,
   });
 
-
   const handleChange = (e: string) => {
     console.log("text", e);
     list.setFilterText(e);
@@ -40,8 +39,6 @@ const Transactions = () => {
       />
     );
   };
-
-  
 
   const TableTopContent = () => {
     return (
@@ -69,7 +66,6 @@ const Transactions = () => {
     );
   };
 
-  
   return (
     <>
       <CustomTable

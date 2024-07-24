@@ -20,7 +20,9 @@ const DownloadTransactions = () => {
           onChange={(value) => handleSelection(value)}
           selectionData={SelectOptionsData}
         />
-        <CustomDateRangePicker />
+        <CustomDateRangePicker 
+          variant=" bordered"
+        />
       </div>
     </>
   );

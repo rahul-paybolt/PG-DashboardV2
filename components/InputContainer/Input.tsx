@@ -3,45 +3,17 @@ import { useInput } from "@nextui-org/input";
 import { CloseFilledIcon } from "@/public/assests/Icon/ClosedFilledIcon";
 
 const styles = {
-  // label: "text-black/50 dark:text-white/90",
-  // input: [
-  //   "bg-transparent",
-  //   "text-black/90 dark:text-white/90",
-  //   "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-  // ],
-  // innerWrapper: "bg-transparent",
-  // inputWrapper: [
-  //   "shadow-xl",
-  //   "bg-default-200/50",
-  //   "dark:bg-default/60",
-  //   "backdrop-blur-xl",
-  //   "backdrop-saturate-200",
-  //   "hover:bg-default-200/70",
-  //   "focus-within:!bg-default-200/50",
-  //   "dark:hover:bg-default/70",
-  //   "dark:focus-within:!bg-default/60",
-  //   "!cursor-text",
-  // ],
-
-  label: "text-purple-600/50 dark:text-white/90",
-  base: [
-    "flex item-center justify-center  px-2 py-2 rounded-md ",
-  ],
+  label: "text-secondary dark:text-white/90",
+  base: ["flex item-center justify-center  px-2 py-2 rounded-md "],
   innerWrapper: "bg-none",
   inputWrapper: [
     "bg-white",
+    "dark:bg-default/60",
     "shadow-large",
     "hover:bg-white",
+    "dark:hover:bg-default/70",
     "focus-within:!bg-white/50",
-
-    //   "bg-default-200/50",
-    //   "dark:bg-default/60",
-    //   "backdrop-blur-xl",
-    //   "backdrop-saturate-200",
-    //   "hover:bg-default-200/70",
-    //   "focus-within:!bg-default-200/50",
-    //   "dark:hover:bg-default/70",
-    //   "dark:focus-within:!bg-default/60",
+    "dark:focus-within:!bg-default/60",
     "!cursor-text",
   ],
 };
@@ -60,6 +32,7 @@ interface InputProps {
     | "error"
     | "idle"
     | "filtering";
+  variant?: "flat" | "bordered" | "faded" | "underlined";
   // Other props as needed
 }
 
