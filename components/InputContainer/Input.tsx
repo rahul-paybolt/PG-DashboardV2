@@ -30,6 +30,14 @@ interface InputProps {
   placeholder: string;
   startContent: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputValue?: string;
+  onInputChange?: (filterText: string)=> void;
+  loadingState?:'loading'
+  | 'sorting'
+  | 'loadingMore'
+  | 'error'
+  | 'idle'
+  | 'filtering'
   // Other props as needed
 }
 
@@ -87,7 +95,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   }, [startContent, end, getInputProps, getInnerWrapperProps]);
 
   return (
-    <div className="flex items-center justify-center w-[300px] ">
+    <div className="w-[300px]">
       <Component {...getBaseProps()}>
         {shouldLabelBeOutside ? labelContent : null}
         <div

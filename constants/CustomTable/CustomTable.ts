@@ -151,3 +151,42 @@ export const UsersData = [
     status: "Active",
   },
 ];
+
+export const TransactionColumns = [
+  {
+    key:"transaction_id",
+    label:"Transaction Id"
+  },
+  {
+    key:"utr",
+    label:"UTR"
+  },
+  {
+    key:"merchant_name",
+    label:"Merchant Name"
+  },
+  {
+    key:"user_name",
+    label:"User Name"
+  },
+  {
+    key:"email",
+    label:"Email"
+  },
+  {
+    key:"phone",
+    label:"phone"
+  },
+  {
+    key:"amount",
+    label:"Amount"
+  },
+  {
+    key:"status",
+    label:"Status"
+  },
+  {
+    key:"date",
+    label:"Date"
+  }
+]

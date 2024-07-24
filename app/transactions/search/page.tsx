@@ -1,12 +1,37 @@
-import { title } from '@/components/primitives'
-import React from 'react'
+"use client";
+import Input from "@/components/InputContainer/Input";
+import CustomSelect from "@/components/SelectOptions/SelectOptions";
+import SelectOptionsData from "@/constants/dropdownConstants/SelectOptionData";
+import { SearchIcon } from "@/public/assests/Icon/SearchIcon";
+import React, { useState } from "react";
+import { useRef } from "react";
 
-const page = () => {
+const SearchTransactions = () => {
+  const [selectedMerchants, setSelectedMerchants] = useState<string | null>("");
+  const handleSelection = (value: string | null) => {
+    setSelectedMerchants(value);
+  };
+  const inputRef = useRef();
   return (
-    <div>
-      <h1 className={title()}>Search Transactions</h1>
-    </div>
-  )
-}
+    <>
+      <div className="flex items-center justify-between border border-purple-400 mx-4 my-4 px-4 py-4 rounded-md">
+        <CustomSelect
+          label="Select"
+          placeholder="MerChant Id"
+          value={selectedMerchants}
+          onChange={(value) => handleSelection(value)}
+          selectionData={SelectOptionsData}
+        />
+        <Input
+          ref={inputRef}
+          label="Search Merchants"
+          placeholder="Type to search..."
+          type="search"
+          startContent={<SearchIcon />}
+        />
+      </div>
+    </>
+  );
+};
 
-export default page
+export default SearchTransactions;

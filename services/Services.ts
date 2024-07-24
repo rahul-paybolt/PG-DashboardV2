@@ -10,6 +10,8 @@ const paginatedData = () =>{
   const list = useAsyncList({
     async load({signal, cursor, filterText}) {
 
+      console.log("filterText-->", filterText)
+
       if (cursor) {
         setIsLoading(false);
       }
@@ -27,21 +29,8 @@ const paginatedData = () =>{
   return {hasMore,isLoading, list};
 }
 
-const ButtonPagination = (users) =>{
-  console.log("users", users);
-  const [page, setPage] = React.useState(1);
-  const rowsPerPage = 4;
-  const pages = Math.ceil(users.length / rowsPerPage);
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
 
-    return users.slice(start, end);
-  }, [page, users]);
-  return {items, page, pages, setPage};
-}
 
 export default {
   paginatedData,
-  ButtonPagination
 }

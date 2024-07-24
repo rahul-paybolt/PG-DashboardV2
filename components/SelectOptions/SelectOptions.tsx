@@ -1,33 +1,25 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
 // import CustomSelectProps from "./SelectOptions";
+export interface selectionDataProps {
+  key: string;
+  label: string;
+}
 interface CustomSelectProps {
   label: string;
   placeholder?: string;
   value: string | null;
   onChange: (value: string | null) => void;
+  selectionData: selectionDataProps[];
 }
 const CustomSelect: React.FC<CustomSelectProps> = ({
   label,
   placeholder = "Select an option",
   value,
   onChange,
+  selectionData,
 }) => {
-  const SelectOptionsData = [
-    { key: "axis", label: "Axis" },
-    { key: "hdfc", label: "HDFC" },
-    { key: "idfc", label: "IDFC" },
-    { key: "fino", label: "Fino" },
-    { key: "icici", label: "Icici" },
-    { key: "giraffe", label: "Giraffe" },
-    { key: "dolphin", label: "Dolphin" },
-    { key: "penguin", label: "Penguin" },
-    { key: "zebra", label: "Zebra" },
-    { key: "shark", label: "Shark" },
-    { key: "whale", label: "Whale" },
-    { key: "otter", label: "Otter" },
-    { key: "crocodile", label: "Crocodile" },
-  ];
+  console.log("data", selectionData)
   const handleSelectionChange = (selectedKeys: Set<string>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
     const selectedValue =
@@ -43,9 +35,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       className="max-w-xs"
       onSelectionChange={handleSelectionChange}
     >
-      {SelectOptionsData.map((animal) => (
-        <SelectItem key={animal.key} value={animal.key}>
-          {animal.label}
+      {selectionData.map((items) => (
+        <SelectItem key={items.key} value={items.key}>
+          {items.label}
         </SelectItem>
       ))}
     </Select>

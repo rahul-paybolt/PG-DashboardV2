@@ -1,4 +1,10 @@
-const SelectOptionsData = [
+
+interface SelectOptionsDataProps {
+  key: string;
+  label: string;
+}
+
+const SelectOptionsData:SelectOptionsDataProps[] = [
   {key: "axis", label: "Axis"},
   {key: "hdfc", label: "HDFC"},
   {key: "idfc", label: "IDFC"},
