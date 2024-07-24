@@ -51,8 +51,7 @@ const CustomTable = <T,>({
   };;
 
   return (
-    <div className="flex items-center justify-center px-4 py-4 lg:w-full md:max-[400px] shadow-large">
-
+    <div className="flex items-center justify-center px-4 py-4 lg:w-full md:max-[400px]">
       <Table
         isStriped
         isHeaderSticky
@@ -60,6 +59,7 @@ const CustomTable = <T,>({
         baseRef={scrollRef}
         selectionMode="multiple"
         topContent={TableTopContent}
+        topContentPlacement="outside"
         bottomContent={
           hasMore ? (
             <div className="flex w-full justify-center">
@@ -68,17 +68,16 @@ const CustomTable = <T,>({
           ) : null
         }
         classNames={{
-          base: "max-h-[600px] overflow-scroll",
-          table: "min-h-[600px]",
+          wrapper: "max-h-[400px]",
         }}
       >
-        <TableHeader columns={columns}>
+        {/* <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn key={column.key} className="text-purple-600 ">
+            < key={column.key} className="text-purple-600 ">
               {column.label}
-            </TableColumn>
+            </ TableColumn>
           )}
-        </TableHeader>
+        </TableHeader> */}
 
         <TableHeader>
           <TableColumn key="name">Name</TableColumn>

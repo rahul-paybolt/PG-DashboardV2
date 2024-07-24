@@ -32,11 +32,6 @@ export default function TabsComponent({ tabsData }: TabsComponentProps) {
         onSelectionChange={key => setSelectedTab(key as string)}>
         {item => (
           <Tab key={item.id} className="py-6" title={item.label}>
-            <Card>
-              <CardBody>
-                <p>{item.label}</p>
-              </CardBody>
-            </Card>
           </Tab>
         )}
       </Tabs>

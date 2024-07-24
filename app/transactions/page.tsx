@@ -45,7 +45,7 @@ const Transactions = () => {
 
   const TableTopContent = () => {
     return (
-      <div className="flex items-center justify-between px-4 py-4 shadow-large rounded-md">
+      <div className="flex items-center justify-between px-4 py-4">
         <Input
           ref={inputRef}
           label="Search Merchants"
@@ -55,6 +55,7 @@ const Transactions = () => {
           inputValue={list.filterText}
           onInputChange={list.setFilterText}
           loadingState={list.loadingState}
+          variant="bordered"
         />
         <CustomDateRangePicker />
         <CustomSelect

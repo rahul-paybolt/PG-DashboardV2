@@ -1,28 +1,49 @@
-import React,{forwardRef} from "react";
+import React, { forwardRef } from "react";
 import { useInput } from "@nextui-org/input";
 import { CloseFilledIcon } from "@/public/assests/Icon/ClosedFilledIcon";
 
 const styles = {
-  label: "text-black/50 dark:text-white/90",
-  input: [
-    "bg-transparent",
-    "text-black/90 dark:text-white/90",
-    "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+  // label: "text-black/50 dark:text-white/90",
+  // input: [
+  //   "bg-transparent",
+  //   "text-black/90 dark:text-white/90",
+  //   "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+  // ],
+  // innerWrapper: "bg-transparent",
+  // inputWrapper: [
+  //   "shadow-xl",
+  //   "bg-default-200/50",
+  //   "dark:bg-default/60",
+  //   "backdrop-blur-xl",
+  //   "backdrop-saturate-200",
+  //   "hover:bg-default-200/70",
+  //   "focus-within:!bg-default-200/50",
+  //   "dark:hover:bg-default/70",
+  //   "dark:focus-within:!bg-default/60",
+  //   "!cursor-text",
+  // ],
+
+  label: "text-purple-600/50 dark:text-white/90",
+  base: [
+    "flex item-center justify-center  px-2 py-2 rounded-md ",
   ],
-  innerWrapper: "bg-transparent",
+  innerWrapper: "bg-none",
   inputWrapper: [
-    "shadow-xl",
-    "bg-default-200/50",
-    "dark:bg-default/60",
-    "backdrop-blur-xl",
-    "backdrop-saturate-200",
-    "hover:bg-default-200/70",
-    "focus-within:!bg-default-200/50",
-    "dark:hover:bg-default/70",
-    "dark:focus-within:!bg-default/60",
+    "bg-white",
+    "shadow-large",
+    "hover:bg-white",
+    "focus-within:!bg-white/50",
+
+    //   "bg-default-200/50",
+    //   "dark:bg-default/60",
+    //   "backdrop-blur-xl",
+    //   "backdrop-saturate-200",
+    //   "hover:bg-default-200/70",
+    //   "focus-within:!bg-default-200/50",
+    //   "dark:hover:bg-default/70",
+    //   "dark:focus-within:!bg-default/60",
     "!cursor-text",
   ],
-
 };
 interface InputProps {
   label: string;
@@ -31,13 +52,14 @@ interface InputProps {
   startContent: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue?: string;
-  onInputChange?: (filterText: string)=> void;
-  loadingState?:'loading'
-  | 'sorting'
-  | 'loadingMore'
-  | 'error'
-  | 'idle'
-  | 'filtering'
+  onInputChange?: (filterText: string) => void;
+  loadingState?:
+    | "loading"
+    | "sorting"
+    | "loadingMore"
+    | "error"
+    | "idle"
+    | "filtering";
   // Other props as needed
 }
 
@@ -63,10 +85,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     getClearButtonProps,
   } = useInput({
     ...props,
-    ref,    
-    // custom styles
+    ref,
     classNames: {
-      ...styles
+      ...styles,
     },
   });
 
@@ -74,7 +95,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   const end = React.useMemo(() => {
     if (isClearable) {
-      return <span {...getClearButtonProps()}>{endContent || <CloseFilledIcon />}</span>;
+      return (
+        <span {...getClearButtonProps()}>
+          {endContent || <CloseFilledIcon />}
+        </span>
+      );
     }
 
     return endContent;
