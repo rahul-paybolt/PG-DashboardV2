@@ -9,7 +9,7 @@ import {
   chargeRows,
   refundColumns,
   refundRows,
-  chargesTabs,
+  transactionsTabs,
 } from "@/utils/settlement.constant";
 import { TableComponent } from "@/components/Table";
 
@@ -22,10 +22,12 @@ const ChargePage = () => {
     <div className="flex w-full flex-col">
       <Tabs
         aria-label="tabs"
-        items={chargesTabs}
+        items={transactionsTabs}
         fullWidth={true}
         classNames={{
           base: "px-5 w-fit",
+          tabContent:
+            "group-data-[selected=true]:text-secondary dark:group-data-[selected=true]:text-primary",
         }}
         selectedKey={selectedTab}
         onSelectionChange={key => setSelectedTab(key as string)}>

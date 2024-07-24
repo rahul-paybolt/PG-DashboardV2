@@ -4,7 +4,6 @@
 
 /* global.css or component-specific CSS */
 
-
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -14,7 +13,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 nav {
@@ -39,3 +38,42 @@ nav a {
   /* Your custom styles for Popover content */
 }
 
+.bg-effect {
+  @apply absolute inset-0 h-full w-full;
+
+  &::before {
+    @apply absolute inset-0 bg-gradient-to-b from-transparent to-primary-100;
+    content: "";
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 80%);
+  }
+
+  .first {
+    @apply absolute top-[5%] left-[25%] h-[300px] w-[300px] bg-gradient-to-b from-secondary-50 to-transparent;
+    clip-path: circle(50% at 50% 50%);
+    animation: leftRight 3s ease-in-out infinite alternate;
+  }
+
+  .second {
+    @apply absolute bottom-[5%] right-[25%] h-[300px] w-[300px] bg-gradient-to-l from-primary-50 to-transparent shadow-md;
+    clip-path: circle(50% at 50% 50%);
+    animation: topBottom 3s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes leftRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(30px);
+  }
+}
+
+@keyframes topBottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(30px);
+  }
+}
