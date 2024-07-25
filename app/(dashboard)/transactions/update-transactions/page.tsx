@@ -1,12 +1,32 @@
-import { title } from '@/components/primitives'
-import React from 'react'
+"use client";
+import CustomModal from "@/components/ModalContainer/Modal";
+import { Button } from "@nextui-org/button";
+import React, { useState } from "react";
 
-const page = () => {
+const UpateTransactions = () => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal((prevState) => !prevState);
+  };
+
   return (
-    <div>
-      <h1 className={title()}>Update Transactions</h1>
-    </div>
-  )
-}
+    <>
+      <div className="flex items-start justify-start px-4 py-4">
+        <Button color="secondary" onClick={handleOpenModal}>
+          Update Transactions
+        </Button>
+      </div>
+      {openModal && (
+        <CustomModal
+          title="Update Transactions"
+          handleModal={handleOpenModal}
+          content="Hello How are you?"
+          isOpen
+        />
+      )}
+    </>
+  );
+};
 
-export default page
+export default UpateTransactions;

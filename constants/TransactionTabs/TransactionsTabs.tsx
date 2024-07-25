@@ -25,9 +25,9 @@ const TransactionsTabs: tabsProps[] = [
     value: "/search",
   },
   {
-    id: "/transactions/transaction-download",
+    id: "/transactions/download-transactions",
     label: "Transaction Download",
-    value: "/transaction-download",
+    value: "/download-transactions",
   },
 ];
 

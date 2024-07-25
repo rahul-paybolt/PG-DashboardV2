@@ -13,7 +13,8 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         className={clsx(
           "flex-1 transition-all duration-300",
           isCollapsed ? "ml-[250px]" : "ml-[70px]"
-        )}>
+        )}
+      >
         <main>{children}</main>
       </div>
     </div>
