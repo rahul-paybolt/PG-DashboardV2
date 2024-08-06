@@ -4,7 +4,7 @@ import { CloseFilledIcon } from "@/public/assests/Icon/ClosedFilledIcon";
 
 const styles = {
   label: "text-secondary dark:text-white/90",
-  base: ["flex item-center justify-center  px-2 py-2 rounded-md "],
+  base: ["flex item-center justify-center rounded-md "],
   innerWrapper: "bg-none",
   inputWrapper: [
     "bg-white",
@@ -15,13 +15,16 @@ const styles = {
     "focus-within:!bg-white/50",
     "dark:focus-within:!bg-default/60",
     "!cursor-text",
+    "data-hover: bg-white"
   ],
 };
 interface InputProps {
   label: string;
   type: string;
-  placeholder: string;
-  startContent: React.ReactNode;
+  placeholder?: string;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue?: string;
   onInputChange?: (filterText: string) => void;
@@ -33,7 +36,13 @@ interface InputProps {
     | "idle"
     | "filtering";
   variant?: "flat" | "bordered" | "faded" | "underlined";
-  // Other props as needed
+  className?: string;
+  isInvalid?: boolean;
+  color?: string;
+  errorMessage?: string;
+  onValueChange?:	(value: string) => void;
+  isRequired?: boolean;
+  name: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -93,7 +102,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   }, [startContent, end, getInputProps, getInnerWrapperProps]);
 
   return (
-    <div className="w-[300px]">
+    <div>
       <Component {...getBaseProps()}>
         {shouldLabelBeOutside ? labelContent : null}
         <div

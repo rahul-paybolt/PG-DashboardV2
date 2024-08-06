@@ -5,6 +5,8 @@
   flex-wrap: wrap;
 }
 
+
+
 /*  */
 body {
   overflow-x: hidden;
@@ -35,3 +37,13 @@ nav a {
   /* Your custom styles for Popover content */
 }
 
+
+
+div{
+  background-color: red($color: #000000);
+}
+
+span{
+  text-align: center;
+  color: red;
+}

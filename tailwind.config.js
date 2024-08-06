@@ -124,7 +124,7 @@ module.exports = {
               // shadow-medium
               md: "rgba(100, 100, 111, 0.2),0px 7px 29px 0px",
               // shadow-large
-              lg: "rgba(0, 0, 0, 0.35), 0px 5px 15px"        
+              // lg: "rgba(0, 0, 0, 0.35), 0px 5px 15px"        
           }
         },
       },

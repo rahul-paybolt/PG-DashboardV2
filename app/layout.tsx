@@ -6,7 +6,7 @@ import { Providers } from "@/app/providers";
 import { fontSans } from "@/config/fonts";
 import { NavbarProvider } from "@/components/NavBarContext";
 
-import "@/styles/globals.css";
+import "@/styles/globals.scss"
 
 export const metadata: Metadata = {
   title: "PayBolt",
@@ -27,7 +27,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           "min-h-screen bg-background antialiased relative",
           fontSans.variable,
           fontSans.className
-        )}>
+        )}
+      >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <NavbarProvider>{children}</NavbarProvider>
         </Providers>

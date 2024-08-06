@@ -17,11 +17,12 @@ interface IFormInput {
   lastName: string;
   iceCreamType: { label: string; value: string };
 }
-const LoginForm = ({ nextStep }: UserInfoProps) => {
+const UserInfoForm = ({ nextStep }: UserInfoProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = React.useState("");
-  const [toggleText, setToggleText] = useState(false);
   const router = useRouter();
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const validateEmail = (value: string) =>
     value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
@@ -35,12 +36,9 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
   const handleSubmit = () => {
     nextStep();
   };
-
   const navigate = () => {
-    setToggleText((prevValue) => !prevValue);
-    router.push("/sign-in");
+    router.push("/sign-up");
   };
-
   return (
     <>
       {/* paybolt animation  */}
@@ -53,9 +51,8 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
           className="flex items-center justify-center h-[50px] w-[50px]"
         />
         <div className="flex gap-2">
-          <span className=" text-light ">Already a member ?</span>{" "}
           <span className=" text-primary-600 cursor-pointer" onClick={navigate}>
-            {toggleText ? "Sign In" : "Sign Up"}
+            Sign In
           </span>
         </div>
       </div>
@@ -64,7 +61,7 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
           className="text-center text-6xl font-extrabold leading-8 sm:text-3xl sm:font-semibold mb-2 cursor-pointer"
           onClick={navigate}
         >
-          Sign up
+          Sign In
         </h1>
         <p className="text-center text-md mb-5 ng-tns-c33-1 ng-star-inserted">
           Simplying Payments &amp; Amplifying Success
@@ -84,4 +81,4 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
   );
 };
 
-export default LoginForm;
+export default UserInfoForm;
