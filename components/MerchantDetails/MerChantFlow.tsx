@@ -1,6 +1,6 @@
 "use client";
 import UserInfoForm from "@/components/Registration/UserInfoForm";
-import VerifyEmailForm from "@/components/Registration/VerifyEmailForm";
+import VerifyEmailForm from "@/components/Registration/UsersBasicDetails";
 import VerifyPhoneOTP from "./VerifyphoneOTP";
 import UpdateMobileNumber from "@/components/Registration/UpdateMobileNumber";
 import React, { useState, createContext, useContext, useEffect } from "react";
@@ -31,8 +31,9 @@ const MerChantFlow = () => {
   const [step, setStep] = useState(0);
   const [updateMobileNumber, setUpdateMobileNumber] = useState(false);
 
-  const [userInfo, setUserInfo] = useState<MerchantBaseProps>(initialMerchantBaseState);
-
+  const [userInfo, setUserInfo] = useState<MerchantBaseProps>(
+    initialMerchantBaseState
+  );
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);

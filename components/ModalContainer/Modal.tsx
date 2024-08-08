@@ -14,7 +14,7 @@ import { SearchIcon } from '@/public/assests/Icon/SearchIcon';
 import Input from '../InputContainer/Input';
 
 interface CustomModalProps{
-  isOpen: boolean;
+  isOpen?: boolean;
   handleModal?: ()=> void;
   title: string;
   content: React.ReactNode;
@@ -72,10 +72,7 @@ const CustomModal = ({isOpen, handleModal, title, content}:CustomModalProps) => 
             </div>
           </ModalBody>
         </ModalContent>
-
-
       </Modal>
-      
     </>
   )
 }

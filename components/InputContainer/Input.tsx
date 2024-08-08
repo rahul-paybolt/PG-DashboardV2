@@ -26,7 +26,7 @@ interface InputProps {
   endContent?: React.ReactNode;
 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputValue?: string;
+  inputValue?: string | null;
   onInputChange?: (filterText: string) => void;
   loadingState?:
     | "loading"

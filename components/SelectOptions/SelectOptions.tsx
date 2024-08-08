@@ -1,8 +1,8 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
-// import CustomSelectProps from "./SelectOptions";
+import { BUSINESS_TYPES } from "@/interfaces/Register/register-interface";
 export interface selectionDataProps {
-  key: string;
+  key: string | BUSINESS_TYPES;
   label: string;
 }
 interface CustomSelectProps {
@@ -30,6 +30,7 @@ interface CustomSelectProps {
       string
     >
   >;
+  name?: string;
 }
 const CustomSelect: React.FC<CustomSelectProps> = ({
   label,
@@ -37,6 +38,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   value,
   onChange,
   selectionData,
+  classNames,
+  variant,
+  name,
 }) => {
   const handleSelectionChange = (selectedKeys: Set<string>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
@@ -47,7 +51,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   return (
     <Select
       label={label}
-      variant="bordered"
+      variant={variant}
       placeholder={placeholder}
       selectedKeys={value ? new Set([value]) : new Set([])}
       className="max-w-xs"
@@ -55,14 +59,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       ght-transparent
       border-medium
       border-default-200
-      classNames={{
-        label: "text-secondary",
-        mainWrapper: "bg-white dark:bg-default-200/60 shadow-large rounded-xl w-[380px] mb-4 ",
-        innerWrapper:
-          "bg-white dark:bg-default-200/60 hover:border-none hover:bg-white dark:hover:bg-default/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
-        listboxWrapper: "border-none",
-        trigger: "border-none",
-      }}
+      classNames={classNames}
+      name={name}
     >
       {selectionData.map((items) => (
         <SelectItem key={items.key} value={items.key}>

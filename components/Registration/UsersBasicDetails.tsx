@@ -3,11 +3,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../InputContainer/Input";
 import CustomSelect from "../SelectOptions/SelectOptions";
 
-interface VerifyOTPFormProps {
-  nextStep: () => void;
-  prevStep: () => void;
-}
-const VerifyBasicDetails = ({ nextStep, prevStep }: VerifyOTPFormProps) => {
+const UsersBasicDetails = () => {
   const [selectedMerchants, setSelectedMerchants] = useState<string | null>("");
 
   const [otp, setOtp] = useState("");
@@ -72,7 +68,7 @@ const VerifyBasicDetails = ({ nextStep, prevStep }: VerifyOTPFormProps) => {
     <div className="flex flex-col items-center text-center justify-center min-h-screen">
       <div className="flex flex-col px-8 py-6">
         <h1 className="text-[80px] font-extrabold sm:text-3xl sm:font-semibold mb-4">
-          Enter your Basic Information
+          Enter your Personal Information
         </h1>
         {/* <p className="mb-2 text-base leading-6 sm:text-md">
           We have sent an OTP to the registered email address
@@ -119,14 +115,14 @@ const VerifyBasicDetails = ({ nextStep, prevStep }: VerifyOTPFormProps) => {
             name="name"
             placeholder="Enter your name"
             label="Name"
-            className="w-[380px] mb-4"
+            className="w-full mb-4"
           />
           <Input
             type="text"
             name="business_name"
             placeholder="Enter your business name"
             label="Business Name"
-            className="w-[380px] mb-4"
+            className="w-full mb-4"
           />
 
           <CustomSelect
@@ -136,20 +132,27 @@ const VerifyBasicDetails = ({ nextStep, prevStep }: VerifyOTPFormProps) => {
             onChange={(value) => handleSelection(value)}
             selectionData={SelectOptionsData}
             classNames={{
-              mainWrapper: "max-w-[380px] mb-4",
+              label: "text-secondary",
+              mainWrapper:
+                "bg-white dark:bg-default-200/60 shadow-large rounded-xl w-[430px] mb-4 ",
+              innerWrapper:
+                "bg-white dark:bg-default-200/60 hover:border-none hover:bg-white dark:hover:bg-default/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
+              listboxWrapper: "border-none",
+              trigger: "border-none",
             }}
+            variant="bordered"
           />
           <Input
             type="text"
             name="mobile_no"
             placeholder="Enter your mobile number"
             label="Mobile Number"
-            className="w-[380px]"
+            className="w-full"
           />
         </div>
         <div className="flex gap-4 mt-4">
           <button
-            className="bg-primary-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
+            className="bg-primary-600 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             onClick={handleSubmit}
           >
             Next
@@ -160,4 +163,4 @@ const VerifyBasicDetails = ({ nextStep, prevStep }: VerifyOTPFormProps) => {
   );
 };
 
-export default VerifyBasicDetails;
+export default UsersBasicDetails;

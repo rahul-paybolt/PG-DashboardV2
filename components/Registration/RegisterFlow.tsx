@@ -1,9 +1,10 @@
 "use client";
 import UserInfoForm from "@/components/Registration/UserInfoForm";
-import VerifyEmailForm from "@/components/Registration/VerifyEmailForm";
+import VerifyEmailForm from "@/components/Registration/UsersBasicDetails";
 import VerifyPhoneOTP from "./VerifyphoneOTP";
 import UpdateMobileNumber from "@/components/Registration/UpdateMobileNumber";
 import React, { useState, createContext, useContext, useEffect } from "react";
+import UsersBasicDetails from "@/components/Registration/UsersBasicDetails";
 
 // Context to store user info
 const UserInfoContext = createContext(null);
@@ -42,8 +43,8 @@ const RegisterForm = () => {
         handleUpdateMobileNumber,
       }}
     >
-      { step === 0 && <VerifyEmailForm nextStep={nextStep} prevStep={prevStep} />}
-      { step === 1 && (
+      {step === 0 && <UsersBasicDetails  />}
+      {step === 1 && (
         <VerifyEmailForm nextStep={nextStep} prevStep={prevStep} />
       )}
       {!updateMobileNumber && step === 2 && (

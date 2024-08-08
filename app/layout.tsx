@@ -6,7 +6,8 @@ import { Providers } from "@/app/providers";
 import { fontSans } from "@/config/fonts";
 import { NavbarProvider } from "@/components/NavBarContext";
 
-import "@/styles/globals.scss"
+import "@/styles/globals.scss";
+import { ReactQueryProvider } from "./QueryProvider";
 
 export const metadata: Metadata = {
   title: "PayBolt",
@@ -29,9 +30,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           fontSans.className
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <NavbarProvider>{children}</NavbarProvider>
-        </Providers>
+          <ReactQueryProvider>
+            <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+              <NavbarProvider>{children}</NavbarProvider>
+            </Providers>
+          </ReactQueryProvider>
       </body>
     </html>
   );

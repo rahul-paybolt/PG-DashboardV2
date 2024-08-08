@@ -39,5 +39,32 @@ export interface MerchantBaseProps{
 
 export interface DesignationOptionsProps{
   label: string;
-  value: string;
+  key: string;
 };
+
+export enum BUSINESS_TYPES {
+  INDIVIDUAL = 1,
+  SOLE_PROPRIETORSHIP = 2,
+  PARTNERSHIP = 3,
+  PUBLIC_PRIVATE_LTD = 4,
+  TRUST_NGO_SOCIETIES = 5,
+  LLP = 6,
+  OTHERS = 7,
+  UNREGISTERED = 8,
+  FREELANCE = 9,
+};
+export interface Entityprops{
+  key: BUSINESS_TYPES;
+  label: string;
+}
+
+export interface IndustryType {
+  key: string;
+  label: string;
+}
+
+export interface TurnoverType {
+  key: string;
+  label: string;
+}
+
