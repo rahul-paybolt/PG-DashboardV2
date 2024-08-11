@@ -1,30 +1,29 @@
-
-"use client"
-import { setAuthenticatedUser } from '@/store/auth-store';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import React from 'react';
+import { AuthStore } from '@/store/auth-store';
+import { AuthenticatedUser } from '@/interfaces/authentication.interface';
  const verifyToken = (token: string, provider: string) => {
-  const router = useRouter();
-  const {data, isLoading,isPending, isSuccess} = useQuery({
-    queryKey: ["auth-user"],
+  
+  const { setData  } = AuthStore();
+  // const router = useRouter();
+  const {data, isLoading,isPending, isSuccess, refetch} = useQuery({
+    queryKey: ["gAuth"],
     queryFn: () => {
-      return axios.get(
-        `http://localhost:4000/api/v1/auth/users/verify-token/${provider}?token=${token}`
+      const res = axios.get<AuthenticatedUser>(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/verify-token/${provider}?token=${token}`
       );
+      return res;
+
     },
-    
-    
+    enabled: false
   });
   if(isLoading){
     return null
   }
-  if(data) {
-    setAuthenticatedUser(data);
-    router.push("/merchant-info");
-  }
-  return data;
+  
+  return refetch;
 };
 
 export {

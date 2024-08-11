@@ -5,12 +5,12 @@ export interface selectionDataProps {
   key: string | BUSINESS_TYPES;
   label: string;
 }
-interface CustomSelectProps {
+interface CustomSelectProps<T> {
   label: string;
   placeholder?: string;
-  value: string | null;
-  onChange: (value: string | null) => void;
-  selectionData: selectionDataProps[];
+  value: T;
+  onChange: (value: T) => void;
+  selectionData: Array<T>;
   variant?: "flat" | "bordered" | "faded" | "underlined";
   classNames?: Partial<
     Record<
@@ -32,7 +32,7 @@ interface CustomSelectProps {
   >;
   name?: string;
 }
-const CustomSelect: React.FC<CustomSelectProps> = ({
+const CustomSelect: React.FC<CustomSelectProps<T>> = ({
   label,
   placeholder = "Select an option",
   value,
@@ -42,7 +42,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   variant,
   name,
 }) => {
-  const handleSelectionChange = (selectedKeys: Set<string>) => {
+  const handleSelectionChange = (selectedKeys: Set<T>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
     const selectedValue =
       selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;

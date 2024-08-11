@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Input from "@/components/InputContainer/Input";
 import CustomSelect from "@/components/SelectOptions/SelectOptions";
 import axios from "axios";
-import { authUserStore } from "@/store/auth-store";
+import { authUserStore } from "@/store/global-store";
 import { MerchantBaseProps } from "@/interfaces/Register/register-interface";
 import { useStore } from "@tanstack/react-store";
 import { AuthenticatedUser } from "@/interfaces/authentication.interface";
@@ -11,7 +11,7 @@ import { AuthenticatedUser } from "@/interfaces/authentication.interface";
 const UsersBasicDetails = () => {
   const [name, setSelectedName] = useState<string>("");
   const [businessName, setSelectedBusinessName] = useState<string>("");
-  const [designationType, setDesignationType] = useState<string| null>("");
+  const [designationType, setDesignationType] = useState<string | null>("");
   const [mobileNumber, setMobileNumber] = useState<string>("");
 
   const useAuthUser = () => {

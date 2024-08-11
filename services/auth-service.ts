@@ -1,12 +1,10 @@
+import { GoogleSignInResponse } from "@/interfaces/authentication.interface";
 
-
-import { GoogleSignInResponse } from '@/interfaces/authentication.interface';
-
-import { resolvePBApi } from '@/utils/common-utils';
-import { PBBaseResponse, safeAny } from '@/interfaces/global.interface';
-import axios from '@/app/api/axios';
+import { resolvePBApi } from "@/utils/common-utils";
+import { PBBaseResponse, safeAny } from "@/interfaces/global.interface";
+import axios from "@/app/api/axios";
+import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 
 // export const loginUser = async (request: LoginRequest): Promise<[LoginResponse | null, safeAny]> => {
 //   const [response, error] = await resolveOAApi<LoginResponse>(
@@ -41,7 +39,9 @@ export const loginWithGoogle = async (data: {
   return [response, error];
 };
 
-export const verifyMagicLink = async (data:): Promise<[GoogleSignInResponse | null, safeAny]> => {
+export const verifyMagicLink = async (
+  data: safeAny
+): Promise<[GoogleSignInResponse | null, safeAny]> => {
   const [response, error] = await resolvePBApi<GoogleSignInResponse>(
     () => axios.post<GoogleSignInResponse>(`${baseUrl}/users/verify_id`, data),
     false,
@@ -51,5 +51,19 @@ export const verifyMagicLink = async (data:): Promise<[GoogleSignInResponse | nu
   return [response, error];
 };
 
-
-
+export const submitMerchantDetails = async (
+  data: MerchantDetailsProps
+): Promise<[PBBaseResponse | null, safeAny]> => {
+  console.log("getting error during api call", data);
+  const [response, error] = await resolvePBApi<PBBaseResponse>(
+    () =>
+      axios.post<PBBaseResponse>(
+        `${baseUrl}/api/v1/users/business-details`,
+        data
+      ),
+    false,
+    true,
+    false
+  );
+  return [response, error];
+};

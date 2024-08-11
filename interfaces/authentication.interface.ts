@@ -1,12 +1,12 @@
 
 export interface AuthenticatedUser {
-  fullName: string | null,
-  email?: string | null,
-  mobile: string | null,
-  designation: string | null,
-  businessName: string | null,
+  fullName: string,
+  email?: string ,
+  mobile: string,
+  designation: string,
+  businessName: string,
   emailVerified?: boolean,
-  image?: string | null,
+  image?: string,
   is2FAEnabled?: boolean
 }
 

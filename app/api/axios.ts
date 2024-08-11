@@ -1,15 +1,15 @@
 // import { getAuthenticatedUser } from '@/utils/auth-utils';
-import axios from 'axios';
+import axios from "axios";
 
 const httpClient = axios.create();
 
 // if needed handle the request
 httpClient.interceptors.request.use(
   (config) => {
-    const authenticatedUser = getAuthenticatedUser();
-    if (authenticatedUser && authenticatedUser.token) {
-      config.headers.Authorization = `Bearer ${authenticatedUser.token}`;
-    }
+    // const authenticatedUser = getAuthenticatedUser();
+    // if (authenticatedUser && authenticatedUser.token) {
+    //   config.headers.Authorization = `Bearer ${authenticatedUser.token}`;
+    // }
     return config;
   },
   (error) => {

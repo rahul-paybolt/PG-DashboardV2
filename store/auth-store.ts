@@ -1,10 +1,6 @@
-"use client"
-import { AuthenticatedUser, GoogleUserdata } from "@/interfaces/authentication.interface";
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-// import { useState } from "react";
+import { AuthenticatedUser } from "@/interfaces/authentication.interface";
+import { createGlobalState } from "./global-store";
 
-// Define initial values
 const initialValues: AuthenticatedUser = {
   fullName: '',
   email: '',
@@ -13,27 +9,8 @@ const initialValues: AuthenticatedUser = {
   businessName: ''
 };
 
-// Create a store for authenticatedUser
 
-const authUserStore = new Store({
+
+export const AuthStore = createGlobalState<AuthenticatedUser>('authUser', {
   ...initialValues
 });
-
-const setAuthenticatedUser = (newUser: AuthenticatedUser) => {
-  console.log("new user coming",newUser)
-  authUserStore.setState(prev=> console.log("prev", prev))
-  authUserStore.setState((prev) => ({ ...prev, ...newUser }));
-};
-
-const resetAuthenticatedUser = () => {
-  authUserStore.setState(()=>initialValues );
-};
-
-export {
-  authUserStore,
-  setAuthenticatedUser,
-  resetAuthenticatedUser,
-  // gAuthUser,
-  // setGAuthUser,
-  // resetGAuthUser,
-};

@@ -1,46 +1,37 @@
-
-export interface MerchantFormProps{
-    step: number;
-    nextStep:()=> void;
-    prevStep:()=> void;
+export interface MerchantFormProps {
+  step: number;
+  nextStep: () => void;
+  prevStep: () => void;
 }
 
-export interface BusinessTypesProps{
+export interface BusinessTypesProps {
   value: number;
   name: string;
 }
 
-export interface BasicMerChantsInfoProps{
+export interface BasicMerChantsInfoProps {
   business_name: string;
-  mob_business_types_id:number | null;
+  mob_business_types_id: number | null;
 }
 
-export interface BusinessDetailProps{
+export interface BusinessDetailProps {
   is_gst_registered: boolean;
   industry_type: string;
   designation: string;
   annual_turnOver: string;
 }
 
-export interface productSelectionProps{
+export interface productSelectionProps {
   payout: string;
   upi_id: string;
   payment_links: string;
   explore: string;
 }
 
-
-export interface MerchantBaseProps{
-  merchant_basic_info: BasicMerChantsInfoProps;
-  merchant_details: BusinessDetailProps;
-  product_selections: productSelectionProps
-};
-
-
-export interface DesignationOptionsProps{
+export interface DesignationOptionsProps {
   label: string;
   key: string;
-};
+}
 
 export enum BUSINESS_TYPES {
   INDIVIDUAL = 1,
@@ -52,19 +43,25 @@ export enum BUSINESS_TYPES {
   OTHERS = 7,
   UNREGISTERED = 8,
   FREELANCE = 9,
-};
-export interface Entityprops{
+}
+export interface Entityprops {
   key: BUSINESS_TYPES;
   label: string;
 }
 
 export interface IndustryType {
-  key: string;
+  key: number;
   label: string;
 }
 
 export interface TurnoverType {
-  key: string;
+  key: number;
   label: string;
 }
 
+export interface MerchantDetailsProps {
+  email: string | null;
+  businessEntityType: number;
+  industry: number;
+  turnover: number;
+}
