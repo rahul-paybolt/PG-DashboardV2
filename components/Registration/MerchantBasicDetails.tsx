@@ -9,7 +9,11 @@ import { Button } from "@nextui-org/button";
 import { DesignationOptions } from "@/constants/RegisterForm/RegisterForm.constants";
 import { AuthStore } from "@/store/auth-store";
 import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
-const UsersBasicDetails = () => {
+
+interface goToNextPageProps {
+  nextStep: () => void;
+}
+const MerchantBasicDetails = () => {
   const [name, setName] = useState<string>("");
   const [businessName, setBusinessName] = useState<string>("");
   const [designationType, setDesignationType] = useState<string>("");
@@ -134,4 +138,4 @@ const UsersBasicDetails = () => {
   );
 };
 
-export default UsersBasicDetails;
+export default MerchantBasicDetails;

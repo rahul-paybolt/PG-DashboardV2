@@ -1,11 +1,12 @@
 "use client";
-import { NextRequest } from "next/server";
-import { verifyToken } from "@/hooks/auth-redirect";
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
 import { transformStringFromSnakeCase } from "@/utils/common-utils";
-import { AuthenticationType } from "@/enum/auth";
 import { useVerifyToken } from "@/hooks/useVerifyToken";
-import { useRouter } from "next/navigation";
+import MerchantDetailsInfo from "@/components/Registration/MerchantDetailsInfo";
+import UsersBasicDetails from "../merchant-info/page";
 
 interface AuthRouteParams {
   nextauth: string[];
@@ -17,56 +18,58 @@ interface AuthRouteSearchParams {
   x?: string;
   [key: string]: string | undefined;
 }
-interface AuthProviders {
-  x: string;
-}
 
-interface AuthRouteRequest extends NextRequest {
+interface AuthRouteRequest {
   params: AuthRouteParams;
   searchParams: AuthRouteSearchParams;
-  providers: AuthProviders;
 }
 
-const AuthRoute = (request: AuthRouteRequest) => {
-  const { nextauth } = request.params;
-  const { token } = request.searchParams;
-  const { error } = request.searchParams;
-  const { x } = request.searchParams;
-
+const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
+  const { nextauth } = params;
+  const { token } = searchParams;
+  const { error } = searchParams;
+  const { x } = searchParams;
   const router = useRouter();
 
   const { refetch } = useVerifyToken(nextauth[0], token ?? "");
-  if (error) {
-    return (
-      <div>
-        <VerifyingPopus
-          title={transformStringFromSnakeCase(error)}
-          content="Please verify your account"
-          isOpen={true}
-        />
-      </div>
-    );
+  const [loading, setLoading] = useState(true);
+  const [componentToRender, setComponentToRender] =
+    useState<React.ReactNode>(null);
+
+  useEffect(() => {
+    if (token) {
+      refetch().then((res: any) => {
+        if (typeof window !== "undefined") {
+          localStorage.setItem("email", res?.data?.email);
+        }
+
+        if (error) {
+          setComponentToRender(
+            <VerifyingPopus
+              title={transformStringFromSnakeCase(error)}
+              content="Please verify your account"
+              isOpen={true}
+            />
+          );
+        }
+        // else if (x && +x === AuthenticationType.SIGN_UP) {
+        setComponentToRender(<UsersBasicDetails />);
+        // } else if (x && +x === AuthenticationType.BUSINESS_DETAILS) {
+        // router.push("/login-2fa");
+        // }
+
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
+  }, [token, x, error, refetch, router]);
+
+  if (loading) {
+    return <div>Loading...</div>; // or a spinner/loading component
   }
 
-  if (token) {
-    refetch().then((res: any) => {
-      console.log("res--->", res);
-      if (typeof window !== "undefined") {
-        localStorage.setItem("email", res?.data?.email);
-      }
-      if (x && +x === AuthenticationType.SIGN_UP) {
-        router.push("/merchant-info");
-      } else if (x && +x === AuthenticationType.BUSINESS_DETAILS) {
-        router.push("/login-2fa");
-      }
-    });
-  }
-
-  // const { error } = request.errorParams;
-  // if (error ?? error) {
-  //   return <div>Google SignUp Error; {error}</div>;
-  // } else {
-  // }
+  return <>{componentToRender}</>;
 };
 
 export default AuthRoute;

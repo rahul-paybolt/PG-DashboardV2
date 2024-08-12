@@ -8,7 +8,7 @@ import {
 } from "@/constants/RegisterForm/RegisterForm.constants";
 import { merchantDetailsSubmission } from "@/hooks/useVerifyToken";
 import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
-import AuthenticatedUser from "@/utils/auth-utils";
+// import AuthenticatedUser from "@/utils/auth-utils";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 

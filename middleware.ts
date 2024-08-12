@@ -1,13 +1,15 @@
+"use server";
+
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 const middleware = async (req: NextRequest) => {
   const cookieStore = cookies();
-  const id_token = cookieStore.get("rtk")?.value;
-  console.log("id_token", id_token);
+  const id_token = cookieStore.get("atk")?.value;
 
   const path = req.nextUrl.pathname;
-  // const id_token = req.cookies.get("rtk")?.value;
+  // const id_token = req.cookies.get("atk")?.value;
+  console.log("id_token----", id_token);
 
   // Define your public routes here (e.g., login, sign-up, and related routes)
   const publicRoutes =
