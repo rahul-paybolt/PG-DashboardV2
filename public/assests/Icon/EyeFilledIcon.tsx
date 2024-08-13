@@ -1,5 +1,6 @@
+import { safeAny } from "@/interfaces/global.interface";
 import React from "react";
-export const EyeFilledIcon = (props) => (
+export const EyeFilledIcon = (props: safeAny) => (
   <svg
     aria-hidden="true"
     fill="none"

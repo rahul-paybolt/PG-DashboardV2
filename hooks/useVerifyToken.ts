@@ -1,6 +1,6 @@
-"use client";
+// "use client";
 import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
-import { submitMerchantDetails } from "@/services/auth-service";
+import { generateQrCode, submitMerchantDetails } from "@/services/auth-service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -21,8 +21,14 @@ export const useVerifyToken = (provider: string, token: string) => {
 export const merchantDetailsSubmission = () => {
   return useMutation({
     mutationFn: (data: MerchantDetailsProps) => {
-      console.log("data-error", data);
       return submitMerchantDetails(data);
     },
+  });
+};
+
+export const generateQRCodeLink = (email: string) => {
+  return useQuery({
+    queryKey: ["Qr-link"],
+    queryFn: () => generateQrCode(email),
   });
 };

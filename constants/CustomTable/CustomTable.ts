@@ -152,41 +152,41 @@ export const UsersData = [
   },
 ];
 
-export const TransactionColumns = [
+export const TransactionColumns: any = [
   {
-    key:"transaction_id",
-    label:"Transaction Id"
+    key: "transaction_id",
+    label: "Transaction Id",
   },
   {
-    key:"utr",
-    label:"UTR"
+    key: "utr",
+    label: "UTR",
   },
   {
-    key:"merchant_name",
-    label:"Merchant Name"
+    key: "merchant_name",
+    label: "Merchant Name",
   },
   {
-    key:"user_name",
-    label:"User Name"
+    key: "user_name",
+    label: "User Name",
   },
   {
-    key:"email",
-    label:"Email"
+    key: "email",
+    label: "Email",
   },
   {
-    key:"phone",
-    label:"phone"
+    key: "phone",
+    label: "phone",
   },
   {
-    key:"amount",
-    label:"Amount"
+    key: "amount",
+    label: "Amount",
   },
   {
-    key:"status",
-    label:"Status"
+    key: "status",
+    label: "Status",
   },
   {
-    key:"date",
-    label:"Date"
-  }
-]
+    key: "date",
+    label: "Date",
+  },
+];

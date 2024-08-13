@@ -21,8 +21,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@pb-axios/*": ["app/api/*ransactions/api/*"] // Assuming you want to map the entire `api` directory
-    }
+    },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

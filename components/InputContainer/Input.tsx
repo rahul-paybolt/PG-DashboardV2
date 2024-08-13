@@ -15,12 +15,12 @@ const styles = {
     "focus-within:!bg-white/50",
     "dark:focus-within:!bg-default/60",
     "!cursor-text",
-    "data-hover: bg-white"
+    "data-hover: bg-white",
   ],
 };
 interface InputProps {
-  label: string;
-  type: string;
+  label?: string;
+  type?: string;
   placeholder?: string;
   startContent?: React.ReactNode;
   endContent?: React.ReactNode;
@@ -40,7 +40,7 @@ interface InputProps {
   isInvalid?: boolean;
   color?: string;
   errorMessage?: string;
-  onValueChange?:	(value: string) => void;
+  onValueChange?: (value: string) => void;
   isRequired?: boolean;
   name: string;
 }
@@ -66,7 +66,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     getErrorMessageProps,
     getClearButtonProps,
   } = useInput({
-    ...props,
     ref,
     classNames: {
       ...styles,

@@ -13,7 +13,7 @@ const middleware = async (req: NextRequest) => {
 
   // Define your public routes here (e.g., login, sign-up, and related routes)
   const publicRoutes =
-    /^\/(login|auth|login-2fa|sign-up|merchant-info|merchants|api|_next\/static|_next\/image|favicon\.ico)/;
+    /^\/(login|auth|assets|login-2fa|sign-up|merchant-info|merchants|api|_next\/static|_next\/images|favicon\.ico)/;
 
   // If the user is trying to access a public route, allow it
   if (publicRoutes.test(path)) {
@@ -21,9 +21,9 @@ const middleware = async (req: NextRequest) => {
   }
 
   // If the user does not have an id_token, redirect them to the sign-up page
-  if (!id_token) {
-    return NextResponse.redirect(new URL("/sign-up", req.url));
-  }
+  // if (!id_token) {
+  //   return NextResponse.redirect(new URL("/sign-up", req.url));
+  // }
 
   // If the user is already logged in and trying to access login or sign-up, redirect them to the home page
   if (

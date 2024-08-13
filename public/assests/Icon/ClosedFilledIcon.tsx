@@ -1,5 +1,6 @@
+import { safeAny } from "@/interfaces/global.interface";
 import React from "react";
-export const CloseFilledIcon = (props) => (
+export const CloseFilledIcon = (props: safeAny) => (
   <svg
     aria-hidden="true"
     focusable="false"

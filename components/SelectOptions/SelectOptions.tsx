@@ -1,6 +1,7 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { BUSINESS_TYPES } from "@/interfaces/Register/register-interface";
+import { safeAny } from "@/interfaces/global.interface";
 export interface selectionDataProps {
   key: string | BUSINESS_TYPES;
   label: string;
@@ -32,7 +33,7 @@ interface CustomSelectProps<T> {
   >;
   name?: string;
 }
-const CustomSelect: React.FC<CustomSelectProps<T>> = ({
+const CustomSelect: React.FC<CustomSelectProps<safeAny>> = ({
   label,
   placeholder = "Select an option",
   value,
@@ -42,7 +43,7 @@ const CustomSelect: React.FC<CustomSelectProps<T>> = ({
   variant,
   name,
 }) => {
-  const handleSelectionChange = (selectedKeys: Set<T>) => {
+  const handleSelectionChange = (selectedKeys: Set<safeAny>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
     const selectedValue =
       selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;

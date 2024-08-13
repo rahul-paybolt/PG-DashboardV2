@@ -16,13 +16,11 @@ const DownloadTransactions = () => {
         <CustomSelect
           label="Select"
           placeholder="MerChant Id"
-          value={selectedMerchants}
-          onChange={(value) => handleSelection(value)}
+          value={selectedMerchants as any}
+          onChange={(value) => handleSelection(value as any)}
           selectionData={SelectOptionsData}
         />
-        <CustomDateRangePicker 
-          variant=" bordered"
-        />
+        <CustomDateRangePicker variant="bordered" />
       </div>
     </>
   );

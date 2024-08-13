@@ -19,13 +19,24 @@ const UsersBasicDetails = () => {
   const { data, setData, resetData } = AuthStore();
 
   console.log("data", data);
+
+  const getEmail = () => {
+    const storedStatus = localStorage.getItem("verificationStatus");
+    if (storedStatus) {
+      try {
+        const verificationStatus = JSON.parse(storedStatus);
+        return verificationStatus.email;
+      } catch (error) {}
+    } else {
+    }
+  };
   const handleSubmit = async () => {
     const merchantInfoData: AuthenticatedUser = {
       fullName: name,
       businessName: businessName,
       designation: designationType,
       mobile: mobile,
-      email: localStorage.getItem("email") || data?.email,
+      email: getEmail() || data?.email,
     };
     try {
       setData({ ...merchantInfoData });

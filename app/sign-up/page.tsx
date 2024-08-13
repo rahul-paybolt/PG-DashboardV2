@@ -1,5 +1,5 @@
 "use client";
-import { initiateGoogleSignIn } from "@/utils/google-auth.utils";
+
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -7,16 +7,11 @@ import { loadScript } from "@/utils/common-utils";
 import { Button } from "@nextui-org/button";
 import { doSocialLogin } from "../actions";
 import axios from "axios";
-interface UserInfoProps {
-  nextStep: () => void;
-}
 
-const LoginForm = ({ nextStep }: UserInfoProps) => {
-  const [isVisible, setIsVisible] = useState(false);
+const SignUpForm = () => {
   const [value, setValue] = useState("");
   const [toggleText, setToggleText] = useState(false);
   const router = useRouter();
-
 
   const navigate = () => {
     setToggleText((prevValue) => !prevValue);
@@ -29,11 +24,6 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
     if (value === "") return false;
     return validateEmail(value) ? false : true;
   }, [value]);
-
-  const handleSubmit = (formData: FormData) => {
-    console.log("formData---->", formData);
-    // nextStep();
-  };
 
   return (
     <>
@@ -88,4 +78,4 @@ const LoginForm = ({ nextStep }: UserInfoProps) => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

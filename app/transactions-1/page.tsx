@@ -53,6 +53,7 @@ const Transactions = () => {
           onInputChange={list.setFilterText}
           loadingState={list.loadingState}
           variant="bordered"
+          name="search"
         />
         <CustomDateRangePicker />
         <CustomSelect

@@ -15,25 +15,32 @@ import {
 } from "@internationalized/date";
 import { useLocale, useDateFormatter } from "@react-aria/i18n";
 import { clsx } from "clsx";
+import { safeAny } from "@/interfaces/global.interface";
 
-interface CustomDateRangePickerProps {
-  value: ZonedDateTime | CalendarDate | CalendarDateTime | undefined | null;
+interface CustomDateRangePickerProps extends DateRangePickerProps {
+  // value: ZonedDateTime | CalendarDate | CalendarDateTime | undefined | null;
   label?: React.ReactNode;
-  variant: "flat" | "bordered" | "faded" | "underlined";
-  color: "default" | "primary" | "secondary" | "success" | "warning" | "danger";
-  size: "sm" | "md" | "lg";
-  radius: "none" | "sm" | "md" | "lg" | "full";
-  defaultValue: string | undefined;
-  placeholderValue:
-    | ZonedDateTime
-    | CalendarDate
-    | CalendarDateTime
-    | undefined
-    | null;
-  description: React.ReactNode;
-  onChange:
-    | ((value: ZonedDateTime | CalendarDate | CalendarDateTime) => void)
-    | undefined;
+  variant?: "flat" | "bordered" | "faded" | "underlined";
+  color?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger";
+  size?: "sm" | "md" | "lg";
+  radius?: "none" | "sm" | "md" | "lg" | "full";
+  // defaultValue: string | undefined;
+  // placeholderValue:
+  //   | ZonedDateTime
+  //   | CalendarDate
+  //   | CalendarDateTime
+  //   | undefined
+  //   | null;
+  // description: React.ReactNode;
+  // onChange:
+  //   | ((value: ZonedDateTime | CalendarDate | CalendarDateTime) => void)
+  //   | undefined;
   initialRange?: { start: Date; end: Date };
   precisionOptions?: { value: string; label: string }[];
   predefinedRanges?: { label: string; range: { start: Date; end: Date } }[];
@@ -58,7 +65,7 @@ const CustomDateRangePicker = (props: CustomDateRangePickerProps) => {
     end: endOfMonth(now.add({ months: 1 })),
   };
 
-  const CustomRadio = (props) => {
+  const CustomRadio = (props: safeAny) => {
     const { children, ...otherProps } = props;
 
     return (
@@ -164,8 +171,8 @@ const CustomDateRangePicker = (props: CustomDateRangePickerProps) => {
           </ButtonGroup>
         }
         calendarProps={{
-          focusedValue: value?.start,
-          onFocusChange: (val) => setValue({ ...value, start: val }),
+          focusedValue: value?.start as any,
+          onFocusChange: (val) => setValue({ ...value, start: val } as any),
           nextButtonProps: {
             variant: "bordered",
           },
@@ -173,8 +180,8 @@ const CustomDateRangePicker = (props: CustomDateRangePickerProps) => {
             variant: "bordered",
           },
         }}
-        value={value}
-        onChange={setValue}
+        value={value as any}
+        onChange={setValue as any}
         label="Event date"
       />
       {/* <p className="text-default-500 text-sm">

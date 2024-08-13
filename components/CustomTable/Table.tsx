@@ -1,5 +1,4 @@
 import React, { RefObject, useState } from "react";
-import Services from "@/services/Services";
 import {
   Table,
   TableBody,
@@ -7,7 +6,8 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  getKeyValue,
+  TableProps,
+  TableBodyProps,
 } from "@nextui-org/table";
 import { Spinner } from "@nextui-org/spinner";
 import { AsyncListData } from "react-stately";
@@ -17,14 +17,14 @@ interface Column<T> {
   label: string;
 }
 
-interface TableProps<T> {
+interface CustomTableProps<T> extends TableProps {
   columns: Column<T>[];
   data: T[];
   TableTopContent: React.ReactNode;
   hasMore: boolean;
   scrollRef: RefObject<HTMLElement>;
   loaderRef: RefObject<HTMLElement>;
-  list: AsyncListData<unknown>;
+  list: AsyncListData<T>;
   isLoading: boolean;
 }
 
@@ -37,18 +37,8 @@ const CustomTable = <T,>({
   loaderRef,
   isLoading,
   list,
-}: TableProps<T>) => {
-
-  
+}: CustomTableProps<T>) => {
   const [showPaginatedButton, setShowPaginatedButton] = useState(false);
-
-  const renderTopContent = () => {
-    return (
-      <div className="mt-10">
-        {showPaginatedButton ? "Show Button Pagination" : "Infinte-scroll"}
-      </div>
-    );
-  };;
 
   return (
     <div className="flex items-center justify-center px-4 py-4 lg:w-full md:max-[400px]">
@@ -71,19 +61,12 @@ const CustomTable = <T,>({
           wrapper: "max-h-[400px]",
         }}
       >
-        {/* <TableHeader columns={columns}>
-          {(column) => (
-            < key={column.key} className="text-purple-600 ">
-              {column.label}
-            </ TableColumn>
-          )}
-        </TableHeader> */}
-
         <TableHeader>
-          <TableColumn key="name">Name</TableColumn>
-          <TableColumn key="height">Height</TableColumn>
-          <TableColumn key="mass">Mass</TableColumn>
-          <TableColumn key="birth_year">Birth year</TableColumn>
+          {columns.map((column) => (
+            <TableColumn key={column.key as string} className="text-purple-600">
+              {column.label}
+            </TableColumn>
+          ))}
         </TableHeader>
         <TableBody
           isLoading={isLoading}
@@ -91,10 +74,13 @@ const CustomTable = <T,>({
           loadingContent={<Spinner color="white" />}
         >
           {(item) => (
-            <TableRow key={item.name}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
+            <TableRow key={JSON.stringify(item)}>
+              {columns.map((column) => (
+                <TableCell key={column.key as string}>
+                  {String(item[column.key])}{" "}
+                  {/* Ensure the value is a string */}
+                </TableCell>
+              ))}
             </TableRow>
           )}
         </TableBody>

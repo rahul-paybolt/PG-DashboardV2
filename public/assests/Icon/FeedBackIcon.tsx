@@ -4,16 +4,22 @@ const FeedBackIcon = ({
   strokeWidth = 1.5,
   width,
   height,
-  color="#fff",
+  color = "#fff",
   ...props
-}:{
-  size?:number,
-  strokeWidth?: number,
-  width?:number,
-  height?:number,
-  color?: string
+}: {
+  size?: number;
+  strokeWidth?: number;
+  width?: number;
+  height?: number;
+  color?: string;
 }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" height={height} width={width} viewBox="0 0 32 32" {...props}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={height}
+    width={width}
+    viewBox="0 0 32 32"
+    {...props}
+  >
     <path
       style={{
         lineHeight: "normal",
@@ -23,7 +29,7 @@ const FeedBackIcon = ({
         textDecorationStyle: "solid",
         textDecorationColor: "#000",
         textTransform: "none",
-        blockProgression: "tb",
+        // blockProgression: "tb",
         isolation: "auto",
         mixBlendMode: "normal",
       }}

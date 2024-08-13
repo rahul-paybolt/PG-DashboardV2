@@ -54,12 +54,27 @@ export const verifyMagicLink = async (
 export const submitMerchantDetails = async (
   data: MerchantDetailsProps
 ): Promise<[PBBaseResponse | null, safeAny]> => {
-  console.log("getting error during api call", data);
   const [response, error] = await resolvePBApi<PBBaseResponse>(
     () =>
       axios.post<PBBaseResponse>(
         `${baseUrl}/api/v1/users/business-details`,
         data
+      ),
+    false,
+    true,
+    false
+  );
+  return [response, error];
+};
+
+export const generateQrCode = async (
+  email: string
+): Promise<[PBBaseResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<PBBaseResponse>(
+    () =>
+      axios.post<PBBaseResponse>(
+        `${baseUrl}/api/v1/mf-auth/generate-qr`,
+        email
       ),
     false,
     true,

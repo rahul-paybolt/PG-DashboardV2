@@ -11,7 +11,7 @@ const SearchTransactions = () => {
   const handleSelection = (value: string | null) => {
     setSelectedMerchants(value);
   };
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement | null>();
   return (
     <>
       <div className="flex items-center justify-between border border-purple-400 mx-4 my-4 px-4 py-4 rounded-md">
@@ -23,11 +23,12 @@ const SearchTransactions = () => {
           selectionData={SelectOptionsData}
         />
         <Input
-          ref={inputRef}
+          // ref={inputRef}
           label="Search Merchants"
           placeholder="Type to search..."
           type="search"
           startContent={<SearchIcon />}
+          name="search merchants"
         />
       </div>
     </>

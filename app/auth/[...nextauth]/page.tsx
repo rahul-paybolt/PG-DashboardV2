@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
 import { transformStringFromSnakeCase } from "@/utils/common-utils";
 import { useVerifyToken } from "@/hooks/useVerifyToken";
-import MerchantDetailsInfo from "@/components/Registration/MerchantDetailsInfo";
 import UsersBasicDetails from "../merchant-info/page";
+import { safeAny } from "@/interfaces/global.interface";
 
 interface AuthRouteParams {
   nextauth: string[];
@@ -24,6 +24,12 @@ interface AuthRouteRequest {
   searchParams: AuthRouteSearchParams;
 }
 
+interface verificationStatusProps {
+  email: string;
+  is2FAEnabled: boolean;
+  onboardingStatus: number;
+}
+
 const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
   const { nextauth } = params;
   const { token } = searchParams;
@@ -39,8 +45,18 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
   useEffect(() => {
     if (token) {
       refetch().then((res: any) => {
+        console.log("res--->", res);
         if (typeof window !== "undefined") {
-          localStorage.setItem("email", res?.data?.email);
+          const verificationStatus = {
+            email: res?.data?.email,
+            is2FAEnabled: res?.data?.is2FAEnabled,
+            onboardingStatus: res?.data?.onboardingStatus,
+          };
+
+          localStorage.setItem(
+            "verificationStatus",
+            JSON.stringify(verificationStatus)
+          );
         }
 
         if (error) {
@@ -51,6 +67,14 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
               isOpen={true}
             />
           );
+        }
+
+        if (res?.data?.onboardingStatus === 1) {
+          router.push("/auth/merchant");
+        } else if (res?.data && res?.data?.onboardingStatus === 2) {
+          router.push("/auth/multifactor");
+        } else {
+          router.push("/sign-in");
         }
         // else if (x && +x === AuthenticationType.SIGN_UP) {
         setComponentToRender(<UsersBasicDetails />);

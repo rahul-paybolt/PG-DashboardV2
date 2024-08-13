@@ -2,17 +2,13 @@
 import Input from "@/components/InputContainer/Input";
 import { EyeFilledIcon } from "@/public/assests/Icon/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "@/public/assests/Icon/EyeSlashedIcon";
-import { baseStyles } from "@nextui-org/theme";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Checkbox } from "@nextui-org/checkbox";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 
-interface UserInfoProps {
-  nextStep: () => void;
-}
-const BasicBusinessInfo = ({ nextStep }: UserInfoProps) => {
+const BasicBusinessInfo = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = React.useState("");
   const router = useRouter();
@@ -27,10 +23,6 @@ const BasicBusinessInfo = ({ nextStep }: UserInfoProps) => {
 
     return validateEmail(value) ? false : true;
   }, [value]);
-
-  const handleSubmit = () => {
-    nextStep();
-  };
   const navigate = () => {
     router.push("/sign-up");
   };
@@ -62,14 +54,7 @@ const BasicBusinessInfo = ({ nextStep }: UserInfoProps) => {
       </div>
 
       <div>
-        <div
-          className="py-2 px-4 flex justify-center h-12"
-          // ngsGoogleAuth
-          // [location]="'register'"
-          // (authChange)="socialRegister($event)"
-          // (loadingsChange)="google_loadings = $event"
-          // [enableGoogleTap]="true"
-        >
+        <div className="py-2 px-4 flex justify-center h-12">
           <img
             className="w-5 mr-6 self-center"
             src="https://open-frontend-bucket.s3.amazonaws.com/open-money/login/google.svg"
@@ -146,7 +131,7 @@ const BasicBusinessInfo = ({ nextStep }: UserInfoProps) => {
           </div>
         </div>
 
-        <Button color="primary" className="w-full" onClick={handleSubmit}>
+        <Button color="primary" className="w-full">
           Sign up
         </Button>
       </div>

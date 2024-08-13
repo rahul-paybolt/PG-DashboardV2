@@ -1,23 +1,22 @@
-
 export interface AuthenticatedUser {
-  fullName: string,
-  email?: string ,
-  mobile: string,
-  designation: string,
-  businessName: string,
-  emailVerified?: boolean,
-  image?: string,
-  is2FAEnabled?: boolean
+  fullName: string;
+  email?: string;
+  mobile: string;
+  designation: string;
+  businessName: string;
+  emailVerified?: boolean;
+  image?: string;
+  is2FAEnabled?: boolean;
+  onboardingStatus?: number;
 }
 
 export interface UserRegistration {
-  fullName: string,
-  email: string,
-  mobile: string,
-  designation: string,
-  businessName: string
+  fullName: string;
+  email: string;
+  mobile: string;
+  designation: string;
+  businessName: string;
 }
-
 
 export interface LoginRequest {
   login: string;
@@ -26,7 +25,6 @@ export interface LoginRequest {
   is_migration_required?: number;
   is_check_box?: boolean;
 }
-
 
 export interface ResetPasswordRequest {
   login: string;
