@@ -3,7 +3,7 @@
 import { ReactNode, useState } from "react";
 import clsx from "clsx";
 
-import { Navbar } from "@/components/NavBar";
+import { Sidebar } from "@/components/Sidebar";
 import Header from "@/components/Header";
 
 import "@/styles/globals.scss";
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex max-h-screen">
-      <Navbar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
+      <Sidebar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
       <div
         className={clsx("flex-1 transition-all bg-zinc-50 dark:bg-default-50", {
           "pl-24": isCollapsed,
