@@ -1,6 +1,6 @@
-import { type AxiosResponse } from 'axios';
-import { safeAny } from '@/interfaces/global.interface';
-import { NO_DATA_FOUND_MSG } from '@/constants/global-constants';
+import { type AxiosResponse } from "axios";
+import { safeAny } from "@/lib/interfaces/global.interface";
+import { NO_DATA_FOUND_MSG } from "@/lib/constants/global-constants";
 
 export const resolvePBApi = async <T = safeAny>(
   aPromiseFn: () => Promise<AxiosResponse<T>>,
@@ -22,14 +22,19 @@ export const resolvePBApi = async <T = safeAny>(
   } catch (e: safeAny) {
     if (handle401 && e?.response?.status === 401) {
       // clearAuthenticatedUserDetails();
-      window.location.pathname = '/login';
+      window.location.pathname = "/login";
     }
-    errorResponse = e?.response?.data || { message: 'Something went wrong' };
-    if (errorResponse?.message && showError && errorResponse?.message !== NO_DATA_FOUND_MSG && !errorResponse.is_check_box) {
+    errorResponse = e?.response?.data || { message: "Something went wrong" };
+    if (
+      errorResponse?.message &&
+      showError &&
+      errorResponse?.message !== NO_DATA_FOUND_MSG &&
+      !errorResponse.is_check_box
+    ) {
       // try to find out how errors key behaves and try to generalize
       // showErrorToast(errorResponse.message);
 
-      console.log("errr...")
+      console.log("errr...");
     }
   } finally {
     if (showSpinner) {
@@ -40,10 +45,12 @@ export const resolvePBApi = async <T = safeAny>(
 };
 
 export const isIosOrSafariDevice = () =>
-  typeof navigator !== 'undefined' &&
-  (/iPad|iPhone|iPod|Safari/.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+  typeof navigator !== "undefined" &&
+  (/iPad|iPhone|iPod|Safari/.test(navigator.userAgent || "") ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
 
-export const isValidAndNonEmptyString = (str: string) => str && typeof str === 'string' && str.length > 0;
+export const isValidAndNonEmptyString = (str: string) =>
+  str && typeof str === "string" && str.length > 0;
 
 export const parseJsonString = <T>(jsonString: string): T | null => {
   let jsonStringToParse = `${jsonString}`;
@@ -61,30 +68,39 @@ export const parseJsonString = <T>(jsonString: string): T | null => {
 };
 
 export const isNonNumericKeyPressed = (e: KeyboardEvent) =>
-  (!e.ctrlKey && !e.metaKey && e.key !== 'Backspace' && !/\d/.test(e.key)) || e.key === ' ';
+  (!e.ctrlKey && !e.metaKey && e.key !== "Backspace" && !/\d/.test(e.key)) ||
+  e.key === " ";
 
-export const rightPadArray = (arrayToPad: safeAny[], requiredArrayLength: number, value: safeAny) => {
+export const rightPadArray = (
+  arrayToPad: safeAny[],
+  requiredArrayLength: number,
+  value: safeAny
+) => {
   if (arrayToPad.length >= requiredArrayLength) {
     return arrayToPad.slice(0, requiredArrayLength);
   }
-  const arrayToConcat = Array(requiredArrayLength - arrayToPad.length).fill(value);
+  const arrayToConcat = Array(requiredArrayLength - arrayToPad.length).fill(
+    value
+  );
   return arrayToPad.concat(arrayToConcat);
 };
 
 export const getRandomColor = (value: string | undefined) => {
   if (!value) {
-    return '#EFEFEF';
+    return "#EFEFEF";
   }
   let hash = 0;
   for (let i = 0; i < value.length; i++) {
     hash = value.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  const color = '#' + (hash & 0x00ffffff).toString(16).toUpperCase();
+  const color = "#" + (hash & 0x00ffffff).toString(16).toUpperCase();
   return color;
 };
 
-export const getNumberOfFiltersApplied = (filter: Record<safeAny, safeAny> | null) => {
+export const getNumberOfFiltersApplied = (
+  filter: Record<safeAny, safeAny> | null
+) => {
   let numberOfFilters = 0;
   if (!filter) {
     return numberOfFilters;
@@ -102,19 +118,21 @@ export const formatSeconds = (duration: number, showSeconds = true) => {
   const minutes = Math.floor((duration % 3600) / 60);
   const remainingSeconds = duration % 60;
 
-  let formattedTime = `${hours.toString().padStart(2, '0')}hr ${minutes.toString().padStart(2, '0')}m ${remainingSeconds
+  let formattedTime = `${hours.toString().padStart(2, "0")}hr ${minutes
     .toString()
-    .padStart(2, '0')}s`;
+    .padStart(2, "0")}m ${remainingSeconds.toString().padStart(2, "0")}s`;
 
   if (!showSeconds) {
-    formattedTime = `${hours.toString().padStart(2, '0')}hr ${minutes.toString().padStart(2, '0')}m`;
+    formattedTime = `${hours.toString().padStart(2, "0")}hr ${minutes
+      .toString()
+      .padStart(2, "0")}m`;
   }
 
   return formattedTime;
 };
 
 export const loadScript = (src: string, successCallback: () => void) => {
-  const script: safeAny = document.createElement('script');
+  const script: safeAny = document.createElement("script");
   // script.type = 'text/javascript';
   // if (script.readyState) {
   //   // only required for IE <9
@@ -137,45 +155,44 @@ export const loadScript = (src: string, successCallback: () => void) => {
   // document.getElementsByTagName('head')[0].appendChild(script);
 };
 
-
-
-
 export const convertToTitleCase = (value: string) => {
   return value
-    .split('_')
+    .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 };
 
 export const formatPathWithTrailingSlash = (data: string | undefined) => {
-  const path = data || '/';
-  if (path.endsWith('/')) {
+  const path = data || "/";
+  if (path.endsWith("/")) {
     return path;
   }
   return `${path}/`;
 };
 
 export const parsePathSegments = (data: string | undefined) => {
-  const path = data || '';
-  return path.split('/').filter(Boolean);
+  const path = data || "";
+  return path.split("/").filter(Boolean);
 };
 
-
-
 export const transformStringFromSnakeCase = (val: string) => {
-  const abbreviations = ['gst', 'mca', 'tds'];
+  const abbreviations = ["gst", "mca", "tds"];
 
   for (const abbreviation of abbreviations) {
     if (val.toLowerCase().startsWith(abbreviation)) {
       const restOfTheString = val.substring(abbreviation.length).toLowerCase();
       const transformedString = abbreviation.toUpperCase() + restOfTheString;
       const words = transformedString.split(/[_\s]+/);
-      const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-      return capitalizedWords.join(' ');
+      const capitalizedWords = words.map(
+        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+      );
+      return capitalizedWords.join(" ");
     }
   }
 
   const words = val.split(/[_\s]+/);
-  const capitalizedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
-  return capitalizedWords.join(' ');
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  );
+  return capitalizedWords.join(" ");
 };

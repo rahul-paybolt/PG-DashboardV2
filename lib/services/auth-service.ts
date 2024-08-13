@@ -1,9 +1,9 @@
-import { GoogleSignInResponse } from "@/interfaces/authentication.interface";
+import { GoogleSignInResponse } from "@/lib/interfaces/authentication.interface";
 
-import { resolvePBApi } from "@/utils/common-utils";
-import { PBBaseResponse, safeAny } from "@/interfaces/global.interface";
+import { resolvePBApi } from "@/lib/utils/common-utils";
+import { PBBaseResponse, safeAny } from "@/lib/interfaces/global.interface";
 import axios from "@/app/api/axios";
-import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
+import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // export const loginUser = async (request: LoginRequest): Promise<[LoginResponse | null, safeAny]> => {

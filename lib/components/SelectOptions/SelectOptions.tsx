@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
-import { BUSINESS_TYPES } from "@/interfaces/Register/register-interface";
-import { safeAny } from "@/interfaces/global.interface";
+import { BUSINESS_TYPES } from "@/lib/interfaces/Register/register-interface";
+import { safeAny } from "@/lib/interfaces/global.interface";
 export interface selectionDataProps {
   key: string | BUSINESS_TYPES;
   label: string;

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useLayoutEffect } from "react";
 
-import { title } from "@/components/primitives";
+import { title } from "@/lib/components/primitives";
 
 export default function SettlementPage() {
   const router = useRouter();

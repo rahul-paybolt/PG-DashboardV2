@@ -1,7 +1,7 @@
 // import { getAuthenticatedUser } from '@/utils/auth-utils';
 import axios from "axios";
 
-const httpClient = axios.create();
+const httpClient = axios.create({ withCredentials: true });
 
 // if needed handle the request
 httpClient.interceptors.request.use(

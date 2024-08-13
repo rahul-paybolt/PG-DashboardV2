@@ -8,7 +8,7 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Divider } from "@nextui-org/divider";
-import SelectOptionsData from "@/constants/dropdownConstants/SelectOptionData";
+import SelectOptionsData from "@/lib/constants/dropdownConstants/SelectOptionData";
 import CustomSelect from "../SelectOptions/SelectOptions";
 import { Button } from "@nextui-org/button";
 import { SearchIcon } from "@/public/assests/Icon/SearchIcon";

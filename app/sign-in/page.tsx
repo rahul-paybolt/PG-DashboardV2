@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { loadScript } from "@/utils/common-utils";
+import { loadScript } from "@/lib/utils/common-utils";
 import { Button } from "@nextui-org/button";
 import { doSocialLogin } from "../actions";
 

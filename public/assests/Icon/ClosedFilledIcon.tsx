@@ -1,4 +1,4 @@
-import { safeAny } from "@/interfaces/global.interface";
+import { safeAny } from "@/lib/interfaces/global.interface";
 import React from "react";
 export const CloseFilledIcon = (props: safeAny) => (
   <svg

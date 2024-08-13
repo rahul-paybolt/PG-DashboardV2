@@ -1,6 +1,9 @@
 // "use client";
-import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
-import { generateQrCode, submitMerchantDetails } from "@/services/auth-service";
+import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
+import {
+  generateQrCode,
+  submitMerchantDetails,
+} from "@/lib/services/auth-service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -9,7 +12,8 @@ export const useVerifyToken = (provider: string, token: string) => {
     queryKey: ["gAuth"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/verify-token/${provider}?token=${token}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/verify-token/${provider}?token=${token}`,
+        { withCredentials: true }
       );
 
       return data;

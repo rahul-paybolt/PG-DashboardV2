@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import clsx from "clsx";
-import { useNavbar } from "../components/NavBarContext";
-import { Sidebar } from "@/components/Sidebar";
+import { useNavbar } from "../lib/components/NavBarContext";
+import { Sidebar } from "@/lib/components/Sidebar";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { isCollapsed, toggleNavbar } = useNavbar();

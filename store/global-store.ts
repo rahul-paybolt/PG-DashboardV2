@@ -1,10 +1,9 @@
-
-import { AuthenticatedUser } from '@/interfaces/authentication.interface';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { AuthenticatedUser } from "@/lib/interfaces/authentication.interface";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function createGlobalState<T>(
   queryKey: unknown,
-  initialData: T | null = null,
+  initialData: T | null = null
 ) {
   return function () {
     const queryClient = useQueryClient();

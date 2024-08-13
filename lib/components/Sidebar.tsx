@@ -9,7 +9,7 @@ import {
 import { Divider } from "@nextui-org/divider";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/lib/config/site";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiHelpCircle } from "react-icons/fi";

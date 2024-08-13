@@ -3,13 +3,11 @@ import MultiFactorIcon from "@/public/assests/Icon/MultiFactorIcon";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import React from "react";
-import Input from "../../../components/InputContainer/Input";
+import Input from "../../../lib/components/InputContainer/Input";
 import { Modal, ModalContent } from "@nextui-org/modal";
 const MultFactorAuth = () => {
   console.log("called!!!!");
   const inputContainer = (src: string) => {
-    const handleSubmitTwofactor = () => {};
-
     return (
       <div className=" flex flex-col items-center justify-center mx-20 my-20">
         <Image

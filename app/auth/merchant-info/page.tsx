@@ -1,24 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "@/components/InputContainer/Input";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
+import Input from "@/lib/components/InputContainer/Input";
+import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
 import axios from "axios";
-import { AuthenticatedUser } from "@/interfaces/authentication.interface";
+import { AuthenticatedUser } from "@/lib/interfaces/authentication.interface";
 import { Button } from "@nextui-org/button";
-import { DesignationOptions } from "@/constants/RegisterForm/RegisterForm.constants";
+import { DesignationOptions } from "@/lib/constants/RegisterForm/RegisterForm.constants";
 import { AuthStore } from "@/store/auth-store";
-import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
+import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
+import CustomInput from "@/lib/components/InputContainer/Input";
+import { CustomButton } from "@/lib/components/ButtonComponent/CustomButton";
+import { NAME_REGEX, PHONE_REGEX } from "@/shared/regular-expressions";
+import ErrorHandlerMessage from "@/lib/components/ErrorHandler/ErrorHandlerMessage";
+import { safeAny } from "@/lib/interfaces/global.interface";
 const UsersBasicDetails = () => {
   const [name, setName] = useState<string>("");
   const [businessName, setBusinessName] = useState<string>("");
   const [designationType, setDesignationType] = useState<string>("");
-  const [mobile, setMobile] = useState<string>("");
+  const [mobile, setMobile] = useState<string>("91");
   const [verifyModal, setVerifyModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { data, setData, resetData } = AuthStore();
-
-  console.log("data", data);
 
   const getEmail = () => {
     const storedStatus = localStorage.getItem("verificationStatus");
@@ -38,6 +42,25 @@ const UsersBasicDetails = () => {
       mobile: mobile,
       email: getEmail() || data?.email,
     };
+    console.log("merchantInfoData", merchantInfoData);
+
+    const isValid =
+      merchantInfoData.fullName &&
+      merchantInfoData.businessName &&
+      merchantInfoData.designation &&
+      merchantInfoData.mobile &&
+      merchantInfoData.email;
+
+    if (!isValid) {
+      setErrorMessage("Some of the fields are empty");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+
+      return;
+      return;
+    }
+
     try {
       setData({ ...merchantInfoData });
       const res = await submitMerchantInfo(merchantInfoData);
@@ -48,11 +71,11 @@ const UsersBasicDetails = () => {
   };
 
   const submitMerchantInfo = async (data: AuthenticatedUser) => {
-    console.log("receiving-data during api call", data);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/send-magic-link`,
-        data
+        data,
+        { withCredentials: true }
       );
       // if (typeof window !== "undefined") {
       //   localStorage.removeItem("email");
@@ -61,46 +84,77 @@ const UsersBasicDetails = () => {
       if (response) {
         setVerifyModal(true);
       }
-
       return response;
-    } catch (err) {
-      console.error("Error during API call", err);
-      throw err;
+    } catch (err: safeAny) {
+      console.log("err", err);
+      setErrorMessage(err);
     }
+    setErrorMessage(null);
   };
+
+  const validatePhone = (value: string) => value.match(PHONE_REGEX);
+
+  const validationState = React.useMemo(() => {
+    if (mobile === "") return undefined;
+
+    return validatePhone(mobile) ? "valid" : "invalid";
+  }, [mobile]);
+  const validate = (value: string) => value.match(NAME_REGEX);
+
+  const validateNameSate = React.useMemo(() => {
+    if (name === "") return undefined;
+
+    return validate(name) ? "valid" : "invalid";
+  }, [name]);
 
   return (
     <>
+      {errorMessage && <ErrorHandlerMessage errorMessage={errorMessage} />}
       <VerifyingPopus
         title="Verifying otp"
         content="Wait for minutes"
         isOpen={verifyModal}
       />
 
-      <div className="flex flex-col items-center text-center justify-center min-h-screen">
+      <div className="flex flex-col items-center text-center justify-center min-h-screen mx-auto my-auto ">
         <div className="flex flex-col px-8 py-6">
-          <h1 className="text-[80px] font-extrabold sm:text-3xl sm:font-semibold mb-4">
+          <h1 className="text-[80px] font-extrabold sm:text-3xl sm:font-semibold text-primary-600 mb-4">
             Enter your Personal Information
           </h1>
 
           <div className="flex flex-col mb-4">
-            <Input
+            <CustomInput
               type="text"
               name="fullName"
               placeholder="Enter your name"
               label="Name"
               className="w-full mb-4"
-              inputValue={name}
+              value={name}
               onValueChange={setName}
+              errorMessage={
+                validateNameSate === "invalid" && "Please enter a valid name"
+              }
+              validationState={validateNameSate}
+              isRequired={true}
+              onClear={() => console.log("input cleared")}
+              isInvalid={validateNameSate === "invalid"}
             />
-            <Input
+            <CustomInput
               type="text"
               name="businessName"
               placeholder="Enter your business name"
               label="Business Name"
               className="w-full mb-4"
-              inputValue={businessName}
+              value={businessName}
               onValueChange={setBusinessName}
+              isRequired={true}
+              errorMessage={
+                validateNameSate === "invalid" &&
+                "Please enter a valid businessname"
+              }
+              validationState={validateNameSate}
+              onClear={() => console.log("input cleared")}
+              isInvalid={validateNameSate === "invalid"}
             />
             <CustomSelect
               label="Designation"
@@ -119,24 +173,33 @@ const UsersBasicDetails = () => {
               }}
               variant="bordered"
               name="designation"
+              isRequired={true}
             />
-            <Input
+            <CustomInput
               type="text"
               name="mobile"
               placeholder="Enter your mobile number"
               label="Mobile Number"
               className="w-full"
-              inputValue={mobile}
+              value={mobile}
               onValueChange={setMobile}
+              errorMessage={
+                validationState === "invalid" &&
+                "Please enter a valid mobile number"
+              }
+              validationState={validationState}
+              isRequired={true}
+              onClear={() => console.log("input cleared")}
+              isInvalid={validationState === "invalid"}
             />
           </div>
           <div className="flex gap-4 mt-4">
-            <Button
+            <CustomButton
               className="bg-primary-600 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
               onClick={handleSubmit}
             >
               Next
-            </Button>
+            </CustomButton>
           </div>
         </div>
       </div>

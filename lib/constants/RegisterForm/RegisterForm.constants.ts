@@ -3,7 +3,7 @@ import {
   Entityprops,
   IndustryType,
   TurnoverType,
-} from "@/interfaces/Register/register-interface";
+} from "@/lib/interfaces/Register/register-interface";
 
 export enum BUSINESS_TYPES {
   INDIVIDUAL = 1,

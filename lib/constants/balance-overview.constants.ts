@@ -1,4 +1,4 @@
-import { BalanceOverviewProps as BalanceOverviewProps } from "@/interfaces/balance-overview";
+import { BalanceOverviewProps as BalanceOverviewProps } from "@/lib/interfaces/balance-overview";
 
 export const BalanceOverViewData: BalanceOverviewProps[] = [
   {

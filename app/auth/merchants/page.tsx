@@ -1,13 +1,13 @@
 "use client";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
+import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
 import {
   businessTypes,
   DesignationOptions,
   IndustryTypes,
   Turnover_list,
-} from "@/constants/RegisterForm/RegisterForm.constants";
-import { merchantDetailsSubmission } from "@/hooks/useVerifyToken";
-import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
+} from "@/lib/constants/RegisterForm/RegisterForm.constants";
+import { merchantDetailsSubmission } from "@/lib/hooks/useVerifyToken";
+import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
 // import AuthenticatedUser from "@/utils/auth-utils";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

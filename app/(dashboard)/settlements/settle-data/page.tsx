@@ -10,8 +10,8 @@ import {
   refundColumns,
   refundRows,
   settleTabs,
-} from "@/utils/settlement.constant";
-import { TableComponent } from "@/components/Table";
+} from "@/lib/utils/settlement.constant";
+import { TableComponent } from "@/lib/components/Table";
 
 const ChargePage = () => {
   const pathName = usePathname();
@@ -30,8 +30,9 @@ const ChargePage = () => {
             "group-data-[selected=true]:text-secondary dark:group-data-[selected=true]:text-primary",
         }}
         selectedKey={selectedTab}
-        onSelectionChange={key => setSelectedTab(key as string)}>
-        {item => (
+        onSelectionChange={(key) => setSelectedTab(key as string)}
+      >
+        {(item) => (
           <Tab key={item.id} title={item.label} className="py-5">
             <TableComponent
               columns={

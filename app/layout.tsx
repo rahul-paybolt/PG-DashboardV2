@@ -3,8 +3,8 @@ import { ReactNode } from "react";
 import clsx from "clsx";
 
 import { Providers } from "@/app/providers";
-import { fontSans } from "@/config/fonts";
-import { NavbarProvider } from "@/components/NavBarContext";
+import { fontSans } from "@/lib/config/fonts";
+import { NavbarProvider } from "@/lib/components/NavBarContext";
 
 import "@/styles/globals.scss";
 import { ReactQueryProvider } from "./QueryProvider";
@@ -30,11 +30,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           fontSans.className
         )}
       >
-          <ReactQueryProvider>
-            <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-              <NavbarProvider>{children}</NavbarProvider>
-            </Providers>
-          </ReactQueryProvider>
+        <ReactQueryProvider>
+          <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+            <NavbarProvider>{children}</NavbarProvider>
+          </Providers>
+        </ReactQueryProvider>
       </body>
     </html>
   );

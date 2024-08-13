@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut } from "@/components/auth/auth";
+import { signIn, signOut } from "@/lib/components/auth/auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Router } from "next/router";
@@ -8,7 +8,7 @@ export async function doSocialLogin(formData: FormData) {
   try {
     const { data: url } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/google`,
-      {}
+      { withCredentials: true }
     );
 
     console.log("url", url); // Assuming the response is { url: "some-url" }

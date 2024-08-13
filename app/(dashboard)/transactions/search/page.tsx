@@ -1,7 +1,7 @@
 "use client";
-import Input from "@/components/InputContainer/Input";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
-import SelectOptionsData from "@/constants/dropdownConstants/SelectOptionData";
+import Input from "@/lib/components/InputContainer/Input";
+import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
+import SelectOptionsData from "@/lib/constants/dropdownConstants/SelectOptionData";
 import { SearchIcon } from "@/public/assests/Icon/SearchIcon";
 import React, { useState } from "react";
 import { useRef } from "react";

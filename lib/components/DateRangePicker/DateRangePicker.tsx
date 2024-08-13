@@ -15,7 +15,7 @@ import {
 } from "@internationalized/date";
 import { useLocale, useDateFormatter } from "@react-aria/i18n";
 import { clsx } from "clsx";
-import { safeAny } from "@/interfaces/global.interface";
+import { safeAny } from "@/lib/interfaces/global.interface";
 
 interface CustomDateRangePickerProps extends DateRangePickerProps {
   // value: ZonedDateTime | CalendarDate | CalendarDateTime | undefined | null;

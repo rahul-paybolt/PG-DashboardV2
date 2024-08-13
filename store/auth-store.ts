@@ -1,4 +1,4 @@
-import { AuthenticatedUser } from "@/interfaces/authentication.interface";
+import { AuthenticatedUser } from "@/lib/interfaces/authentication.interface";
 import { createGlobalState } from "./global-store";
 
 const initialValues: AuthenticatedUser = {

@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
-import { transformStringFromSnakeCase } from "@/utils/common-utils";
-import { useVerifyToken } from "@/hooks/useVerifyToken";
+import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
+import { transformStringFromSnakeCase } from "@/lib/utils/common-utils";
+import { useVerifyToken } from "@/lib/hooks/useVerifyToken";
 import UsersBasicDetails from "../merchant-info/page";
-import { safeAny } from "@/interfaces/global.interface";
+import { safeAny } from "@/lib/interfaces/global.interface";
 
 interface AuthRouteParams {
   nextauth: string[];
@@ -69,19 +69,15 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
           );
         }
 
-        if (res?.data?.onboardingStatus === 1) {
+        if (res?.data?.onboardingStatus === 0) {
+          router.push("/auth/merchant-info");
+        } else if (res?.data?.onboardingStatus === 1) {
           router.push("/auth/merchant");
         } else if (res?.data && res?.data?.onboardingStatus === 2) {
           router.push("/auth/multifactor");
-        } else {
+        } else if (res?.data && res?.data?.onboardingStatus === 2) {
           router.push("/sign-in");
         }
-        // else if (x && +x === AuthenticationType.SIGN_UP) {
-        setComponentToRender(<UsersBasicDetails />);
-        // } else if (x && +x === AuthenticationType.BUSINESS_DETAILS) {
-        // router.push("/login-2fa");
-        // }
-
         setLoading(false);
       });
     } else {

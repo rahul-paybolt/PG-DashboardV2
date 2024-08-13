@@ -1,5 +1,5 @@
 "use client";
-import CustomModal from "@/components/ModalContainer/Modal";
+import CustomModal from "@/lib/components/ModalContainer/Modal";
 import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
 

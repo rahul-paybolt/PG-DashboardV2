@@ -1,8 +1,8 @@
 "use client";
-import CustomDateRangePicker from "@/components/DateRangePicker/DateRangePicker";
-import { title } from "@/components/primitives";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
-import SelectOptionsData from "@/constants/dropdownConstants/SelectOptionData";
+import CustomDateRangePicker from "@/lib/components/DateRangePicker/DateRangePicker";
+import { title } from "@/lib/components/primitives";
+import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
+import SelectOptionsData from "@/lib/constants/dropdownConstants/SelectOptionData";
 import React, { useState } from "react";
 
 const DownloadTransactions = () => {
