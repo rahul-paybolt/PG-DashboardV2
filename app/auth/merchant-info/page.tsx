@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "@/lib/components/InputContainer/Input";
 import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
 import axios from "axios";
 import { AuthenticatedUser } from "@/lib/interfaces/authentication.interface";
-import { Button } from "@nextui-org/button";
 import { DesignationOptions } from "@/lib/constants/RegisterForm/RegisterForm.constants";
 import { AuthStore } from "@/store/auth-store";
 import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
@@ -173,7 +171,6 @@ const UsersBasicDetails = () => {
               }}
               variant="bordered"
               name="designation"
-              isRequired={true}
             />
             <CustomInput
               type="text"

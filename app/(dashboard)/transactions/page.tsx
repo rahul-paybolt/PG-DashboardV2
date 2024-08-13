@@ -50,8 +50,8 @@ const Transactions = () => {
           type="search"
           startContent={<SerchIcon />}
           value={list.filterText}
-          onChange={list.setFilterText}
-          loadingState={list.loadingState}
+          onValueChange={list.setFilterText}
+          // loadingState={list.loadingState}
           name="transactions"
         />
         <CustomDateRangePicker />

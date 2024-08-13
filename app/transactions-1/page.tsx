@@ -49,9 +49,9 @@ const Transactions = () => {
           placeholder="Type to search..."
           type="search"
           startContent={<SerchIcon />}
-          inputValue={list.filterText}
-          onInputChange={list.setFilterText}
-          loadingState={list.loadingState}
+          value={list.filterText}
+          onValueChange={list.setFilterText}
+          // loadingState={list.loadingState}
           variant="bordered"
           name="search"
         />

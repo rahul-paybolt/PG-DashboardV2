@@ -209,7 +209,7 @@ const RecentTransactions = () => {
             className="w-full sm:max-w-[80%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
-            inputValue={filterValue}
+            value={filterValue}
             // on={() => onClear()}
             onValueChange={onSearchChange}
             name="search"
