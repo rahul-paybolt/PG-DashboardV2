@@ -75,14 +75,14 @@ const CustomInput = extendVariants(Input, {
       },
     },
 
-    variant: {
-      flat: {
-        mainWrapper: "border border-primary-600",
-      },
-      bordered: {
-        mainWrapper: "border border-primary-600",
-      },
-    },
+    // variant: {
+    //   flat: {
+    //     mainWrapper: "border border-primary-600",
+    //   },
+    //   bordered: {
+    //     mainWrapper: "border border-primary-600",
+    //   },
+    // },
   },
   defaultVariants: {
     color: "stone",

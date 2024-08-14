@@ -4,9 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
 import { transformStringFromSnakeCase } from "@/lib/utils/common-utils";
-import { useVerifyToken } from "@/lib/hooks/useVerifyToken";
+import { useVerifyToken } from "@/lib/hooks/auth-verification";
 import UsersBasicDetails from "../merchant-info/page";
 import { safeAny } from "@/lib/interfaces/global.interface";
+import authRouteHandler from "@/lib/utils/route.utils";
+import {
+  LocalStorageKeys,
+  persistToLocalStorage,
+} from "@/lib/utils/localStorage-utils";
 
 interface AuthRouteParams {
   nextauth: string[];
@@ -52,13 +57,22 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
             is2FAEnabled: res?.data?.is2FAEnabled,
             onboardingStatus: res?.data?.onboardingStatus,
           };
-
-          localStorage.setItem(
-            "verificationStatus",
-            JSON.stringify(verificationStatus)
+          persistToLocalStorage(
+            LocalStorageKeys.AUTHENTICATED_USER,
+            verificationStatus
           );
         }
-
+        const status = res?.data?.[0]?.onboardingStatus;
+        console.log("status", res?.data);
+        if (status === 0) {
+          router.push("/auth/merchant-info");
+        } else if (status === 1) {
+          router.push("/auth/merchants");
+        } else if (status === 2) {
+          router.push("/auth/multifactor");
+        } else if (status === 2) {
+          router.push("/sign-in");
+        }
         if (error) {
           setComponentToRender(
             <VerifyingPopus
@@ -69,21 +83,12 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
           );
         }
 
-        if (res?.data?.onboardingStatus === 0) {
-          router.push("/auth/merchant-info");
-        } else if (res?.data?.onboardingStatus === 1) {
-          router.push("/auth/merchant");
-        } else if (res?.data && res?.data?.onboardingStatus === 2) {
-          router.push("/auth/multifactor");
-        } else if (res?.data && res?.data?.onboardingStatus === 2) {
-          router.push("/sign-in");
-        }
         setLoading(false);
       });
     } else {
       setLoading(false);
     }
-  }, [token, x, error, refetch, router]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>; // or a spinner/loading component

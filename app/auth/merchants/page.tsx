@@ -6,7 +6,7 @@ import {
   IndustryTypes,
   Turnover_list,
 } from "@/lib/constants/RegisterForm/RegisterForm.constants";
-import { merchantDetailsSubmission } from "@/lib/hooks/useVerifyToken";
+import { merchantDetailsSubmission } from "@/lib/hooks/auth-verification";
 import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
 // import AuthenticatedUser from "@/utils/auth-utils";
 import { useRouter } from "next/navigation";
@@ -41,8 +41,13 @@ const MerchantDetails = () => {
       turnover: Number(turnOver),
     };
     console.log("it's triggering", data);
-
     mutate(data);
+    if (isSuccess) {
+      router.push("/");
+    }
+    if (isError) {
+      console.log(isError);
+    }
   };
 
   return (

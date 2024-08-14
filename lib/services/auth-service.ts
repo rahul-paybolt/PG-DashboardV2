@@ -1,9 +1,16 @@
-import { GoogleSignInResponse } from "@/lib/interfaces/authentication.interface";
+import {
+  AuthenticatedUser,
+  GoogleSignInResponse,
+} from "@/lib/interfaces/authentication.interface";
 
 import { resolvePBApi } from "@/lib/utils/common-utils";
 import { PBBaseResponse, safeAny } from "@/lib/interfaces/global.interface";
 import axios from "@/app/api/axios";
 import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
+import {
+  LocalStorageKeys,
+  persistToLocalStorage,
+} from "../utils/localStorage-utils";
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // export const loginUser = async (request: LoginRequest): Promise<[LoginResponse | null, safeAny]> => {
@@ -26,16 +33,37 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 //   return [response, error];
 // };
 
-export const loginWithGoogle = async (data: {
-  id_token: string;
-  recaptcha: string;
-}): Promise<[GoogleSignInResponse | null, safeAny]> => {
-  const [response, error] = await resolvePBApi<GoogleSignInResponse>(
-    () => axios.post<GoogleSignInResponse>(`${baseUrl}/users/verify_id`, data),
+export const googleSignUp = async (): Promise<
+  [PBBaseResponse | null, safeAny]
+> => {
+  const [response, error] = await resolvePBApi<PBBaseResponse>(
+    () => axios.get<PBBaseResponse>(`${baseUrl}/api/v1/auth/users/google`),
     false,
     true,
     false
   );
+
+  return [response, error];
+};
+
+export const signUpWithGoogle = async (
+  provider: string,
+  token: string
+): Promise<[AuthenticatedUser | null, safeAny]> => {
+  console.log("provider", provider, "token", token);
+  const [response, error] = await resolvePBApi<AuthenticatedUser>(
+    () =>
+      axios.get<AuthenticatedUser>(
+        `${baseUrl}/api/v1/auth/users/verify-token/${provider}?token=${token}`
+      ),
+    false,
+    true,
+    false
+  );
+
+  if (response) {
+    persistToLocalStorage(LocalStorageKeys.AUTHENTICATED_USER, response);
+  }
   return [response, error];
 };
 

@@ -2,22 +2,18 @@
 import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
 import {
   generateQrCode,
+  signUpWithGoogle,
   submitMerchantDetails,
 } from "@/lib/services/auth-service";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+export const socialLogin = () => {};
 export const useVerifyToken = (provider: string, token: string) => {
   const { refetch } = useQuery({
     queryKey: ["gAuth"],
-    queryFn: async () => {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/verify-token/${provider}?token=${token}`,
-        { withCredentials: true }
-      );
-
-      return data;
-    },
+    queryFn: () => signUpWithGoogle(provider, token),
+    enabled: false,
   });
   return { refetch };
 };

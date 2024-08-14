@@ -52,6 +52,8 @@
 // // export const isOwner = () => authenticatedUser && authenticatedUser.role_id === ROLES_ID.OWNER;
 
 import { NextRequest, NextResponse } from "next/server";
+import { AuthenticatedUser } from "../interfaces/authentication.interface";
+import { getFromLocalStorage, LocalStorageKeys } from "./localStorage-utils";
 
 const AuthenticatedUser = async (req: NextRequest) => {
   // const isAuthenticated = getAuthenticatedUser();
@@ -69,3 +71,10 @@ const AuthenticatedUser = async (req: NextRequest) => {
 };
 
 export default AuthenticatedUser;
+
+export const getAuthenticatedUserDetailsFromLS = () => {
+  const authenticatedUser = getFromLocalStorage<AuthenticatedUser>(
+    LocalStorageKeys.AUTHENTICATED_USER
+  );
+  return authenticatedUser;
+};

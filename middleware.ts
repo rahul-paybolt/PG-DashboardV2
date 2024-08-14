@@ -13,7 +13,7 @@ const middleware = async (req: NextRequest) => {
 
   // Define your public routes here (e.g., login, sign-up, and related routes)
   const publicRoutes =
-    /^\/(login|auth|assets|login-2fa|sign-up|merchant-info|merchants|api|_next\/static|_next\/images|favicon\.ico)/;
+    /^\/(login|auth|assets|login-2fa|sign-up|sign-in|merchant-info|merchants|api|_next\/static|_next\/images|favicon\.ico)/;
 
   // If the user is trying to access a public route, allow it
   if (publicRoutes.test(path)) {
