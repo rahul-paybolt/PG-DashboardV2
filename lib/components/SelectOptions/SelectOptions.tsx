@@ -6,6 +6,8 @@ export interface selectionDataProps {
   key: string | BUSINESS_TYPES;
   label: string;
 }
+export type Key = string | number;
+
 interface CustomSelectProps<T> {
   label: string;
   placeholder?: string;
@@ -43,11 +45,11 @@ const CustomSelect: React.FC<CustomSelectProps<safeAny>> = ({
   variant,
   name,
 }) => {
-  const handleSelectionChange = (selectedKeys: Set<safeAny>) => {
+  const handleSelectionChange = (selectedKeys: "all" | Set<Key>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
-    const selectedValue =
-      selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;
-    onChange(selectedValue);
+    // const selectedValue =
+    //   selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;
+    onChange(selectedKeys);
   };
   return (
     <Select
