@@ -1,12 +1,17 @@
 import {
   AuthenticatedUser,
   GoogleSignInResponse,
+  LoginRequest,
 } from "@/lib/interfaces/authentication.interface";
 
 import { resolvePBApi } from "@/lib/utils/common-utils";
-import { PBBaseResponse, safeAny } from "@/lib/interfaces/global.interface";
+import {
+  generateQRCodeResponse,
+  PBBaseResponse,
+  safeAny,
+} from "@/lib/interfaces/global.interface";
 import axios from "@/app/api/axios";
-import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
+import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
 import {
   LocalStorageKeys,
   persistToLocalStorage,
@@ -33,6 +38,18 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 //   return [response, error];
 // };
 
+export const loginWithGoogle = async (
+  data: LoginRequest
+): Promise<[PBBaseResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<PBBaseResponse>(
+    () =>
+      axios.post<PBBaseResponse>(`${baseUrl}/api/v1/auth/users/login`, data),
+    false,
+    true,
+    false
+  );
+  return [response, error];
+};
 export const googleSignUp = async (): Promise<
   [PBBaseResponse | null, safeAny]
 > => {
@@ -97,12 +114,14 @@ export const submitMerchantDetails = async (
 
 export const generateQrCode = async (
   email: string
-): Promise<[PBBaseResponse | null, safeAny]> => {
-  const [response, error] = await resolvePBApi<PBBaseResponse>(
+): Promise<[generateQRCodeResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<generateQRCodeResponse>(
     () =>
-      axios.post<PBBaseResponse>(
+      axios.post<generateQRCodeResponse>(
         `${baseUrl}/api/v1/mf-auth/generate-qr`,
-        email
+        {
+          email,
+        }
       ),
     false,
     true,

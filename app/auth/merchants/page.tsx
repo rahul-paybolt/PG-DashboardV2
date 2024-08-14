@@ -2,12 +2,12 @@
 import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
 import {
   businessTypes,
-  DesignationOptions,
   IndustryTypes,
   Turnover_list,
 } from "@/lib/constants/RegisterForm/RegisterForm.constants";
 import { merchantDetailsSubmission } from "@/lib/hooks/auth-verification";
-import { MerchantDetailsProps } from "@/lib/interfaces/Register/register-interface";
+import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
+import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
 // import AuthenticatedUser from "@/utils/auth-utils";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -34,8 +34,10 @@ const MerchantDetails = () => {
 
   const handleSubmitMerchantDetails = () => {
     console.log(typeof selectedEntitty, typeof businessType, typeof turnOver);
+    const authenticatedUser = getAuthenticatedUserDetailsFromLS();
+
     const data: MerchantDetailsProps = {
-      email: window.localStorage.getItem("email"),
+      email: authenticatedUser && (authenticatedUser?.email as string),
       businessEntityType: Number(selectedEntitty),
       industry: Number(businessType),
       turnover: Number(turnOver),
@@ -43,6 +45,7 @@ const MerchantDetails = () => {
     console.log("it's triggering", data);
     mutate(data);
     if (isSuccess) {
+      console.log("go to dashboard");
       router.push("/");
     }
     if (isError) {

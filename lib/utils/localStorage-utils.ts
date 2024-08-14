@@ -1,8 +1,10 @@
+"use client";
 import { parseJsonString } from "./common-utils";
 
 export enum LocalStorageKeys {
   AUTHENTICATED_USER = "pb_user",
   META = "meta",
+  QR_CODE = "qrCode",
 }
 export const persistToLocalStorage = <T>(key: LocalStorageKeys, data: T) => {
   localStorage.setItem(key, JSON.stringify(data));

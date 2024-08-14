@@ -15,7 +15,10 @@ export interface DataWrapper<T> {
 export type ResponseWrapper<T> = DataWrapper<T> & PTBaseResponse;
 
 export enum LocalStorageKeys {
-  AUTHENTICATED_USER = 'oa_user',
-  META = 'meta',
+  AUTHENTICATED_USER = "oa_user",
+  META = "meta",
 }
 
+export interface generateQRCodeResponse {
+  qrCode: string;
+}

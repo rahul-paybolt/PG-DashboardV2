@@ -19,11 +19,8 @@ export interface UserRegistration {
 }
 
 export interface LoginRequest {
-  login: string;
-  password: string;
-  recaptcha?: string;
-  is_migration_required?: number;
-  is_check_box?: boolean;
+  email: string;
+  code2FA: string;
 }
 
 export interface ResetPasswordRequest {

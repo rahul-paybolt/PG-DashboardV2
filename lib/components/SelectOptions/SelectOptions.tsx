@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
-import { BUSINESS_TYPES } from "@/lib/interfaces/Register/register-interface";
+import { BUSINESS_TYPES } from "@/lib/interfaces/register-interface";
 import { safeAny } from "@/lib/interfaces/global.interface";
 export interface selectionDataProps {
   key: string | BUSINESS_TYPES;
@@ -45,11 +45,11 @@ const CustomSelect: React.FC<CustomSelectProps<safeAny>> = ({
   variant,
   name,
 }) => {
-  const handleSelectionChange = (selectedKeys: "all" | Set<Key>) => {
+  const handleSelectionChange = (selectedKeys: Set<string>) => {
     // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
-    // const selectedValue =
-    //   selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;
-    onChange(selectedKeys);
+    const selectedValue =
+      selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;
+    onChange(selectedValue);
   };
   return (
     <Select

@@ -5,9 +5,8 @@ export function createGlobalState<T>(
   queryKey: unknown,
   initialData: T | null = null
 ) {
+  const queryClient = useQueryClient();
   return function () {
-    const queryClient = useQueryClient();
-
     const { data } = useQuery({
       queryKey: [queryKey],
       queryFn: () => Promise.resolve(initialData),

@@ -2,7 +2,7 @@ import { Card, CardBody } from "@nextui-org/card";
 import { Spinner } from "@nextui-org/react";
 
 interface ErrorMessageProps {
-  errorMessage: React.ReactNode;
+  errorMessage?: string;
 }
 const ErrorHandlerMessage = ({ errorMessage }: ErrorMessageProps) => {
   return (

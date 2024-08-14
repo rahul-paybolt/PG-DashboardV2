@@ -12,6 +12,8 @@ import { CustomButton } from "@/lib/components/ButtonComponent/CustomButton";
 import { NAME_REGEX, PHONE_REGEX } from "@/shared/regular-expressions";
 import ErrorHandlerMessage from "@/lib/components/ErrorHandler/ErrorHandlerMessage";
 import { safeAny } from "@/lib/interfaces/global.interface";
+import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
+import { showErrorToast } from "@/lib/utils/toast.utils";
 const UsersBasicDetails = () => {
   const [name, setName] = useState<string>("");
   const [businessName, setBusinessName] = useState<string>("");
@@ -20,14 +22,14 @@ const UsersBasicDetails = () => {
   const [verifyModal, setVerifyModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { data, setData, resetData } = AuthStore();
+  // const { data, setData, resetData } = AuthStore();
 
   const getEmail = () => {
-    const storedStatus = localStorage.getItem("verificationStatus");
-    if (storedStatus) {
+    const storedData = getAuthenticatedUserDetailsFromLS();
+    if (storedData) {
       try {
-        const verificationStatus = JSON.parse(storedStatus);
-        return verificationStatus.email;
+        const verifiedEmail = storedData?.email;
+        return verifiedEmail;
       } catch (error) {}
     } else {
     }
@@ -38,7 +40,7 @@ const UsersBasicDetails = () => {
       businessName: businessName,
       designation: designationType,
       mobile: mobile,
-      email: getEmail() || data?.email,
+      email: getEmail(),
     };
     console.log("merchantInfoData", merchantInfoData);
 
@@ -55,7 +57,7 @@ const UsersBasicDetails = () => {
         setErrorMessage(null);
       }, 3000);
 
-      return;
+      // showErrorToast("Some of the fields are empty")
       return;
     }
 
