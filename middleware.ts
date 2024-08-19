@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 const middleware = async (req: NextRequest) => {
-  const cookieStore = cookies();
-  const id_token = cookies().get("atk")?.value;
+  const id_token = req.cookies.get("atk")?.value;
+  console.log(id_token)
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;
@@ -50,7 +50,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|favicon_3.png|login|login-2fa|sign-up|merchant-info|merchants).*)",
+    "/((?!api|_next/static|_next/image|_next\/image|favicon.ico|favicon_3.png|login|login-2fa|sign-up|merchant-info|merchants).*)",
   ],
 };
 

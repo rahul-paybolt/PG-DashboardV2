@@ -82,18 +82,14 @@ const Toast: React.FC<ToastProps> = ({
         }}
         onOpenChange={handleClose}
       >
-        <PopoverTrigger>
-          {[
-            <div key="trigger" className="flex items-center gap-x-4">
-              {toastClasses[type]}
-              <p className="font-medium text-white text-sm capitalize">
-                {message}
-              </p>
-            </div>,
-          ]}
-        </PopoverTrigger>
+        <PopoverTrigger />
         <PopoverContent>
-          {/* Any additional content for the Popover */}
+          <div key="trigger" className="flex items-center gap-x-4">
+            {toastClasses[type]}
+            <p className="font-medium text-white text-sm capitalize">
+              {message}
+            </p>
+          </div>
         </PopoverContent>
       </Popover>
     </div>
