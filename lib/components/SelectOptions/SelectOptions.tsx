@@ -13,7 +13,7 @@ interface CustomSelectProps {
   label: string;
   placeholder?: string;
   value: Key | null;
-  onChange: (value: Key | null) => void;
+  onChange: (value: Key) => void;
   selectionData: Array<SelectionDataProps>;
   variant?: "flat" | "bordered" | "faded" | "underlined";
   classNames?: Partial<
@@ -49,7 +49,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 }) => {
   const handleSelectionChange = (keys: SharedSelection) => {
     const selectedKey = Array.isArray(keys) ? keys[0] : keys.currentKey || null;
-    onChange(selectedKey as Key | null);
+    onChange(selectedKey as Key);
   };
 
   return (

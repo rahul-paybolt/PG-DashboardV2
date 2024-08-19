@@ -43,7 +43,7 @@ export const merchantDetailsSubmission = () => {
   });
 };
 
-export const generateQRCodeLink = (email: GenrateQRCodeRequest) => {
+export const generateQRCodeLink = (email: string | null | undefined) => {
   return useQuery({
     queryKey: ["Qr-link"],
     queryFn: () => generateQrCode(email),

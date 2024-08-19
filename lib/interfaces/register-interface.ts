@@ -1,3 +1,5 @@
+import { TURNOVER_TYPE } from "../constants/RegisterForm/RegisterForm.constants";
+
 export interface BusinessTypesProps {
   value: number;
   name: string;
@@ -8,6 +10,7 @@ export interface DesignationOptionsProps {
   key: string;
 }
 
+export type Key = string | BUSINESS_TYPES | TURNOVER_TYPE;
 export enum BUSINESS_TYPES {
   INDIVIDUAL = 1,
   SOLE_PROPRIETORSHIP = 2,
@@ -20,17 +23,17 @@ export enum BUSINESS_TYPES {
   FREELANCE = 9,
 }
 export interface Entityprops {
-  key: BUSINESS_TYPES;
+  key: Key;
   label: string;
 }
 
 export interface IndustryType {
-  key: number;
+  key: Key;
   label: string;
 }
 
 export interface TurnoverType {
-  key: number;
+  key: Key;
   label: string;
 }
 

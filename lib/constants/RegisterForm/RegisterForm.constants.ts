@@ -275,6 +275,7 @@ export enum TURNOVER_TYPE {
   TWO_CR_TO_TEN_CR = 4,
   TEN_CR_PLUS = 5,
 }
+
 export const Turnover_list: TurnoverType[] = [
   { key: TURNOVER_TYPE.ZERO_TO_TWENTY_FIVE_LAC, label: "0 - 25L" },
   { key: TURNOVER_TYPE.TWENTY_FIVE_TO_FIFTY_LAC, label: "25L - 50L" },

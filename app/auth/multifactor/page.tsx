@@ -22,7 +22,7 @@ const MultFactorAuth = () => {
   const { mutate } = signInwithGoogle();
   const { showToast } = useToast();
 
-  const { data: response, error } = generateQRCodeLink({ email });
+  const { data: response, error } = generateQRCodeLink(email);
 
   const loginVerify = () => {
     if (!code) {

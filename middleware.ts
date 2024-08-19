@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 const middleware = async (req: NextRequest) => {
   const cookieStore = cookies();
-  const id_token = cookieStore.get("atk")?.value;
+  const id_token = cookies().get("atk")?.value;
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;

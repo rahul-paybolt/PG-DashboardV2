@@ -21,12 +21,8 @@ const UsersBasicDetails = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { showToast } = useToast();
   const { mutate } = submitMerchantInfoSubmission();
-  // const { data, setData } = AuthStore();
 
   const authenticatedUsers = getAuthenticatedUserDetailsFromLS();
-  // if (authenticatedUsers) {
-  //   setData(authenticatedUsers);
-  // }
 
   const handleSubmit = async () => {
     const merchantInfoData: AuthenticatedUser = {

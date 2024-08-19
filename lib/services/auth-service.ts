@@ -133,7 +133,7 @@ export const submitMerchantDetails = async (
 };
 
 export const generateQrCode = async (
-  email: GenrateQRCodeRequest
+  email: string | null | undefined
 ): Promise<[generateQRCodeResponse | null, safeAny]> => {
   const [response, error] = await resolvePBApi<generateQRCodeResponse>(
     () =>

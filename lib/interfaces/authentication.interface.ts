@@ -2,7 +2,7 @@ export interface AuthenticatedUser {
   fullName: string;
   email: string | null | undefined;
   mobile: string;
-  designation: string;
+  designation: string | null;
   businessName: string;
   emailVerified?: boolean;
   image?: string;
