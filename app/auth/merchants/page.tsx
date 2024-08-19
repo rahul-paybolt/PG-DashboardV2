@@ -36,11 +36,10 @@ const MerchantDetails = () => {
   const { mutate } = merchantDetailsSubmission();
 
   const handleSubmitMerchantDetails = () => {
-    console.log(typeof selectedEntitty, typeof businessType, typeof turnOver);
     const authenticatedUser = getAuthenticatedUserDetailsFromLS();
 
     const data: MerchantDetailsProps = {
-      email: authenticatedUser && (authenticatedUser?.email as string),
+      email: authenticatedUser?.email ?? null,
       businessEntityType: Number(selectedEntitty),
       industry: Number(businessType),
       turnover: Number(turnOver),

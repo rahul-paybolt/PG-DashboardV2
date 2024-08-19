@@ -35,9 +35,7 @@ export const resolvePBApi = async <T = safeAny>(
     ) {
       // try to find out how errors key behaves and try to generalize
       // showErrorToast(errorResponse.message);
-
       // showToast("getting error", "error");
-      console.log("errr...");
     }
   } finally {
     if (showSpinner) {
@@ -65,7 +63,6 @@ export const parseJsonString = <T>(jsonString: string): T | null => {
     const parsedJson = JSON.parse(jsonStringToParse);
     return parsedJson;
   } catch (e) {
-    console.error(`error parsing json string: ${jsonStringToParse}`, e);
     return null;
   }
 };

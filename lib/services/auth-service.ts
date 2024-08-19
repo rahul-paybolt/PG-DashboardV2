@@ -72,7 +72,6 @@ export const signUpWithGoogle = async (
   provider: string,
   token: string
 ): Promise<[AuthenticatedUser | null, safeAny]> => {
-  console.log("provider", provider, "token", token);
   const [response, error] = await resolvePBApi<AuthenticatedUser>(
     () =>
       axios.get<AuthenticatedUser>(

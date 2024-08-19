@@ -23,10 +23,7 @@ const LoginForm = () => {
     return validateEmail(value) ? false : true;
   }, [value]);
 
-  const handleSubmit = (formData: FormData) => {
-    console.log("formData---->", formData);
-    // nextStep();
-  };
+  const handleSubmit = (formData: FormData) => {};
 
   return (
     <>

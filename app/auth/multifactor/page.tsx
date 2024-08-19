@@ -39,9 +39,7 @@ const MultFactorAuth = () => {
       onSuccess: (data) => {
         const [response, error] = data;
 
-        console.log("response", response, "error", error);
         if (error) {
-          console.log("error", error);
           showToast(error?.message, "error");
           return;
         }

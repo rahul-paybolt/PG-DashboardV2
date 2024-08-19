@@ -11,7 +11,6 @@ interface ToastContextProps {
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
 
 export const useToast = () => {
-  console.log("Toast triggered");
   const context = useContext(ToastContext);
   if (!context) {
     throw new Error("useToast must be used within a ToastProvider");
@@ -28,7 +27,6 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   const [duration, setDuration] = useState<number>(5000);
 
   const showToast = (message: string, type: ToastType, duration = 5000) => {
-    console.log("toast-message", message, "type", type);
     setMessage(message);
     setType(type);
     setDuration(duration);

@@ -1,8 +1,6 @@
 "use client";
-import { signIn, signOut } from "@/lib/components/auth/auth";
+import { signOut } from "@/lib/components/auth/auth";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 
 export async function doSocialLogin(formData: FormData) {
   try {
@@ -11,7 +9,6 @@ export async function doSocialLogin(formData: FormData) {
       { withCredentials: true }
     );
 
-    console.log("url", url); // Assuming the response is { url: "some-url" }
     if (url) {
       // Redirect the user to the received URL
       window.location.href = url;

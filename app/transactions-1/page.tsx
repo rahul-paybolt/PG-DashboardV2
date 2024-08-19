@@ -26,7 +26,6 @@ const Transactions = () => {
   });
 
   const handleChange = (e: string) => {
-    console.log("text", e);
     list.setFilterText(e);
   };
 

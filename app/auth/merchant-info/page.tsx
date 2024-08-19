@@ -30,7 +30,7 @@ const UsersBasicDetails = () => {
       businessName: businessName,
       designation: designationType,
       mobile: mobile,
-      email: authenticatedUsers && authenticatedUsers?.email,
+      email: authenticatedUsers?.email ?? null,
     };
 
     const isValid =

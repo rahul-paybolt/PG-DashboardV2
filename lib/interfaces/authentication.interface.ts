@@ -1,6 +1,6 @@
 export interface AuthenticatedUser {
   fullName: string;
-  email: string | null | undefined;
+  email: string | null;
   mobile: string;
   designation: string | null;
   businessName: string;

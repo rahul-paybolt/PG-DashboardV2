@@ -21,12 +21,6 @@ const Toast: React.FC<ToastProps> = ({
   onClose,
   duration,
 }) => {
-  console.log(
-    "Message inside toast compoenents",
-    message,
-    "type-inside component",
-    type
-  );
   const _defaultDuration = 3000;
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
@@ -79,10 +73,7 @@ const Toast: React.FC<ToastProps> = ({
         placement="top"
         isOpen={open}
         classNames={{
-          base: [
-            // arrow color
-            "flex items-center justify-center ",
-          ],
+          base: "flex items-center justify-center",
           content: [
             "py-3 px-4 border border-default-200",
             "bg-gradient-to-br from-white to-default-300",
@@ -91,15 +82,18 @@ const Toast: React.FC<ToastProps> = ({
         }}
         onOpenChange={handleClose}
       >
-        <PopoverContent>
-          <PopoverTrigger>
-            <div className="flex items-center gap-x-4">
+        <PopoverTrigger>
+          {[
+            <div key="trigger" className="flex items-center gap-x-4">
               {toastClasses[type]}
               <p className="font-medium text-white text-sm capitalize">
                 {message}
               </p>
-            </div>
-          </PopoverTrigger>
+            </div>,
+          ]}
+        </PopoverTrigger>
+        <PopoverContent>
+          {/* Any additional content for the Popover */}
         </PopoverContent>
       </Popover>
     </div>

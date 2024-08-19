@@ -28,7 +28,7 @@ export interface Entityprops {
 }
 
 export interface IndustryType {
-  key: Key;
+  key: Key | number;
   label: string;
 }
 

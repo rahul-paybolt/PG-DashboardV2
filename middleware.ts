@@ -9,7 +9,6 @@ const middleware = async (req: NextRequest) => {
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;
-  console.log("id_token----", id_token);
 
   // Define your public routes here (e.g., login, sign-up, and related routes)
   const publicRoutes =
