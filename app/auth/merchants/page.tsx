@@ -1,48 +1,63 @@
 "use client";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
+import CustomSelect, {
+  SelectionDataProps,
+} from "@/lib/components/SelectOptions/SelectOptions";
+import { useToast } from "@/lib/components/Toast/ToastContext";
 import {
   businessTypes,
-  DesignationOptions,
   IndustryTypes,
   Turnover_list,
-} from "@/constants/RegisterForm/RegisterForm.constants";
-import { merchantDetailsSubmission } from "@/hooks/useVerifyToken";
-import { MerchantDetailsProps } from "@/interfaces/Register/register-interface";
-// import AuthenticatedUser from "@/utils/auth-utils";
+} from "@/lib/constants/RegisterForm/RegisterForm.constants";
+import { merchantDetailsSubmission } from "@/lib/hooks/auth-verification";
+import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
+import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const MerchantDetails = () => {
-  const [selectedEntitty, setSelectedEntity] = useState<number>();
-  const [businessType, setBusinessType] = useState<number>();
-  const [turnOver, setTurnOver] = useState<number>();
+  const [selectedEntitty, setSelectedEntity] = useState<string | null>(null);
+  const [businessType, setBusinessType] = useState<string | null>(null);
+  const [turnOver, setTurnOver] = useState<string | null>(null);
   const router = useRouter();
+  const { showToast } = useToast();
 
-  const handleSlectedEntity = (value: number) => {
+  const handleSlectedEntity = (value: string | null) => {
     setSelectedEntity(value);
   };
 
-  const handleSelectBusinessTypes = (value: number) => {
+  const handleSelectBusinessTypes = (value: string) => {
     setBusinessType(value);
   };
 
-  const handleTurnOver = (value: number) => {
+  const handleTurnOver = (value: string | null) => {
     setTurnOver(value);
   };
 
-  const { mutate, isError, isSuccess } = merchantDetailsSubmission();
+  const { mutate } = merchantDetailsSubmission();
 
   const handleSubmitMerchantDetails = () => {
-    console.log(typeof selectedEntitty, typeof businessType, typeof turnOver);
+    const authenticatedUser = getAuthenticatedUserDetailsFromLS();
+
     const data: MerchantDetailsProps = {
-      email: window.localStorage.getItem("email"),
+      email: authenticatedUser?.email ?? null,
       businessEntityType: Number(selectedEntitty),
       industry: Number(businessType),
       turnover: Number(turnOver),
     };
-    console.log("it's triggering", data);
-
-    mutate(data);
+    mutate(data, {
+      onSuccess: (data) => {
+        const [response, error] = data;
+        if (error) {
+          showToast("There is some issue while submitting details.", "error");
+          return;
+        }
+        if (response) {
+          showToast(`Merchant details successfully submitted`, "success");
+          console.log("go to dashboard");
+          router.push("/");
+        }
+      },
+    });
   };
 
   return (
@@ -60,7 +75,7 @@ const MerchantDetails = () => {
             label="Entity type"
             value={selectedEntitty}
             onChange={(value) => handleSlectedEntity(value)}
-            selectionData={businessTypes}
+            selectionData={businessTypes as SelectionDataProps[]}
             classNames={{
               label: "text-secondary",
               mainWrapper:
@@ -76,7 +91,7 @@ const MerchantDetails = () => {
             label="Business type"
             value={businessType}
             onChange={(value) => handleSelectBusinessTypes(value)}
-            selectionData={IndustryTypes}
+            selectionData={IndustryTypes as SelectionDataProps[]}
             classNames={{
               label: "text-secondary",
               mainWrapper:
@@ -91,8 +106,8 @@ const MerchantDetails = () => {
           <CustomSelect
             label="Annual Business Turnover"
             value={turnOver}
-            onChange={(value) => handleTurnOver(value)}
-            selectionData={Turnover_list}
+            onChange={(value: string | null) => handleTurnOver(value)}
+            selectionData={Turnover_list as SelectionDataProps[]}
             classNames={{
               label: "text-secondary",
               mainWrapper:

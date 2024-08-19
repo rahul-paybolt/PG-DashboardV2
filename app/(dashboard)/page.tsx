@@ -1,14 +1,14 @@
 "use client";
 
-import { BalanceOverViewData } from "@/constants/balance-overview.constants";
-import { BalanceOverviewProps as BalanceOverviewProps } from "@/interfaces/balance-overview";
+import { BalanceOverViewData } from "@/lib/constants/balance-overview.constants";
+import { BalanceOverviewProps as BalanceOverviewProps } from "@/lib/interfaces/balance-overview";
 import { Card, CardBody } from "@nextui-org/card";
 import { TbDots } from "react-icons/tb";
-import AnnualChart from "@/components/charts/AnnualChart";
-import ShowShortMessage from "@/components/PopOver/PopOver";
+import AnnualChart from "@/lib/components/charts/AnnualChart";
+import ShowShortMessage from "@/lib/components/PopOver/PopOver";
 import { useState } from "react";
 import { Skeleton } from "@nextui-org/skeleton";
-import { formatAmount } from "@/utils/utils";
+import { formatAmount } from "@/lib/utils/utils";
 
 const Simmer = () => {
   return (

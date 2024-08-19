@@ -1,12 +1,17 @@
-"use client";
+"use client"; // Make sure to use "use client" to indicate this file uses client-side features
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import VerifyingPopus from "@/components/VerifyingPopups/VerifyingPopus";
-import { transformStringFromSnakeCase } from "@/utils/common-utils";
-import { useVerifyToken } from "@/hooks/useVerifyToken";
-import UsersBasicDetails from "../merchant-info/page";
-import { safeAny } from "@/interfaces/global.interface";
+import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
+import { transformStringFromSnakeCase } from "@/lib/utils/common-utils";
+import {
+  generateQRCodeLink,
+  useVerifyToken,
+} from "@/lib/hooks/auth-verification";
+import {
+  LocalStorageKeys,
+  persistToLocalStorage,
+} from "@/lib/utils/localStorage-utils";
 
 interface AuthRouteParams {
   nextauth: string[];
@@ -24,7 +29,7 @@ interface AuthRouteRequest {
   searchParams: AuthRouteSearchParams;
 }
 
-interface verificationStatusProps {
+interface VerificationStatusProps {
   email: string;
   is2FAEnabled: boolean;
   onboardingStatus: number;
@@ -34,7 +39,6 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
   const { nextauth } = params;
   const { token } = searchParams;
   const { error } = searchParams;
-  const { x } = searchParams;
   const router = useRouter();
 
   const { refetch } = useVerifyToken(nextauth[0], token ?? "");
@@ -43,51 +47,57 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
     useState<React.ReactNode>(null);
 
   useEffect(() => {
-    if (token) {
-      refetch().then((res: any) => {
-        console.log("res--->", res);
-        if (typeof window !== "undefined") {
-          const verificationStatus = {
-            email: res?.data?.email,
-            is2FAEnabled: res?.data?.is2FAEnabled,
-            onboardingStatus: res?.data?.onboardingStatus,
-          };
+    const fetchData = async () => {
+      if (token) {
+        try {
+          const res = await refetch();
+          const userData = res?.data?.[0];
 
-          localStorage.setItem(
-            "verificationStatus",
-            JSON.stringify(verificationStatus)
-          );
+          if (userData) {
+            const verificationStatus = {
+              email: userData.email,
+              is2FAEnabled: userData.is2FAEnabled,
+              onboardingStatus: userData.onboardingStatus,
+            };
+
+            persistToLocalStorage(
+              LocalStorageKeys.AUTHENTICATED_USER,
+              verificationStatus
+            );
+
+            const { onboardingStatus, is2FAEnabled, email } = userData;
+            if (onboardingStatus === 0) {
+              router.push("/auth/merchant-info");
+            } else if (onboardingStatus === 1) {
+              router.push("/auth/merchants");
+            } else if (onboardingStatus === 2) {
+              router.push("/auth/multifactor");
+            } else {
+              router.push("/sign-in");
+            }
+          }
+
+          if (error) {
+            setComponentToRender(
+              <VerifyingPopus
+                title={transformStringFromSnakeCase(error)}
+                content="Please verify your account"
+                isOpen={true}
+              />
+            );
+          }
+        } catch (err) {
+          console.error("Error:", err);
+        } finally {
+          setLoading(false);
         }
-
-        if (error) {
-          setComponentToRender(
-            <VerifyingPopus
-              title={transformStringFromSnakeCase(error)}
-              content="Please verify your account"
-              isOpen={true}
-            />
-          );
-        }
-
-        if (res?.data?.onboardingStatus === 1) {
-          router.push("/auth/merchant");
-        } else if (res?.data && res?.data?.onboardingStatus === 2) {
-          router.push("/auth/multifactor");
-        } else {
-          router.push("/sign-in");
-        }
-        // else if (x && +x === AuthenticationType.SIGN_UP) {
-        setComponentToRender(<UsersBasicDetails />);
-        // } else if (x && +x === AuthenticationType.BUSINESS_DETAILS) {
-        // router.push("/login-2fa");
-        // }
-
+      } else {
         setLoading(false);
-      });
-    } else {
-      setLoading(false);
-    }
-  }, [token, x, error, refetch, router]);
+      }
+    };
+
+    fetchData();
+  }, [refetch, token, router, error]);
 
   if (loading) {
     return <div>Loading...</div>; // or a spinner/loading component

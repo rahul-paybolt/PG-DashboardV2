@@ -1,5 +1,5 @@
 "use client";
-import Input from "@/components/InputContainer/Input";
+import Input from "@/lib/components/InputContainer/Input";
 import { EyeFilledIcon } from "@/public/assests/Icon/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "@/public/assests/Icon/EyeSlashedIcon";
 import Image from "next/image";

@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { loadScript } from "@/utils/common-utils";
 import { Button } from "@nextui-org/button";
 import { doSocialLogin } from "../actions";
 
@@ -24,10 +23,7 @@ const LoginForm = () => {
     return validateEmail(value) ? false : true;
   }, [value]);
 
-  const handleSubmit = (formData: FormData) => {
-    console.log("formData---->", formData);
-    // nextStep();
-  };
+  const handleSubmit = (formData: FormData) => {};
 
   return (
     <>

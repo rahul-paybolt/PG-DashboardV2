@@ -25,10 +25,10 @@ import {
   columns,
   statusOptions,
   users,
-} from "@/constants/recentTable/RecentTableData";
+} from "@/lib/constants/recentTable/RecentTableData";
 import { User } from "@nextui-org/user";
-import { SearchIcon } from "@/components/icons";
-import Input from "@/components/InputContainer/Input";
+import { SearchIcon } from "@/lib/components/icons";
+import Input from "@/lib/components/InputContainer/Input";
 import {
   Pagination,
   PaginationItem,
@@ -209,7 +209,7 @@ const RecentTransactions = () => {
             className="w-full sm:max-w-[80%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
-            inputValue={filterValue}
+            value={filterValue}
             // on={() => onClear()}
             onValueChange={onSearchChange}
             name="search"

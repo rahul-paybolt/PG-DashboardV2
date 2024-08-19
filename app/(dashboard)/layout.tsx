@@ -3,8 +3,8 @@
 import { ReactNode, useState } from "react";
 import clsx from "clsx";
 
-import { Sidebar } from "@/components/Sidebar";
-import Header from "@/components/Header";
+import { Sidebar } from "@/lib/components/Sidebar";
+import Header from "@/lib/components/Header";
 
 import "@/styles/globals.scss";
 

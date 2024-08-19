@@ -64,7 +64,7 @@ const LoginForm = () => {
             className="login-with-microsoft-btn w-[380px] cursor-pointer"
             type="submit"
             name="action"
-            value="google"
+            value="microsoft"
           >
             Sign In with Microsoft
           </Button>
