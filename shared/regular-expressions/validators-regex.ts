@@ -17,7 +17,7 @@ export const OA_CLIENT_NAME_REGEX = /^[a-zA-Z '.&-]+$/;
 export const COMMA_SEPARATED_EMAIL_REGEX =
   /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.,]+$/;
 
-export const PHONE_REGEX = /^(\91)?[123456789][0-9]{9}$/;
+export const PHONE_REGEX = /^(91)?[123456789][0-9]{9}$/;
 
 export const EMAIL_OR_PHONE_REGEX =
   /^[123456789][0-9]{9}$|^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
