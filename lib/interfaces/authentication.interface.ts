@@ -1,6 +1,6 @@
 export interface AuthenticatedUser {
   fullName: string;
-  email: string;
+  email: string | null | undefined;
   mobile: string;
   designation: string;
   businessName: string;
@@ -19,29 +19,15 @@ export interface UserRegistration {
 }
 
 export interface LoginRequest {
-  email: string;
+  email: string | null | undefined;
   code2FA: string;
+}
+export interface GenrateQRCodeRequest {
+  email: string | null | undefined;
 }
 
 export interface ResetPasswordRequest {
   login: string;
   verification_code: string;
   new_password: string;
-}
-
-export interface GoogleSignInResponse {
-  is_new_user: number;
-  status: number;
-}
-
-export interface GoogleUserdata {
-  email: string;
-  email_verified: boolean;
-  exp: number;
-  family_name: string;
-  given_name: string;
-  name: string;
-  picture: string;
-  sub: string;
-  credential: string;
 }

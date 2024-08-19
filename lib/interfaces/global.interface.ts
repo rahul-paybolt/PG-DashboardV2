@@ -8,6 +8,18 @@ export interface PBBaseResponse {
   message: string;
 }
 
+export interface MerchantBasicInfoResponse {
+  message: string;
+  statusCode: number;
+  error?: string | null;
+}
+
+export interface GoogleSignInResponse {
+  message: string[];
+  statusCode: number;
+  error?: string | null;
+}
+
 export interface DataWrapper<T> {
   data: T;
 }
@@ -21,4 +33,6 @@ export enum LocalStorageKeys {
 
 export interface generateQRCodeResponse {
   qrCode: string;
+  message: string;
+  error: string;
 }

@@ -1,19 +1,20 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
-import { BUSINESS_TYPES } from "@/lib/interfaces/register-interface";
-import { safeAny } from "@/lib/interfaces/global.interface";
-export interface selectionDataProps {
-  key: string | BUSINESS_TYPES;
+import { SharedSelection } from "@nextui-org/react";
+
+export type Key = string;
+
+export interface SelectionDataProps {
+  key: Key;
   label: string;
 }
-export type Key = string | number;
 
-interface CustomSelectProps<T> {
+interface CustomSelectProps {
   label: string;
   placeholder?: string;
-  value: T;
-  onChange: (value: T) => void;
-  selectionData: Array<T>;
+  value: Key | null;
+  onChange: (value: Key | null) => void;
+  selectionData: Array<SelectionDataProps>;
   variant?: "flat" | "bordered" | "faded" | "underlined";
   classNames?: Partial<
     Record<
@@ -35,7 +36,8 @@ interface CustomSelectProps<T> {
   >;
   name?: string;
 }
-const CustomSelect: React.FC<CustomSelectProps<safeAny>> = ({
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
   label,
   placeholder = "Select an option",
   value,
@@ -45,29 +47,24 @@ const CustomSelect: React.FC<CustomSelectProps<safeAny>> = ({
   variant,
   name,
 }) => {
-  const handleSelectionChange = (selectedKeys: Set<string>) => {
-    // Since Select in Next UI accepts Set<string> for selectedKeys, convert to string or null
-    const selectedValue =
-      selectedKeys.size > 0 ? Array.from(selectedKeys)[0] : null;
-    onChange(selectedValue);
+  const handleSelectionChange = (keys: SharedSelection) => {
+    const selectedKey = Array.isArray(keys) ? keys[0] : keys.currentKey || null;
+    onChange(selectedKey as Key | null);
   };
+
   return (
     <Select
       label={label}
       variant={variant}
       placeholder={placeholder}
-      selectedKeys={value ? new Set([value]) : new Set([])}
-      className="max-w-xs"
+      selectedKeys={value !== null ? new Set([value]) : new Set()}
       onSelectionChange={handleSelectionChange}
-      ght-transparent
-      border-medium
-      border-default-200
       classNames={classNames}
       name={name}
     >
-      {selectionData.map((items) => (
-        <SelectItem key={items.key} value={items.key}>
-          {items.label}
+      {selectionData.map((item) => (
+        <SelectItem key={item.key} value={item.key}>
+          {item.label}
         </SelectItem>
       ))}
     </Select>

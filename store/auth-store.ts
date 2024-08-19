@@ -11,6 +11,6 @@ const initialValues: AuthenticatedUser = {
   onboardingStatus: 0,
 };
 
-export const AuthStore = createGlobalState<AuthenticatedUser>("authUser", {
+export const AuthStore = createGlobalState<AuthenticatedUser>("pb_user", {
   ...initialValues,
 });

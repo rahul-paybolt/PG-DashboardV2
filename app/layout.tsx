@@ -8,6 +8,8 @@ import { NavbarProvider } from "@/lib/components/NavBarContext";
 
 import "@/styles/globals.scss";
 import { ReactQueryProvider } from "./QueryProvider";
+import { ToastProvider } from "@/lib/components/Toast/ToastContext";
+import Toast from "@/lib/components/Toast/Toast";
 
 export const metadata: Metadata = {
   title: "PayBolt",
@@ -31,9 +33,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         )}
       >
         <ReactQueryProvider>
-          <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-            <NavbarProvider>{children}</NavbarProvider>
-          </Providers>
+          <ToastProvider>
+            <Providers
+              themeProps={{ attribute: "class", defaultTheme: "dark" }}
+            >
+              <NavbarProvider>{children}</NavbarProvider>
+            </Providers>
+          </ToastProvider>
         </ReactQueryProvider>
       </body>
     </html>

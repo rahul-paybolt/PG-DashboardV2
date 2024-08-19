@@ -71,13 +71,6 @@ const AuthRoute = ({ params, searchParams }: AuthRouteRequest) => {
             } else if (onboardingStatus === 1) {
               router.push("/auth/merchants");
             } else if (onboardingStatus === 2) {
-              // if (!is2FAEnabled) {
-              //   const qrCodeData = await generateQRCodeLink(email);
-              //   persistToLocalStorage(
-              //     LocalStorageKeys.QR_CODE,
-              //     qrCodeData?.data?.[0]?.qrCode
-              //   );
-              // }
               router.push("/auth/multifactor");
             } else {
               router.push("/sign-in");

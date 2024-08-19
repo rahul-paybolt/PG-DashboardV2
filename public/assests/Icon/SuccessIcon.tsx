@@ -37,9 +37,9 @@ const SuccessIcon = ({
         transform="translate(-1496.634 1108.586)"
         fill="none"
         stroke="#fff"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        // stroke-linecap="round"
+        // stroke-linejoin="round"
+        strokeWidth={strokeWidth}
       />
     </g>
   </svg>

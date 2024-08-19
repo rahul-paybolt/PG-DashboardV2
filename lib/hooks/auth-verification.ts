@@ -4,13 +4,20 @@ import {
   generateQrCode,
   loginWithGoogle,
   signUpWithGoogle,
+  submitMerchantBasicInfo,
   submitMerchantDetails,
 } from "@/lib/services/auth-service";
-import { useMutation, useQuery, QueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { LoginRequest } from "../interfaces/authentication.interface";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  AuthenticatedUser,
+  GenrateQRCodeRequest,
+  LoginRequest,
+} from "../interfaces/authentication.interface";
+import {
+  generateQRCodeResponse,
+  safeAny,
+} from "../interfaces/global.interface";
 
-export const socialLogin = () => {};
 export const useVerifyToken = (provider: string, token: string) => {
   const { refetch } = useQuery({
     queryKey: ["gAuth"],
@@ -18,6 +25,14 @@ export const useVerifyToken = (provider: string, token: string) => {
     enabled: false,
   });
   return { refetch };
+};
+
+export const submitMerchantInfoSubmission = () => {
+  return useMutation({
+    mutationFn: (data: AuthenticatedUser) => {
+      return submitMerchantBasicInfo(data);
+    },
+  });
 };
 
 export const merchantDetailsSubmission = () => {
@@ -28,7 +43,7 @@ export const merchantDetailsSubmission = () => {
   });
 };
 
-export const generateQRCodeLink = (email: string) => {
+export const generateQRCodeLink = (email: GenrateQRCodeRequest) => {
   return useQuery({
     queryKey: ["Qr-link"],
     queryFn: () => generateQrCode(email),

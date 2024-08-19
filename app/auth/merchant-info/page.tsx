@@ -1,19 +1,17 @@
 "use client";
-
 import React, { useState } from "react";
 import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
-import axios from "axios";
 import { AuthenticatedUser } from "@/lib/interfaces/authentication.interface";
 import { DesignationOptions } from "@/lib/constants/RegisterForm/RegisterForm.constants";
-import { AuthStore } from "@/store/auth-store";
 import VerifyingPopus from "@/lib/components/VerifyingPopups/VerifyingPopus";
 import CustomInput from "@/lib/components/InputContainer/Input";
 import { CustomButton } from "@/lib/components/ButtonComponent/CustomButton";
 import { NAME_REGEX, PHONE_REGEX } from "@/shared/regular-expressions";
 import ErrorHandlerMessage from "@/lib/components/ErrorHandler/ErrorHandlerMessage";
-import { safeAny } from "@/lib/interfaces/global.interface";
 import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
-import { showErrorToast } from "@/lib/utils/toast.utils";
+import { useToast } from "@/lib/components/Toast/ToastContext";
+import { submitMerchantInfoSubmission } from "@/lib/hooks/auth-verification";
+import { AuthStore } from "@/store/auth-store";
 const UsersBasicDetails = () => {
   const [name, setName] = useState<string>("");
   const [businessName, setBusinessName] = useState<string>("");
@@ -21,28 +19,23 @@ const UsersBasicDetails = () => {
   const [mobile, setMobile] = useState<string>("91");
   const [verifyModal, setVerifyModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { showToast } = useToast();
+  const { mutate } = submitMerchantInfoSubmission();
+  // const { data, setData } = AuthStore();
 
-  // const { data, setData, resetData } = AuthStore();
+  const authenticatedUsers = getAuthenticatedUserDetailsFromLS();
+  // if (authenticatedUsers) {
+  //   setData(authenticatedUsers);
+  // }
 
-  const getEmail = () => {
-    const storedData = getAuthenticatedUserDetailsFromLS();
-    if (storedData) {
-      try {
-        const verifiedEmail = storedData?.email;
-        return verifiedEmail;
-      } catch (error) {}
-    } else {
-    }
-  };
   const handleSubmit = async () => {
     const merchantInfoData: AuthenticatedUser = {
       fullName: name,
       businessName: businessName,
       designation: designationType,
       mobile: mobile,
-      email: getEmail(),
+      email: authenticatedUsers && authenticatedUsers?.email,
     };
-    console.log("merchantInfoData", merchantInfoData);
 
     const isValid =
       merchantInfoData.fullName &&
@@ -52,44 +45,23 @@ const UsersBasicDetails = () => {
       merchantInfoData.email;
 
     if (!isValid) {
-      setErrorMessage("Some of the fields are empty");
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 3000);
-
-      // showErrorToast("Some of the fields are empty")
+      showToast("Some field value are not valid", "error");
       return;
     }
-
-    try {
-      setData({ ...merchantInfoData });
-      const res = await submitMerchantInfo(merchantInfoData);
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const submitMerchantInfo = async (data: AuthenticatedUser) => {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/users/send-magic-link`,
-        data,
-        { withCredentials: true }
-      );
-      // if (typeof window !== "undefined") {
-      //   localStorage.removeItem("email");
-      // }
-      console.log("res", response);
-      if (response) {
-        setVerifyModal(true);
-      }
-      return response;
-    } catch (err: safeAny) {
-      console.log("err", err);
-      setErrorMessage(err);
-    }
-    setErrorMessage(null);
+    mutate(merchantInfoData, {
+      onSuccess: (data) => {
+        const [response, error] = data;
+        if (error) {
+          showToast(error?.message, "error");
+          return;
+        }
+        if (response) {
+          setVerifyModal(true);
+          showToast(response?.message, "success");
+          return;
+        }
+      },
+    });
   };
 
   const validatePhone = (value: string) => value.match(PHONE_REGEX);

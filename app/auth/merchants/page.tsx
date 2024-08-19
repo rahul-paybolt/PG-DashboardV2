@@ -1,5 +1,6 @@
 "use client";
 import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
+import { useToast } from "@/lib/components/Toast/ToastContext";
 import {
   businessTypes,
   IndustryTypes,
@@ -8,7 +9,6 @@ import {
 import { merchantDetailsSubmission } from "@/lib/hooks/auth-verification";
 import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
 import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
-// import AuthenticatedUser from "@/utils/auth-utils";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -17,6 +17,7 @@ const MerchantDetails = () => {
   const [businessType, setBusinessType] = useState<number>();
   const [turnOver, setTurnOver] = useState<number>();
   const router = useRouter();
+  const { showToast } = useToast();
 
   const handleSlectedEntity = (value: number) => {
     setSelectedEntity(value);
@@ -33,6 +34,8 @@ const MerchantDetails = () => {
   const { mutate, isError, isSuccess } = merchantDetailsSubmission();
 
   const handleSubmitMerchantDetails = () => {
+    // showToast(`Merchant details successfully submitted`, "success");
+
     console.log(typeof selectedEntitty, typeof businessType, typeof turnOver);
     const authenticatedUser = getAuthenticatedUserDetailsFromLS();
 
@@ -46,10 +49,11 @@ const MerchantDetails = () => {
     mutate(data);
     if (isSuccess) {
       console.log("go to dashboard");
+      showToast(`Merchant details successfully submitted`, "success");
       router.push("/");
     }
     if (isError) {
-      console.log(isError);
+      showToast("There is some issue while submitting details.", "error");
     }
   };
 

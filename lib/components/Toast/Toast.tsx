@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+"use client";
 import { ToastType } from "@/lib/enum/toast";
+import ErrorIcon from "@/public/assests/Icon/ErrorIcon";
 import HintIcon from "@/public/assests/Icon/HintIcon";
-import CrossCloseIcon from "@/public/assests/Icon/CrossCloseIcon";
 import SuccessIcon from "@/public/assests/Icon/SuccessIcon";
 import WarnIcon from "@/public/assests/Icon/WarnIcon";
-import ErrorIcon from "@/public/assests/Icon/ErrorIcon";
+import { useEffect, useState } from "react";
+import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/popover";
 interface ToastProps {
   open: boolean;
   message: string;
@@ -20,9 +21,16 @@ const Toast: React.FC<ToastProps> = ({
   onClose,
   duration,
 }) => {
-  const _defaultDuration = 5000;
+  console.log(
+    "Message inside toast compoenents",
+    message,
+    "type-inside component",
+    type
+  );
+  const _defaultDuration = 3000;
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
+  // Map each toast type to its corresponding icon
   const toastClasses: Record<ToastType, JSX.Element> = {
     hint: <HintIcon />,
     success: <SuccessIcon />,
@@ -30,23 +38,31 @@ const Toast: React.FC<ToastProps> = ({
     error: <ErrorIcon />,
   };
 
+  // Effect to handle the toast auto-close functionality
   useEffect(() => {
     if (open && message) {
+      // Clear any existing timeout to reset the timer
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
+
+      // Set a new timeout to close the toast after the duration
       const id = setTimeout(() => {
         handleClose();
       }, duration || _defaultDuration);
+
       setTimeoutId(id);
     }
+
+    // Cleanup function to clear timeout when component unmounts or dependencies change
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
     };
-  }, [open, message, duration, timeoutId]);
+  }, []);
 
+  // Function to handle manual toast close
   const handleClose = () => {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -54,17 +70,38 @@ const Toast: React.FC<ToastProps> = ({
     onClose();
   };
 
+  // Return null if the toast is not open
   if (!open) return null;
 
   return (
-    <div className="min-w-80 bg-default-900 absolute bottom-4 z-max left-1/2 transform -translate-x-1/2 text-transparent inline-flex px-4 py-3 rounded items-center justify-between space-x-5">
-      <div className="flex items-center">
-        {toastClasses[type]}
-        <p className="font-medium text-white text-sm capitalize">{message}</p>
-      </div>
-      <div className="flex items-center justify-center" onClick={handleClose}>
-        <CrossCloseIcon />
-      </div>
+    <div className=" flex items-center justify-center">
+      <Popover
+        placement="top"
+        isOpen={open}
+        classNames={{
+          base: [
+            // arrow color
+            "flex items-center justify-center ",
+          ],
+          content: [
+            "py-3 px-4 border border-default-200",
+            "bg-gradient-to-br from-white to-default-300",
+            "dark:from-default-100 dark:to-default-50",
+          ],
+        }}
+        onOpenChange={handleClose}
+      >
+        <PopoverContent>
+          <PopoverTrigger>
+            <div className="flex items-center gap-x-4">
+              {toastClasses[type]}
+              <p className="font-medium text-white text-sm capitalize">
+                {message}
+              </p>
+            </div>
+          </PopoverTrigger>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };

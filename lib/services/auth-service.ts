@@ -1,12 +1,14 @@
 import {
   AuthenticatedUser,
-  GoogleSignInResponse,
+  GenrateQRCodeRequest,
   LoginRequest,
 } from "@/lib/interfaces/authentication.interface";
 
 import { resolvePBApi } from "@/lib/utils/common-utils";
 import {
   generateQRCodeResponse,
+  GoogleSignInResponse,
+  MerchantBasicInfoResponse,
   PBBaseResponse,
   safeAny,
 } from "@/lib/interfaces/global.interface";
@@ -39,11 +41,14 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 // };
 
 export const loginWithGoogle = async (
-  data: LoginRequest
-): Promise<[PBBaseResponse | null, safeAny]> => {
-  const [response, error] = await resolvePBApi<PBBaseResponse>(
+  request: LoginRequest
+): Promise<[GoogleSignInResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<GoogleSignInResponse>(
     () =>
-      axios.post<PBBaseResponse>(`${baseUrl}/api/v1/auth/users/login`, data),
+      axios.post<GoogleSignInResponse>(
+        `${baseUrl}/api/v1/auth/users/login`,
+        request
+      ),
     false,
     true,
     false
@@ -96,6 +101,21 @@ export const verifyMagicLink = async (
   return [response, error];
 };
 
+export const submitMerchantBasicInfo = async (
+  data: AuthenticatedUser
+): Promise<[MerchantBasicInfoResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<MerchantBasicInfoResponse>(
+    () =>
+      axios.post<MerchantBasicInfoResponse>(
+        `${baseUrl}/api/v1/auth/users/send-magic-link`,
+        data
+      ),
+    false,
+    true,
+    false
+  );
+  return [response, error];
+};
 export const submitMerchantDetails = async (
   data: MerchantDetailsProps
 ): Promise<[PBBaseResponse | null, safeAny]> => {
@@ -113,7 +133,7 @@ export const submitMerchantDetails = async (
 };
 
 export const generateQrCode = async (
-  email: string
+  email: GenrateQRCodeRequest
 ): Promise<[generateQRCodeResponse | null, safeAny]> => {
   const [response, error] = await resolvePBApi<generateQRCodeResponse>(
     () =>

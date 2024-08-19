@@ -1,6 +1,7 @@
 import { type AxiosResponse } from "axios";
 import { safeAny } from "@/lib/interfaces/global.interface";
 import { NO_DATA_FOUND_MSG } from "@/lib/constants/global-constants";
+import { useToast } from "../components/Toast/ToastContext";
 
 export const resolvePBApi = async <T = safeAny>(
   aPromiseFn: () => Promise<AxiosResponse<T>>,
@@ -9,6 +10,7 @@ export const resolvePBApi = async <T = safeAny>(
   handle401 = true
 ): Promise<[T | null, safeAny, number]> => {
   let apiResponse: AxiosResponse<T> | null = null;
+  // const { showToast } = useToast();
 
   let errorResponse: safeAny = null;
 
@@ -34,6 +36,7 @@ export const resolvePBApi = async <T = safeAny>(
       // try to find out how errors key behaves and try to generalize
       // showErrorToast(errorResponse.message);
 
+      // showToast("getting error", "error");
       console.log("errr...");
     }
   } finally {

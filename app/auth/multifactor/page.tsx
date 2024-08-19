@@ -1,7 +1,7 @@
 "use client";
 import MultiFactorIcon from "@/public/assests/Icon/MultiFactorIcon";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, ModalContent } from "@nextui-org/modal";
 import CustomInput from "../../../lib/components/InputContainer/Input";
 import { CustomButton } from "@/lib/components/ButtonComponent/CustomButton";
@@ -10,41 +10,48 @@ import {
   generateQRCodeLink,
   signInwithGoogle,
 } from "@/lib/hooks/auth-verification";
-import { generateQRCodeResponse } from "@/lib/interfaces/global.interface";
-import {
-  AuthenticatedUser,
-  LoginRequest,
-} from "@/lib/interfaces/authentication.interface";
-import ErrorHandlerMessage from "@/lib/components/ErrorHandler/ErrorHandlerMessage";
+import { LoginRequest } from "@/lib/interfaces/authentication.interface";
 import { useRouter } from "next/navigation";
-import { ToastStore } from "@/store/toast-store";
+import { useToast } from "@/lib/components/Toast/ToastContext";
 const MultFactorAuth = () => {
-  const [code, setCode] = useState<string>();
+  const [code, setCode] = useState<string>("");
   const router = useRouter();
   const verifiedUser = getAuthenticatedUserDetailsFromLS();
   const email = verifiedUser?.email;
-  const { data, error, isLoading, isSuccess } = generateQRCodeLink(email);
-  const { mutate, isError } = signInwithGoogle();
+
+  const { mutate } = signInwithGoogle();
+  const { showToast } = useToast();
+
+  const { data: response, error } = generateQRCodeLink({ email });
 
   const loginVerify = () => {
-    console.log("clicked!!");
-
     if (!code) {
+      showToast("Code not found!", "error");
+      return;
     }
 
     const loginData: LoginRequest = {
       email: email,
       code2FA: code,
     };
-    mutate(loginData);
-    if (isSuccess) {
-      showSuccessToast("2FA enabled successfully");
-      return;
-    }
-    if (isError) {
-      showErrorToast("Invalid code");
-      return;
-    }
+
+    mutate(loginData, {
+      onSuccess: (data) => {
+        const [response, error] = data;
+
+        console.log("response", response, "error", error);
+        if (error) {
+          console.log("error", error);
+          showToast(error?.message, "error");
+          return;
+        }
+        if (response) {
+          showToast(response?.message[0], "success");
+          router.push("/");
+          return;
+        }
+      },
+    });
   };
 
   return (
@@ -65,9 +72,9 @@ const MultFactorAuth = () => {
               className="mb-4 dark:bg-white"
               color="#fff"
             />
-            {isSuccess && (
+            {response && response[0] && response[0].qrCode && (
               <Image
-                src={data[0]?.qrCode}
+                src={response[0].qrCode}
                 height={100}
                 width={250}
                 alt="QR Code"
