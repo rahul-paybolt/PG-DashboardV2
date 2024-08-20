@@ -53,8 +53,10 @@ const MerchantDetails = () => {
         }
         if (response) {
           showToast(`Merchant details successfully submitted`, "success");
-          console.log("go to dashboard");
-          router.push("/");
+          console.log("Navigating to dashboard");
+          router.push("/dashboard");
+          // Ensure the home page component is properly set up
+          // You may need to check if the home page route is correctly defined in your Next.js configuration
         }
       },
     });

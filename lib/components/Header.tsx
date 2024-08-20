@@ -25,8 +25,9 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getPageTitle = () => {
+    console.log("pathName", pathName);
     switch (pathName) {
-      case "/":
+      case "/home":
         return "Dashboard";
       case "/transactions":
         return "Transactions List";
@@ -56,7 +57,7 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
       {isLoading ? (
         <Simmer />
       ) : (
-        <div className="flex items-center justify-between p-5">
+        <div className="flex items-center justify-between px-4 py-4">
           <span className="text-2xl dark:text-primary text-secondary font-semibold">
             {getPageTitle()}
           </span>
@@ -66,7 +67,8 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
             <div
               className={
                 "w-full flex items-center gap-x-4 py-1 px-5 rounded-md text-gray-700 dark:text-gray-300 border shadow-sm bg-white dark:bg-default-100 dark:border-default-300"
-              }>
+              }
+            >
               <Profile />
             </div>
           </div>

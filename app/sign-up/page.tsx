@@ -3,12 +3,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { loadScript } from "@/lib/utils/common-utils";
 import { Button } from "@nextui-org/button";
 import { doSocialLogin } from "../actions";
+import { ThemeSwitch } from "@/lib/components/theme-switch";
 
 const SignUpForm = () => {
-  const [value, setValue] = useState("");
   const [toggleText, setToggleText] = useState(false);
   const router = useRouter();
 
@@ -16,13 +15,6 @@ const SignUpForm = () => {
     setToggleText((prevValue) => !prevValue);
     router.push("/sign-in");
   };
-  const validateEmail = (value: string) =>
-    value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-
-  const isInvalid = useMemo(() => {
-    if (value === "") return false;
-    return validateEmail(value) ? false : true;
-  }, [value]);
 
   return (
     <>
@@ -34,9 +26,12 @@ const SignUpForm = () => {
           alt="page not found"
           className="flex items-center justify-center h-[50px] w-[50px]"
         />
-        <div className="flex gap-2">
-          <span className="text-light">Already a member?</span>
-          <span className="text-primary-600 cursor-pointer" onClick={navigate}>
+        <div className="flex gap-4 justify-center items-center">
+          <ThemeSwitch className="border-none bg-transparent [&>button]:bg-white [&>button]:dark:bg-gray-800" />
+          <span className="text-purple-600 dark:text-white">
+            Already a member?
+          </span>
+          <span className="text-purple-600 cursor-pointer" onClick={navigate}>
             {toggleText ? "Sign In" : "Sign Up"}
           </span>
         </div>

@@ -24,7 +24,7 @@ export const siteConfig = {
   navItems: [
     {
       label: "DashBoard",
-      href: "/",
+      href: "/home",
       icon: RxDashboard,
     },
     {

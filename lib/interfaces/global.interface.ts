@@ -15,7 +15,7 @@ export interface MerchantBasicInfoResponse {
 }
 
 export interface GoogleSignInResponse {
-  message: string[];
+  message: string;
   statusCode: number;
   error?: string | null;
 }

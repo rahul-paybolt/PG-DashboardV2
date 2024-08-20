@@ -44,8 +44,8 @@ const MultFactorAuth = () => {
           return;
         }
         if (response) {
-          showToast(response?.message[0], "success");
-          router.push("/");
+          showToast(response?.message, "success");
+          router.push("/home");
           return;
         }
       },
