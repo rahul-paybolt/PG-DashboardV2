@@ -4,11 +4,14 @@ FROM node:20
 # Set the working directory in the container
 WORKDIR /usr/app
 
-# Copy the package.json and package-lock.json files to the container
-COPY package*.json ./
+# Copy the package.json and pnpm-lock.yaml files to the container
+COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN pnpm install
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -20,4 +23,4 @@ RUN pnpm run build
 EXPOSE 3000
 
 # Command to run the Next.js application in production mode
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
