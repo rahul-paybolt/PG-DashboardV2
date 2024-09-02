@@ -27,11 +27,13 @@ interface SidebarProps {
 
 export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
   const pathName = usePathname();
-  const [subMenuOpenOf, setSubMenuOpenOf] = useState("/");
+  const [subMenuOpenOf, setSubMenuOpenOf] = useState("/home");
 
   const toggleSubmenu = (href: string) => {
     setSubMenuOpenOf(prev => (prev === href ? "/" : href));
   };
+
+  console.log("isCollapsed---->", isCollapsed);
 
   return (
     <div className="relative">

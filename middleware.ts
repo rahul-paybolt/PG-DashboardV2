@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 const middleware = async (req: NextRequest) => {
   const id_token = req.cookies.get("atk")?.value;
-  console.log(id_token)
+  console.log("id_token", id_token);
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;
@@ -29,7 +29,8 @@ const middleware = async (req: NextRequest) => {
     id_token &&
     (path === "/login" || path === "/sign-up" || path === "/login-2fa")
   ) {
-    return NextResponse.redirect(new URL("/", req.url));
+    console.log("url", req.url);
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
   // Allow the request to proceed
@@ -50,7 +51,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|_next\/image|favicon.ico|favicon_3.png|login|login-2fa|sign-up|merchant-info|merchants).*)",
+    "/((?!api|_next/static|_next/image|_next/image|favicon.ico|favicon_3.png|login|login-2fa|sign-up|merchant-info|merchants).*)",
   ],
 };
 
