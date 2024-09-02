@@ -52,11 +52,11 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
   };
 
   return (
-    <div className="shadow-md mb-5 border-b dark:border-primary border-secondary">
+    <div className="shadow-md mb-5 border-b dark:border-primary border-secondary py-5 px-7">
       {isLoading ? (
         <Simmer />
       ) : (
-        <div className="flex items-center justify-between p-5">
+        <div className="flex items-center justify-between">
           <span className="text-2xl dark:text-primary text-secondary font-semibold">
             {getPageTitle()}
           </span>

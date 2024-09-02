@@ -17,6 +17,8 @@ import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { cn } from "@nextui-org/theme";
 import { Tooltip } from "@nextui-org/tooltip";
+import logoFull from "@/public/logo/color-full.svg";
+import smallIcon from "@public/logo/paybolt-icon.png";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -28,7 +30,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
   const [subMenuOpenOf, setSubMenuOpenOf] = useState("/");
 
   const toggleSubmenu = (href: string) => {
-    setSubMenuOpenOf((prev) => (prev === href ? "/" : href));
+    setSubMenuOpenOf(prev => (prev === href ? "/" : href));
   };
 
   return (
@@ -42,31 +44,35 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
             "w-24": isCollapsed,
             "w-64": !isCollapsed,
           }
-        )}
-      >
+        )}>
         <NavbarContent className="flex flex-col w-full">
           <NavbarBrand
             as="li"
-            className="flex py-4 items-center w-full justify-start"
-          >
-            <div className="flex items-center gap-x-4">
-              <Image
-                src="/assests/images/favicon_3.png"
-                alt="Logo"
-                height={40}
-                width={40}
-                className="rounded cursor-pointer"
-                onClick={toggleNavbar}
-              />
-              {!isCollapsed && (
-                <p className="font-black text-2xl uppercase dark:text-primary text-secondary">
-                  PayBolt
-                </p>
+            className="flex py-4 items-center w-full justify-start">
+            <div className="flex items-center gap-x-4 h-14">
+              {!isCollapsed ? (
+                <Image
+                  {...logoFull}
+                  alt="PayBolt Logo"
+                  height={56}
+                  width={200}
+                  className="rounded cursor-pointer"
+                  onClick={toggleNavbar}
+                />
+              ) : (
+                <Image
+                  {...smallIcon}
+                  alt="PayBolt Icon"
+                  height={56}
+                  width={30}
+                  className="rounded cursor-pointer pt-2.5 pl-1"
+                  onClick={toggleNavbar}
+                />
               )}
             </div>
           </NavbarBrand>
           <ul className="flex flex-col gap-4 justify-start w-full">
-            {siteConfig.navItems.map((item) => {
+            {siteConfig.navItems.map(item => {
               const isActive = pathName === item.href;
               const hasSubMenu = item?.subMenu && item.subMenu.length > 0;
 
@@ -76,8 +82,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
                     <NextLink
                       href={hasSubMenu ? item.subMenu[0].href : item.href}
                       passHref
-                      onClick={() => hasSubMenu && toggleSubmenu(item.href)}
-                    >
+                      onClick={() => hasSubMenu && toggleSubmenu(item.href)}>
                       <NavbarItem
                         className={clsx(
                           "flex items-center p-2 rounded-md transition-colors duration-200 gap-x-4 text-gray-700 dark:text-gray-300 border border-transparent",
@@ -86,8 +91,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
                               isActive,
                             "w-fit": isCollapsed,
                           }
-                        )}
-                      >
+                        )}>
                         <item.icon
                           className={cn(
                             "text-gray-500 dark:text-gray-400 h-[24px] w-[24px] min-h-[24px]",
@@ -104,8 +108,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
                                 "font-medium dark:text-primary text-secondary":
                                   isActive,
                               }
-                            )}
-                          >
+                            )}>
                             <span>{item.label}</span>
                             {hasSubMenu && (
                               <FaAngleDown
@@ -121,7 +124,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
                   </Tooltip>
                   {subMenuOpenOf === item.href && hasSubMenu && (
                     <div className="w-full pl-3 flex flex-col my-1">
-                      {item.subMenu.map((sub) => (
+                      {item.subMenu.map(sub => (
                         <Tooltip content={sub.label} key={sub.label}>
                           <NextLink
                             href={sub.href}
@@ -132,8 +135,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
                                   pathName === sub.href,
                                 "w-fit": isCollapsed,
                               }
-                            )}
-                          >
+                            )}>
                             <sub.icon
                               className={cn(
                                 "text-gray-500 dark:text-gray-400 h-[24px] w-[24px]",
@@ -158,7 +160,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
             {[
               { label: "Help", link: "/help" },
               { label: "Feedback", link: "/feedback" },
-            ].map((item) => (
+            ].map(item => (
               <Tooltip key={item.link} content={item.label}>
                 <NextLink href={item.link} passHref>
                   <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
