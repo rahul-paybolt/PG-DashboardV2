@@ -1,5 +1,5 @@
 import { Metadata, Viewport } from "next";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/lib/config/site";
 
 export const metadata: Metadata = {
   title: {

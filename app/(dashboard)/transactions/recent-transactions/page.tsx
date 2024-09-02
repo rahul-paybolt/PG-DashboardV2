@@ -25,10 +25,10 @@ import {
   columns,
   statusOptions,
   users,
-} from "@/constants/recentTable/RecentTableData";
+} from "@/lib/constants/recentTable/RecentTableData";
 import { User } from "@nextui-org/user";
-import { SearchIcon } from "@/components/icons";
-import Input from "@/components/InputContainer/Input";
+import { SearchIcon } from "@/lib/components/icons";
+import Input from "@/lib/components/InputContainer/Input";
 import {
   Pagination,
   PaginationItem,
@@ -206,13 +206,13 @@ const RecentTransactions = () => {
       <div className="flex flex-col gap-4 rounded-md shadow-large px-4 py-4">
         <div className="flex  gap-3 items-end">
           <Input
-            isClearable
             className="w-full sm:max-w-[80%]"
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
-            onClear={() => onClear()}
+            // on={() => onClear()}
             onValueChange={onSearchChange}
+            name="search"
           />
         </div>
         <div className="flex justify-between items-center">

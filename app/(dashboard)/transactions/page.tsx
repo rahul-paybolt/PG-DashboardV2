@@ -1,15 +1,15 @@
 "use client";
 
-import Input from "@/components/InputContainer/Input";
+import Input from "@/lib/components/InputContainer/Input";
 import { SearchIcon } from "@/public/assests/Icon/SearchIcon";
 import { useRef, useState } from "react";
-import CustomDateRangePicker from "@/components/DateRangePicker/DateRangePicker";
-import CustomSelect from "@/components/SelectOptions/SelectOptions";
-import CustomTable from "@/components/CustomTable/Table";
-import Services from "@/services/Services";
+import CustomDateRangePicker from "@/lib/components/DateRangePicker/DateRangePicker";
+import CustomSelect from "@/lib/components/SelectOptions/SelectOptions";
+import CustomTable from "@/lib/components/CustomTable/Table";
+import Services from "@/lib/services/Services";
 import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
-import { TransactionColumns } from "@/constants/CustomTable/CustomTable";
-import SelectOptionsData from "@/constants/dropdownConstants/SelectOptionData";
+import { TransactionColumns } from "@/lib/constants/CustomTable/CustomTable";
+import SelectOptionsData from "@/lib/constants/dropdownConstants/SelectOptionData";
 
 const Transactions = () => {
   const inputRef = useRef(null);
@@ -25,9 +25,7 @@ const Transactions = () => {
     onLoadMore: list.loadMore,
   });
 
-
   const handleChange = (e: string) => {
-    console.log("text", e);
     list.setFilterText(e);
   };
 
@@ -41,8 +39,6 @@ const Transactions = () => {
     );
   };
 
-  
-
   const TableTopContent = () => {
     return (
       <div className="flex items-center justify-between px-4 py-4 shadow-large rounded-md">
@@ -52,9 +48,10 @@ const Transactions = () => {
           placeholder="Type to search..."
           type="search"
           startContent={<SerchIcon />}
-          inputValue={list.filterText}
-          onInputChange={list.setFilterText}
-          loadingState={list.loadingState}
+          value={list.filterText}
+          onValueChange={list.setFilterText}
+          // loadingState={list.loadingState}
+          name="transactions"
         />
         <CustomDateRangePicker />
         <CustomSelect
@@ -68,7 +65,6 @@ const Transactions = () => {
     );
   };
 
-  
   return (
     <>
       <CustomTable
