@@ -33,8 +33,6 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
     setSubMenuOpenOf(prev => (prev === href ? "/" : href));
   };
 
-  console.log("isCollapsed---->", isCollapsed);
-
   return (
     <div className="relative">
       <NextUINavbar

@@ -45,7 +45,7 @@ const MerchantDetails = () => {
       turnover: Number(turnOver),
     };
     mutate(data, {
-      onSuccess: (data) => {
+      onSuccess: data => {
         const [response, error] = data;
         if (error) {
           showToast("There is some issue while submitting details.", "error");
@@ -53,7 +53,6 @@ const MerchantDetails = () => {
         }
         if (response) {
           showToast(`Merchant details successfully submitted`, "success");
-          console.log("Navigating to dashboard");
           router.push("/dashboard");
           // Ensure the home page component is properly set up
           // You may need to check if the home page route is correctly defined in your Next.js configuration
@@ -76,7 +75,7 @@ const MerchantDetails = () => {
           <CustomSelect
             label="Entity type"
             value={selectedEntitty}
-            onChange={(value) => handleSlectedEntity(value)}
+            onChange={value => handleSlectedEntity(value)}
             selectionData={businessTypes as SelectionDataProps[]}
             classNames={{
               label: "text-secondary",
@@ -92,7 +91,7 @@ const MerchantDetails = () => {
           <CustomSelect
             label="Business type"
             value={businessType}
-            onChange={(value) => handleSelectBusinessTypes(value)}
+            onChange={value => handleSelectBusinessTypes(value)}
             selectionData={IndustryTypes as SelectionDataProps[]}
             classNames={{
               label: "text-secondary",
@@ -125,8 +124,7 @@ const MerchantDetails = () => {
         <div className="flex gap-4 mt-4">
           <button
             className="bg-primary-600 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
-            onClick={handleSubmitMerchantDetails}
-          >
+            onClick={handleSubmitMerchantDetails}>
             Next
           </button>
         </div>

@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 
 const middleware = async (req: NextRequest) => {
   const id_token = req.cookies.get("atk")?.value;
-  console.log("id_token", id_token);
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;
@@ -29,7 +28,6 @@ const middleware = async (req: NextRequest) => {
     id_token &&
     (path === "/login" || path === "/sign-up" || path === "/login-2fa")
   ) {
-    console.log("url", req.url);
     return NextResponse.redirect(new URL("/home", req.url));
   }
 

@@ -25,7 +25,6 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getPageTitle = () => {
-    console.log("pathName", pathName);
     switch (pathName) {
       case "/home":
         return "Dashboard";
