@@ -53,7 +53,7 @@ const MerchantDetails = () => {
         }
         if (response) {
           showToast(`Merchant details successfully submitted`, "success");
-          router.push("/dashboard");
+          router.push("/kyc");
           // Ensure the home page component is properly set up
           // You may need to check if the home page route is correctly defined in your Next.js configuration
         }

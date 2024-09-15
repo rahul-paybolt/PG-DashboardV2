@@ -9,7 +9,6 @@ import { NavbarProvider } from "@/lib/components/NavBarContext";
 import "@/styles/globals.scss";
 import { ReactQueryProvider } from "./QueryProvider";
 import { ToastProvider } from "@/lib/components/Toast/ToastContext";
-import Toast from "@/lib/components/Toast/Toast";
 
 export const metadata: Metadata = {
   title: "PayBolt",
