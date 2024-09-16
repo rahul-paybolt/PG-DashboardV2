@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ReactQueryProvider>
           <ToastProvider>
             <Providers
-              themeProps={{ attribute: "class", defaultTheme: "dark" }}
+              themeProps={{ attribute: "class", defaultTheme: "white" }}
             >
               <NavbarProvider>{children}</NavbarProvider>
             </Providers>

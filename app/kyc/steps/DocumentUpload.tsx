@@ -55,15 +55,18 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
           <CustomInput
             label={`Upload ${doc}`}
             type="text"
-            className="w-full pr-10"
+            className="w-[300px] pr-10 cursor-pointer"
             readOnly
             endContent={
               <MdOutlineFileUpload
                 className="cursor-pointer"
                 size={24}
-                onClick={() => handleOpenModal(doc)}
               />
             }
+            onClick={() => handleOpenModal(doc)}
+            classNames={{
+              input: "cursor-pointer"
+            }}
           />
         </div>
       ))}
@@ -81,7 +84,7 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
             <div className="p-4">
               <div className="flex items-center justify-center mb-4  h-24 w-full border border-primary-600 rounded-lg">
                 <CiCamera size={48} className="cursor-pointer" onClick={handleFileSelection} />
-                <input
+                <CustomInput
                   type="file"
                   ref={fileInputRef}
                   className="hidden"
