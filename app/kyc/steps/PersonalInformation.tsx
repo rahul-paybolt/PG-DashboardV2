@@ -19,9 +19,9 @@ const PersonalInformation = ({ onNext, onSkip }: { onNext: () => void, onSkip: (
 
   return (
     <div className="flex flex-col items-center w-full">
-      <CustomInput label="PAN Number" className="w-full mb-4" />
-      <CustomInput label="Business Email" className="w-full mb-4" />
-      <CustomInput label="Business Type" className="w-full mb-4" />
+      <CustomInput label="PAN Number" className="w-full bg-white dark:text-white mb-4" />
+      <CustomInput label="Business Email" className="w-full bg-white dark:text-white mb-4" />
+      <CustomInput label="Business Type" className="w-full bg-white dark:text-white mb-4" />
       <div className="flex justify-between mt-4 w-full">
         <CustomButton onClick={onSkip} className="border border-primary-600">Skip</CustomButton>
         <CustomButton onClick={handleSubmit} className="border border-primary-600">Next</CustomButton>

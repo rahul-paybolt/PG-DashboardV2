@@ -14,7 +14,7 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
 
   const handleOpenModal = (documentName: string) => {
     setCurrentDocument(documentName);
-    setIsModalOpen(true);
+    setIsModalOpen(true);      
   };
 
   const handleCloseModal = () => {
@@ -44,17 +44,18 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => { // Add this function
     const file = event.target.files?.[0];
+    console.log(file);
     if (file) {
       // Handle the file upload logic here
     }
   };
   return (
-    <div className="flex flex-col items-center w-full">
+    <form className="flex flex-col items-center w-full" encType="multipart/form-data">
       {["PAN", "Aadhaar", "Bank Statement", "Address Proof"].map((doc) => (
         <div key={doc} className="relative w-full mb-4">
           <CustomInput
             label={`Upload ${doc}`}
-            type="text"
+            // type="file"
             className="w-[300px] pr-10 cursor-pointer"
             readOnly
             endContent={
@@ -67,11 +68,13 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
             classNames={{
               input: "cursor-pointer"
             }}
+            accept=".pdf, .jpg, .jpeg, .png"
+            // enctype="multipart/form-data"
           />
         </div>
       ))}
       <div className="flex justify-between mt-4 w-full">
-        <CustomButton onClick={onSkip} className="border border-primary-600">Skip</CustomButton>
+        <CustomButton onClick={onSkip}  className="border border-primary-600">Skip</CustomButton>
         <CustomButton onClick={handleSubmit} className="border border-primary-600">Next</CustomButton>
       </div>
 
@@ -96,7 +99,7 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
           }
         />
       )}
-    </div>
+    </form>
   );
 };
 

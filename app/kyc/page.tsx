@@ -38,6 +38,7 @@ const KYCPage = () => {
             <DropdownTrigger>
                 <Button 
                 variant="bordered" 
+                className=" border-primary-600 text-black"
                 >
                 There are only five steps and below documents are required to complete the KYC process.
                 </Button>
