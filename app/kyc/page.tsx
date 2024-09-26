@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import UsersBasicDetails from "../auth/merchant-info/page";
+import MerchantDetails from "../auth/merchants/page";
 import PersonalInformation from "./steps/PersonalInformation";
 import AadhaarNumber from "./steps/AadhaarNumber";
 import OTPVerification from "./steps/OTPVerification";
@@ -10,6 +12,8 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@ne
 
 
 const steps = [
+  "User Basic Details",
+  "Merchant Details",
   "Personal Information",
   "Aadhaar Number",
   "OTP Verification",
@@ -53,11 +57,13 @@ const KYCPage = () => {
             </DropdownMenu>
             </Dropdown>
       </div>
-      {currentStep === 0 && <PersonalInformation onNext={handleNext} onSkip={handleSkip} />}
-      {currentStep === 1 && <AadhaarNumber onNext={handleNext} onSkip={handleSkip} />}
-      {currentStep === 2 && <OTPVerification onNext={handleNext} onSkip={handleSkip} />}
-      {currentStep === 3 && <DocumentUpload onNext={handleNext} onSkip={handleSkip} />}
-      {currentStep === 4 && <Completion onSkip={handleSkip} />}
+      {currentStep === 0 && <UsersBasicDetails onNext={handleNext} />}
+      {currentStep === 1 && <MerchantDetails onNext={handleNext} />}
+      {currentStep === 2 && <PersonalInformation onNext={handleNext} onSkip={handleSkip} />}
+      {currentStep === 3 && <AadhaarNumber onNext={handleNext} onSkip={handleSkip} />}
+      {currentStep === 4 && <OTPVerification onNext={handleNext} onSkip={handleSkip} />}
+      {currentStep === 5 && <DocumentUpload onNext={handleNext} onSkip={handleSkip} />}
+      {currentStep === 6 && <Completion onSkip={handleSkip} />}
     </div>
   );
 };

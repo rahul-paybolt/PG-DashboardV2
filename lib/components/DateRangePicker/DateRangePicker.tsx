@@ -88,7 +88,7 @@ const CustomDateRangePicker = (props: CustomDateRangePickerProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-sm">
+    <div className="flex flex-col gap-4 w-full">
       <DateRangePicker
         classNames={{
           label: " text-purple-600 ",

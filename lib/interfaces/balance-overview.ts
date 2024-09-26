@@ -7,3 +7,9 @@ export interface BalanceOverviewProps {
 export interface SuccessFulTransactionsProps {
   header: string;
 }
+
+export interface CountCardProps {
+  heading: string;
+  count: number;
+  updated: string;
+}

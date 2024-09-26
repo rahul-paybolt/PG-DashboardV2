@@ -1,11 +1,12 @@
 "use client";
-import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
+import { MerchantDetailsProps, UserDetailsProps } from "@/lib/interfaces/register-interface";
 import {
   generateQrCode,
   loginWithGoogle,
   signUpWithGoogle,
   submitMerchantBasicInfo,
   submitMerchantDetails,
+  submitUserDetails,
 } from "@/lib/services/auth-service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -57,3 +58,11 @@ export const signInwithGoogle = () => {
     },
   });
 };
+
+export const logInWithMobile = () => {
+  return useMutation({
+    mutationFn: (data: UserDetailsProps) => {
+      return submitUserDetails(data);
+    }
+  })
+}

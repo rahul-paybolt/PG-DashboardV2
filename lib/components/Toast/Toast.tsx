@@ -67,7 +67,7 @@ const Toast: React.FC<ToastProps> = ({
       </PopoverTrigger>
       <PopoverContent>
         
-        <div className="flex items-center jsutify-center mb-24 gap-x-4 px-2 py-2">
+        <div className="flex items-center justify-center space-x-6 px-2 py-2">
           {toastIcons[type]}
           <span>{message}</span>
         </div>

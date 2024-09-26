@@ -40,6 +40,13 @@ export interface TurnoverType {
 export interface MerchantDetailsProps {
   email: string | null;
   businessEntityType: number;
-  industry: number;
+  // industry: number;
   turnover: number;
+  businessName: string;
+  designation: string;
+}
+
+export interface UserDetailsProps {
+  mobile: string;
+  password: string;
 }

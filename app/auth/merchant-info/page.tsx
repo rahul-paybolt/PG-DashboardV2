@@ -12,11 +12,12 @@ import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
 import { useToast } from "@/lib/components/Toast/ToastContext";
 import { submitMerchantInfoSubmission } from "@/lib/hooks/auth-verification";
 import { AuthStore } from "@/store/auth-store";
-const UsersBasicDetails = () => {
+const UsersBasicDetails = ({onNext} : {onNext: () => void}) => {
   const [name, setName] = useState<string>("");
-  const [businessName, setBusinessName] = useState<string>("");
-  const [designationType, setDesignationType] = useState<string>("");
-  const [mobile, setMobile] = useState<string>("91");
+  // const [businessName, setBusinessName] = useState<string>("");
+  // const [designationType, setDesignationType] = useState<string>("");
+  const [mobile, setMobile] = useState<string>("");
+  // 91
   const [verifyModal, setVerifyModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { showToast } = useToast();
@@ -27,17 +28,17 @@ const UsersBasicDetails = () => {
   const handleSubmit = async () => {
     const merchantInfoData: AuthenticatedUser = {
       fullName: name,
-      businessName: businessName,
-      designation: designationType,
+      // businessName: businessName,
+      // designation: designationType,
       mobile: mobile,
       email: authenticatedUsers?.email ?? null,
     };
 
     const isValid =
       merchantInfoData.fullName &&
-      merchantInfoData.businessName &&
-      merchantInfoData.designation &&
-      merchantInfoData.mobile &&
+      // merchantInfoData.businessName &&
+      // merchantInfoData.designation &&
+      merchantInfoData.mobile;
       merchantInfoData.email;
 
     if (!isValid) {
@@ -45,7 +46,7 @@ const UsersBasicDetails = () => {
       return;
     }
     mutate(merchantInfoData, {
-      onSuccess: (data) => {
+      onSuccess: (data: any) => {
         const [response, error] = data;
         if (error) {
           showToast(error?.message, "error");
@@ -54,10 +55,14 @@ const UsersBasicDetails = () => {
         if (response) {
           setVerifyModal(true);
           showToast(response?.message, "success");
+          onNext();
           return;
         }
+        
       },
     });
+
+    onNext();
   };
 
   const validatePhone = (value: string) => value.match(PHONE_REGEX);
@@ -83,8 +88,8 @@ const UsersBasicDetails = () => {
         content="Wait for minutes"
         isOpen={verifyModal}
       />
-
-      <div className="flex flex-col items-center text-center justify-center min-h-screen mx-auto my-auto ">
+{/* min-h-screen */}
+      <div className="flex flex-col items-center text-center justify-center mx-auto my-auto ">
         <div className="flex flex-col px-8 py-6">
           <h1 className="text-[80px] font-extrabold sm:text-3xl sm:font-semibold text-primary-600 mb-4">
             Enter your Personal Information
@@ -94,7 +99,7 @@ const UsersBasicDetails = () => {
             <CustomInput
               type="text"
               name="fullName"
-              placeholder="Enter your name"
+              // placeholder="Enter your name"
               label="Name"
               className="w-full mb-4"
               value={name}
@@ -107,7 +112,7 @@ const UsersBasicDetails = () => {
               onClear={() => console.log("input cleared")}
               isInvalid={validateNameSate === "invalid"}
             />
-            <CustomInput
+            {/* <CustomInput
               type="text"
               name="businessName"
               placeholder="Enter your business name"
@@ -123,8 +128,8 @@ const UsersBasicDetails = () => {
               validationState={validateNameSate}
               onClear={() => console.log("input cleared")}
               isInvalid={validateNameSate === "invalid"}
-            />
-            <CustomSelect
+            /> */}
+            {/* <CustomSelect
               label="Designation"
               placeholder="Select your designation"
               value={designationType}
@@ -141,7 +146,7 @@ const UsersBasicDetails = () => {
               }}
               variant="bordered"
               name="designation"
-            />
+            /> */}
             <CustomInput
               type="text"
               name="mobile"
