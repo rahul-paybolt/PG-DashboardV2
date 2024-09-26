@@ -46,14 +46,20 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
   const [role, setRole] = useState("2");
 
   useEffect(() => {
-    const userRole = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('usr='))
-      ?.split('=')[1];
-    
-    if (userRole) {
-      setRole(userRole);
-    }
+    const fetchRole = async () => {
+      try {
+        const response = await fetch(window.location.href);
+        const userRole = response.headers.get('x-user-role'); // Get role from headers
+        console.log("User role from headers:", userRole);
+        if (userRole) {
+          setRole(userRole);
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    fetchRole();
   }, []);
 
   const filteredNavItems = filterNavItemsByRole(siteConfig.navItems, role);
