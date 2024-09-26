@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <>
       <section className="flex flex-wrap items-start justify-between gap-5 px-5">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {isLoading ? (
             <>
               <Simmer />
@@ -102,7 +102,7 @@ export default function Home() {
             ))
           )}
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {CountOverViewData.map((countData: CountCardProps, idx) => (
             <CountCard key={idx} {...countData} />
           ))}
