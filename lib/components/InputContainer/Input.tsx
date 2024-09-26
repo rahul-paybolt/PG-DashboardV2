@@ -15,19 +15,31 @@ const CustomInput = extendVariants(Input, {
           "data-[hover=true]:border-primary-600",
           "data-[hover=true]:bg-white",
           "group-data-[focus=true]:border-primary-600",
+          "data-[focus=true]: bg-white",
+          "focus-within:!bg-white",
+          // white theme
+          "white:bg-white",
+          "white:border-primary-600",
+          "white:data-[hover=true]:bg-white",
+          "white:focus-within:bg-white",
           // dark theme
-          "dark:bg-zinc-900",
-          "dark:border-zinc-800",
-          "dark:data-[hover=true]:bg-zinc-900",
-          "dark:focus-within:bg-zinc-900",
+          // "dark:bg-zinc-900",
+          // "dark:border-zinc-800",
+          // "dark:data-[hover=true]:bg-zinc-900",
+          // "dark:focus-within:bg-zinc-900",
         ],
         input: [
           // <- Input element slot
           "text-blue-800",
           "placeholder:text-zinc-600",
+
+          // white theme
+          "white:text-black",
+          "white:placeholder:text-black",
           // dark theme
-          "dark:text-zinc-400",
-          "dark:placeholder:text-zinc-600",
+          // "dark:text-zinc-400",
+          // "dark:placeholder:text-zinc-600",
+
         ],
       },
     },

@@ -13,7 +13,7 @@ import { siteConfig } from "@/lib/config/site";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiHelpCircle } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { cn } from "@nextui-org/theme";
 import { Tooltip } from "@nextui-org/tooltip";
@@ -25,9 +25,44 @@ interface SidebarProps {
   toggleNavbar: () => void;
 }
 
+type NavItem = typeof siteConfig.navItems[number];
+
+const filterNavItemsByRole = (navItems: NavItem[], role: string) => {
+  if (role === "2") {
+    return navItems.filter(item => 
+      item.label === "DashBoard" ||
+      item.label === "Transactions" ||
+      item.label === "Account" ||
+      item.label === "Docs"
+    );
+  }
+  return navItems;
+};
+
 export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
   const pathName = usePathname();
   const [subMenuOpenOf, setSubMenuOpenOf] = useState("/home");
+
+  const [role, setRole] = useState("2");
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const response = await fetch(window.location.href);
+        const userRole = response.headers.get('x-user-role'); // Get role from headers
+        console.log("User role from headers:", userRole);
+        if (userRole) {
+          setRole(userRole);
+        }
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
+    fetchRole();
+  }, []);
+
+  const filteredNavItems = filterNavItemsByRole(siteConfig.navItems, role);
 
   const toggleSubmenu = (href: string) => {
     setSubMenuOpenOf(prev => (prev === href ? "/" : href));
@@ -72,7 +107,7 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
             </div>
           </NavbarBrand>
           <ul className="flex flex-col gap-4 justify-start w-full">
-            {siteConfig.navItems.map(item => {
+            {filteredNavItems.map(item => {
               const isActive = pathName === item.href;
               const hasSubMenu = item?.subMenu && item.subMenu.length > 0;
 
@@ -156,23 +191,25 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
             })}
           </ul>
           <Divider />
-          <ul className="flex flex-col gap-4 justify-start w-full shadow-inherit">
-            {[
-              { label: "Help", link: "/help" },
-              { label: "Feedback", link: "/feedback" },
-            ].map(item => (
-              <Tooltip key={item.link} content={item.label}>
-                <NextLink href={item.link} passHref>
-                  <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
-                    <FiHelpCircle className="w-[24px] h-[24px]" />
-                    {!isCollapsed && (
-                      <span className="flex-1">{item.label}</span>
-                    )}
-                  </NavbarItem>
-                </NextLink>
-              </Tooltip>
-            ))}
-          </ul>
+          {role !== "2" && (
+            <ul className="flex flex-col gap-4 justify-start w-full shadow-inherit">
+              {[
+                { label: "Help", link: "/help" },
+                { label: "Feedback", link: "/feedback" },
+              ].map(item => (
+                <Tooltip key={item.link} content={item.label}>
+                  <NextLink href={item.link} passHref>
+                    <NavbarItem className="flex items-center gap-x-4 p-2 rounded-md text-gray-700 dark:text-gray-300">
+                      <FiHelpCircle className="w-[24px] h-[24px]" />
+                      {!isCollapsed && (
+                        <span className="flex-1">{item.label}</span>
+                      )}
+                    </NavbarItem>
+                  </NextLink>
+                </Tooltip>
+              ))}
+            </ul>
+          )}
         </NavbarContent>
       </NextUINavbar>
     </div>

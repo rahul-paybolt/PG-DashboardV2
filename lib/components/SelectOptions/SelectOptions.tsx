@@ -56,7 +56,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     <Select
       label={label}
       variant={variant}
-      placeholder={placeholder}
+      // placeholder={placeholder}
       selectedKeys={value !== null ? new Set([value]) : new Set()}
       onSelectionChange={handleSelectionChange}
       classNames={classNames}

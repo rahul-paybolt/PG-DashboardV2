@@ -36,3 +36,9 @@ export interface generateQRCodeResponse {
   message: string;
   error: string;
 }
+
+export interface UserLogInResponse {
+  message: string;
+  statusCode: number;
+  error?: string | null;
+}

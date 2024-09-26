@@ -1,23 +1,28 @@
 "use client";
+import CustomInput from "@/lib/components/InputContainer/Input";
 import CustomSelect, {
   SelectionDataProps,
 } from "@/lib/components/SelectOptions/SelectOptions";
 import { useToast } from "@/lib/components/Toast/ToastContext";
 import {
   businessTypes,
+  DesignationOptions,
   IndustryTypes,
   Turnover_list,
 } from "@/lib/constants/RegisterForm/RegisterForm.constants";
 import { merchantDetailsSubmission } from "@/lib/hooks/auth-verification";
 import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
 import { getAuthenticatedUserDetailsFromLS } from "@/lib/utils/auth-utils";
+import { NAME_REGEX } from "@/shared/regular-expressions";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const MerchantDetails = () => {
+const MerchantDetails = ({onNext} : {onNext: () => void}) => {
   const [selectedEntitty, setSelectedEntity] = useState<string | null>(null);
-  const [businessType, setBusinessType] = useState<string | null>(null);
+  // const [businessType, setBusinessType] = useState<string | null>(null);
   const [turnOver, setTurnOver] = useState<string | null>(null);
+  const [businessName, setBusinessName] = useState<string>("");
+  const [designationType, setDesignationType] = useState<string>("");
   const router = useRouter();
   const { showToast } = useToast();
 
@@ -25,9 +30,9 @@ const MerchantDetails = () => {
     setSelectedEntity(value);
   };
 
-  const handleSelectBusinessTypes = (value: string) => {
-    setBusinessType(value);
-  };
+  // const handleSelectBusinessTypes = (value: string) => {
+  //   setBusinessType(value);
+  // };
 
   const handleTurnOver = (value: string | null) => {
     setTurnOver(value);
@@ -41,8 +46,10 @@ const MerchantDetails = () => {
     const data: MerchantDetailsProps = {
       email: authenticatedUser?.email ?? null,
       businessEntityType: Number(selectedEntitty),
-      industry: Number(businessType),
+      // industry: Number(businessType),
       turnover: Number(turnOver),
+      businessName: businessName,
+      designation: designationType,
     };
     mutate(data, {
       onSuccess: data => {
@@ -53,16 +60,25 @@ const MerchantDetails = () => {
         }
         if (response) {
           showToast(`Merchant details successfully submitted`, "success");
-          router.push("/dashboard");
+          router.push("/kyc");
+          onNext();
           // Ensure the home page component is properly set up
           // You may need to check if the home page route is correctly defined in your Next.js configuration
         }
       },
     });
+    onNext();
   };
+  const validate = (value: string) => value.match(NAME_REGEX);
+  const validateNameSate = React.useMemo(() => {
+    if (businessName === "") return undefined;
+
+    return validate(businessName) ? "valid" : "invalid";
+  }, [businessName]);
 
   return (
-    <div className="flex flex-col items-center text-center justify-center min-h-screen">
+    // min-h-screen
+    <div className="flex flex-col items-center text-center justify-center">
       <div className="flex flex-col px-8 py-6">
         <h1 className="text-[80px] font-extrabold sm:text-3xl sm:font-semibold mb-4">
           Your business details
@@ -72,6 +88,23 @@ const MerchantDetails = () => {
         </p>
 
         <div className=" flex flex-col mb-4 ">
+        <CustomInput
+            type="text"
+            name="businessName"
+            placeholder="Enter your business name"
+            label="Business Name"
+            className="w-full mb-4"
+            value={businessName}
+            onValueChange={setBusinessName}
+            isRequired={true}
+            errorMessage={
+              validateNameSate === "invalid" &&
+              "Please enter a valid businessname"
+            }
+            validationState={validateNameSate}
+            onClear={() => console.log("input cleared")}
+            isInvalid={validateNameSate === "invalid"}
+          />
           <CustomSelect
             label="Entity type"
             value={selectedEntitty}
@@ -80,25 +113,9 @@ const MerchantDetails = () => {
             classNames={{
               label: "text-secondary",
               mainWrapper:
-                "bg-white dark:bg-default-200/60 shadow-large rounded-xl w-[480px] mb-4 ",
+                "bg-white dark:bg-white shadow-large rounded-xl w-[480px] mb-4 ",
               innerWrapper:
-                "bg-white dark:bg-default-200/60 hover:border-none hover:bg-white dark:hover:bg-default/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
-              listboxWrapper: "border-none",
-              trigger: "border-none",
-            }}
-            variant="bordered"
-          />
-          <CustomSelect
-            label="Business type"
-            value={businessType}
-            onChange={value => handleSelectBusinessTypes(value)}
-            selectionData={IndustryTypes as SelectionDataProps[]}
-            classNames={{
-              label: "text-secondary",
-              mainWrapper:
-                "bg-white dark:bg-default-200/60 shadow-large rounded-xl w-[480px] mb-4 ",
-              innerWrapper:
-                "bg-white dark:bg-default-200/60 hover:border-none hover:bg-white dark:hover:bg-default/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
+                "bg-white dark:bg-white hover:border-none hover:bg-white/100 dark:hover:bg-white/100 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
               listboxWrapper: "border-none",
               trigger: "border-none",
             }}
@@ -112,13 +129,32 @@ const MerchantDetails = () => {
             classNames={{
               label: "text-secondary",
               mainWrapper:
-                "bg-white dark:bg-default-200/60 shadow-large rounded-xl w-[480px] mb-4 ",
+                "bg-white dark:bg-white shadow-large rounded-xl w-[480px] mb-4 ",
               innerWrapper:
-                "bg-white dark:bg-default-200/60 hover:border-none hover:bg-white dark:hover:bg-default/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
+                "bg-white dark:bg-white hover:border-none hover:bg-white dark:hover:bg-white/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
               listboxWrapper: "border-none",
               trigger: "border-none",
             }}
             variant="bordered"
+          />
+          <CustomSelect
+            label="Designation"
+            placeholder="Select your designation"
+            value={designationType}
+            onChange={setDesignationType}
+            selectionData={DesignationOptions}
+            classNames={{
+              label: "text-secondary",
+              // default-200/60
+              mainWrapper:
+                "bg-white dark:bg-white shadow-large rounded-xl w-[480px] mb-4 ",
+              innerWrapper:
+                "bg-white dark:bg-white hover:border-none hover:bg-white dark:hover:bg-white/70 focus-within:!bg-white/50 dark:focus-within:!bg-default/60 !cursor-pointer border-none data-[hover=true]:border-none data-[open=true]:border-none data-[focus=true]:border-none",
+              listboxWrapper: "border-none",
+              trigger: "border-none",
+            }}
+            variant="bordered"
+            name="designation"
           />
         </div>
         <div className="flex gap-4 mt-4">

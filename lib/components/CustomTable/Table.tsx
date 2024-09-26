@@ -20,7 +20,7 @@ interface Column<T> {
 interface CustomTableProps<T> extends TableProps {
   columns: Column<T>[];
   data: T[];
-  TableTopContent: React.ReactNode;
+  // TableTopContent: React.ReactNode;
   hasMore: boolean;
   scrollRef: RefObject<HTMLElement>;
   loaderRef: RefObject<HTMLElement>;
@@ -31,7 +31,7 @@ interface CustomTableProps<T> extends TableProps {
 const CustomTable = <T,>({
   columns,
   data,
-  TableTopContent,
+  // TableTopContent,
   hasMore,
   scrollRef,
   loaderRef,
@@ -48,7 +48,7 @@ const CustomTable = <T,>({
         aria-label="Infinite pagination"
         baseRef={scrollRef}
         selectionMode="multiple"
-        topContent={TableTopContent}
+        // topContent={TableTopContent}
         topContentPlacement="outside"
         bottomContent={
           hasMore ? (

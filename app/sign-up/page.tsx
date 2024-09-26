@@ -34,6 +34,7 @@ const SignUpForm = () => {
           className="flex flex-col items-center justify-center"
           action={doSocialLogin}>
           <Button
+            disabled
             className="login-with-google-btn mb-8 w-[380px] cursor-pointer"
             type="submit"
             name="action"
@@ -41,6 +42,7 @@ const SignUpForm = () => {
             Sign up with Google
           </Button>
           <Button
+            disabled
             className="login-with-microsoft-btn w-[380px] cursor-pointer"
             type="submit"
             name="action"

@@ -11,9 +11,10 @@ import {
   MerchantBasicInfoResponse,
   PBBaseResponse,
   safeAny,
+  UserLogInResponse,
 } from "@/lib/interfaces/global.interface";
 import axios from "@/app/api/axios";
-import { MerchantDetailsProps } from "@/lib/interfaces/register-interface";
+import { MerchantDetailsProps, UserDetailsProps } from "@/lib/interfaces/register-interface";
 import {
   LocalStorageKeys,
   persistToLocalStorage,
@@ -148,3 +149,19 @@ export const generateQrCode = async (
   );
   return [response, error];
 };
+
+export const submitUserDetails = async (
+  data: UserDetailsProps
+): Promise<[UserLogInResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<UserLogInResponse>(
+    () =>
+      axios.post<UserLogInResponse>(
+        `${baseUrl}/api/v1/auth/login`,
+        data,
+      ),
+    false,
+    true,
+    false
+  );
+  return [response, error];
+}

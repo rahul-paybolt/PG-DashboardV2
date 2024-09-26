@@ -2,9 +2,14 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+
+interface CustomJwtPayload extends JwtPayload {
+  role: string; 
+}
 
 const middleware = async (req: NextRequest) => {
-  const id_token = req.cookies.get("atk")?.value;
+  const id_token = req.cookies.get("atk")?.value; 
 
   const path = req.nextUrl.pathname;
   // const id_token = req.cookies.get("atk")?.value;
@@ -30,9 +35,23 @@ const middleware = async (req: NextRequest) => {
   ) {
     return NextResponse.redirect(new URL("/home", req.url));
   }
+  let decodedRole 
+  
+
+  if (id_token) {
+    try {
+      const decodedToken = jwtDecode<CustomJwtPayload>(id_token);
+      decodedRole = decodedToken.role; // Assuming the role is in the token
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+    }
+  }
 
   // Allow the request to proceed
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set("x-user-role", decodedRole || "2"); // Default to "2" if role is not set
+
+  return response;
 };
 
 export const config = {
