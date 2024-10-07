@@ -23,7 +23,7 @@ export enum BUSINESS_TYPES {
   FREELANCE = 9,
 }
 export interface Entityprops {
-  key: Key;
+  key: number | string;
   label: string;
 }
 

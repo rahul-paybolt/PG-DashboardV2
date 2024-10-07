@@ -1,10 +1,4 @@
-import AnalyticsIcon from "@/public/assests/Icon/AnalyticsIcon";
-import AvatarIcon from "@/public/assests/Icon/Avatar";
-import DashBoardIcon from "@/public/assests/Icon/DashBoardIcon";
-import DepositIcon from "@/public/assests/Icon/DepositIcon";
-import HistoryIcon from "@/public/assests/Icon/HistoryIcon";
-import PaymentIcon from "@/public/assests/Icon/Payments";
-import TransactionIcons from "@/public/assests/Icon/TransactionsIcon";
+
 import { VscHistory } from "react-icons/vsc";
 import { GrTransaction } from "react-icons/gr";
 import { IoAnalyticsOutline } from "react-icons/io5";
@@ -15,6 +9,11 @@ import { RxDashboard } from "react-icons/rx";
 import { CgFileDocument } from "react-icons/cg";
 import { FaHandshake } from "react-icons/fa";
 import { CiMoneyCheck1 } from "react-icons/ci";
+import { TbLogout } from "react-icons/tb";
+import { AiOutlinePayCircle } from "react-icons/ai";
+import { CiSettings } from "react-icons/ci";
+
+
 
 export type SiteConfig = typeof siteConfig;
 
@@ -28,10 +27,15 @@ export const siteConfig = {
       icon: RxDashboard,
     },
     {
-      label: "Transactions",
+      label: "Collections",
       href: "/transactions",
       icon: GrTransaction,
     },
+    // {
+    //   label: "PayOut",
+    //   href: "/payout",
+    //   icon: AiOutlinePayCircle,
+    // },
     {
       label: "Analytics",
       href: "/analytics",
@@ -65,20 +69,30 @@ export const siteConfig = {
       ],
     },
     {
+      label: "Settings",
+      href: "/settings",
+      icon: CiSettings,
+    },
+    {
       label: "History",
       href: "/history",
       icon: VscHistory,
     },
-    {
-      label: "Account",
-      href: "/account",
-      icon: RxAvatar,
-    },
-    {
-      label: "Docs",
-      href: "/docs",
-      icon: CgFileDocument,
-    },
+    // {
+    //   label: "Account",
+    //   href: "/account",
+    //   icon: RxAvatar,
+    // },
+    // {
+    //   label: "Docs",
+    //   href: "/docs",
+    //   icon: CgFileDocument,
+    // },
+    // {
+    //   label: "Sign Out",
+    //   href: "/logout",
+    //   icon: TbLogout,
+    // },
   ],
   navMenuItems: [
     {
@@ -109,16 +123,5 @@ export const siteConfig = {
       label: "Help & Feedback",
       href: "/help-feedback",
     },
-    {
-      label: "Logout",
-      href: "/logout",
-    },
   ],
-  links: {
-    github: "https://github.com/nextui-org/nextui",
-    twitter: "https://twitter.com/getnextui",
-    docs: "https://nextui.org",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
 };

@@ -18,9 +18,40 @@ export interface UserRegistration {
   // businessName: string;
 }
 
+export interface RegisterRequest {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  mobile: string;
+}
+
+export interface RegisterResponse {
+  message: string;
+}
+
 export interface LoginRequest {
-  email: string | null | undefined;
-  code2FA: string;
+  // email: string | null | undefined;
+  // code2FA: string;
+  // email: string;
+  // password: string;
+  // confirmPassword: string;
+  // mobile: string;
+
+  mobile: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  message: string;
+}
+
+export interface LoginResponse {
+  message: string;
+}
+
+export interface LogoutResponse {
+  message: string;
 }
 export interface GenrateQRCodeRequest {
   email: string | null | undefined;
@@ -35,4 +66,14 @@ export interface ResetPasswordRequest {
 export interface UserLogin {
   mobile: string;
   password: string;
+}
+
+export interface changePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface changedResponse {
+  message: string;
 }

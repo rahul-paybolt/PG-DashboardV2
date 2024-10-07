@@ -1,7 +1,9 @@
-import { type AxiosResponse } from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { safeAny } from "@/lib/interfaces/global.interface";
 import { NO_DATA_FOUND_MSG } from "@/lib/constants/global-constants";
 import { useToast } from "../components/Toast/ToastContext";
+
+const baseUrl = process.env.NEXT_PUBLIC_DEV_PB_BASE_URL;
 
 export const resolvePBApi = async <T = safeAny>(
   aPromiseFn: () => Promise<AxiosResponse<T>>,
@@ -22,6 +24,17 @@ export const resolvePBApi = async <T = safeAny>(
     const response = await aPromiseFn();
     apiResponse = response;
   } catch (e: safeAny) {
+
+    if(e?.response?.status === 401) {
+      axios.post(`${baseUrl}/api/v1/auth/refresh`, {}, {
+        withCredentials: true
+      }).catch(e => {
+        if(e?.response?.status === 401) {
+          window.location.pathname = "/sign-in";
+        }
+      })
+    }
+    
     if (handle401 && e?.response?.status === 401) {
       // clearAuthenticatedUserDetails();
       window.location.pathname = "/login";

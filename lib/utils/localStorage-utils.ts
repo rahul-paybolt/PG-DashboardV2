@@ -5,6 +5,7 @@ export enum LocalStorageKeys {
   AUTHENTICATED_USER = "pb_user",
   META = "meta",
   QR_CODE = "qrCode",
+  ROLE = "role",
 }
 export const persistToLocalStorage = <T>(key: LocalStorageKeys, data: T) => {
   if (typeof window !== "undefined") {

@@ -19,6 +19,8 @@ import { cn } from "@nextui-org/theme";
 import { Tooltip } from "@nextui-org/tooltip";
 import logoFull from "@/public/logo/color-full.svg";
 import smallIcon from "@public/logo/paybolt-icon.png";
+import { LocalStorageKeys, persistToLocalStorage } from "../utils/localStorage-utils";
+import { isMerchant } from "../utils/utils";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -28,12 +30,16 @@ interface SidebarProps {
 type NavItem = typeof siteConfig.navItems[number];
 
 const filterNavItemsByRole = (navItems: NavItem[], role: string) => {
-  if (role === "2") {
+  if (isMerchant(role)) {
     return navItems.filter(item => 
       item.label === "DashBoard" ||
-      item.label === "Transactions" ||
-      item.label === "Account" ||
-      item.label === "Docs"
+      item.label === "Collections" ||
+      // item.label === "PayOut" ||
+      // item.label === "Settlements" ||
+      // item.label === "Account" ||
+      // item.label === "Docs" ||
+      // item.label === "Sign Out" ||
+      item.label === "Settings"
     );
   }
   return navItems;
@@ -42,7 +48,6 @@ const filterNavItemsByRole = (navItems: NavItem[], role: string) => {
 export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
   const pathName = usePathname();
   const [subMenuOpenOf, setSubMenuOpenOf] = useState("/home");
-
   const [role, setRole] = useState("2");
 
   useEffect(() => {
@@ -50,9 +55,9 @@ export const Sidebar = ({ isCollapsed, toggleNavbar }: SidebarProps) => {
       try {
         const response = await fetch(window.location.href);
         const userRole = response.headers.get('x-user-role'); // Get role from headers
-        console.log("User role from headers:", userRole);
         if (userRole) {
           setRole(userRole);
+          persistToLocalStorage(LocalStorageKeys.ROLE, userRole);
         }
       } catch (error) {
         console.error("Error fetching user role:", error);

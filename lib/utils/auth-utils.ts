@@ -66,7 +66,7 @@ const AuthenticatedUser = async (req: NextRequest) => {
   const id_token = req.cookies.get("rtk")?.value;
   return isAuthenticated
     ? NextResponse.next()
-    : NextResponse.redirect(new URL("/sign-up", req.url));
+    : NextResponse.redirect(new URL("/sign-in", req.url));
 };
 
 export default AuthenticatedUser;

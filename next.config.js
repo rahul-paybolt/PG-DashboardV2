@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const path = require("path");
+require('dotenv').config();
 
 const nextConfig = {
   sassOptions: {
@@ -15,6 +16,9 @@ const nextConfig = {
         permanent: true,
       },
     ];
+  },
+  env: {
+    NEXT_PUBLIC_DEV_PB_BASE_URL: process.env.DEV_PB_BASE_URL,
   },
 };
 

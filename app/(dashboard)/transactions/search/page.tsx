@@ -5,10 +5,11 @@ import SelectOptionsData from "@/lib/constants/dropdownConstants/SelectOptionDat
 import { SearchIcon } from "@/public/assests/Icon/SearchIcon";
 import React, { useState } from "react";
 import { useRef } from "react";
+import { Key } from "react-stately";
 
 const SearchTransactions = () => {
-  const [selectedMerchants, setSelectedMerchants] = useState<string | null>("");
-  const handleSelection = (value: string | null) => {
+  const [selectedMerchants, setSelectedMerchants] = useState<Key | null>(null);
+  const handleSelection = (value: Key) => {
     setSelectedMerchants(value);
   };
   const inputRef = useRef<HTMLInputElement | null>();
@@ -19,7 +20,7 @@ const SearchTransactions = () => {
           label="Select"
           placeholder="MerChant Id"
           value={selectedMerchants}
-          onChange={(value) => handleSelection(value)}
+          onChange={(value: Key) => handleSelection(value)}
           selectionData={SelectOptionsData}
         />
         <Input

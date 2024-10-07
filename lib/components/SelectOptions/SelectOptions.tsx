@@ -2,7 +2,7 @@ import React from "react";
 import { Select, SelectItem } from "@nextui-org/select";
 import { SharedSelection } from "@nextui-org/react";
 
-export type Key = string;
+export type Key = string | number;
 
 export interface SelectionDataProps {
   key: Key;

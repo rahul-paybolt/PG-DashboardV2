@@ -44,7 +44,6 @@ const DocumentUpload = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => { // Add this function
     const file = event.target.files?.[0];
-    console.log(file);
     if (file) {
       // Handle the file upload logic here
     }

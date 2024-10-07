@@ -18,9 +18,9 @@ const SignUpForm = () => {
           className="flex items-center justify-center"
         />
         <div className="flex gap-2">
-          <Link href="/sign-in" className="text-primary">
+          {/* <Link href="/sign-in" className="text-primary">
             Already a member?
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="self-center w-full mt-40">

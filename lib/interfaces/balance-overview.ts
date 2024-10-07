@@ -1,7 +1,5 @@
 export interface BalanceOverviewProps {
-  heading: string;
-  amount: number;
-  updated: string;
+  heading: string;  updated: string;
 }
 
 export interface SuccessFulTransactionsProps {
@@ -9,7 +7,7 @@ export interface SuccessFulTransactionsProps {
 }
 
 export interface CountCardProps {
-  heading: string;
-  count: number;
-  updated: string;
+  totalCount: number;
+  successCount: number;
+  failedCount: number;
 }

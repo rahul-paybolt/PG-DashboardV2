@@ -1,4 +1,5 @@
 // import { getAuthenticatedUser } from '@/utils/auth-utils';
+import { safeAny } from "@/lib/interfaces/global.interface";
 import axios from "axios";
 
 const httpClient = axios.create({ withCredentials: true });
@@ -22,7 +23,7 @@ httpClient.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  (error: safeAny) => {
     return Promise.reject(error);
   }
 );

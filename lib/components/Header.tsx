@@ -29,25 +29,31 @@ const Header = ({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) => {
       case "/home":
         return "Dashboard";
       case "/transactions":
-        return "Transactions List";
+        return "Collections";
+      case "/payout":
+        return "Payout";
       case "/analytics":
         return "Analytics";
       case "/payment":
         return "Payment";
-      case "/settlements":
+      case "/settlements/charges":
         return "Settlements";
       case "/history":
         return "History";
+      case "/settings/profile":
+        return "Settings";
       case "/about":
         return "About";
-      case "/help":
-        return "Help";
       case "/docs":
         return "Docs";
       case "/account":
         return "Account";
+      case "/logout":
+        return "LogOut";
+      case "/transactions/[id]":
+        return "Merchant List";
       default:
-        return "FeedBack";
+        return "Feedback";
     }
   };
 

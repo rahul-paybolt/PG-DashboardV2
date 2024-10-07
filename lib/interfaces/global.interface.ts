@@ -3,9 +3,15 @@ export type safeAny = any;
 export interface PTBaseResponse {
   status: number;
 }
-
+export interface PB_RESPONSE {
+  data: {
+    message: string;
+  }
+}
 export interface PBBaseResponse {
-  message: string;
+  data: {
+    message: string;
+  }
 }
 
 export interface MerchantBasicInfoResponse {
@@ -27,8 +33,8 @@ export interface DataWrapper<T> {
 export type ResponseWrapper<T> = DataWrapper<T> & PTBaseResponse;
 
 export enum LocalStorageKeys {
-  AUTHENTICATED_USER = "oa_user",
   META = "meta",
+  ROLE = "role",
 }
 
 export interface generateQRCodeResponse {

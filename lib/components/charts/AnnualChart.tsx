@@ -1,6 +1,5 @@
 "use client";
 import React, { PureComponent } from "react";
-import { LineChartData } from "@/lib/constants/charts/LineChartsData";
 import {
   LineChart,
   ResponsiveContainer,
@@ -13,13 +12,47 @@ import {
 } from "recharts";
 import { useTheme } from "next-themes";
 
-export default function AnnualChart() {
+export default function AnnualChart({ data, name }: { data: any, name: string }) {
   const { theme } = useTheme();
+
+  // Prepare the data for the chart
+  const chartData = [
+    {
+      name: name === "PayIn" ? "Total Amount" :   "Total Amount",
+      payin: data?.payin?.totalAmount ?? 0,
+      payout: data?.payout?.totalAmount ?? 0,
+    },
+    {
+      name: name === "PayIn" ? "Total Count" : "Total Count",
+      payin: data?.payin?.totalCount ?? 0,
+      payout: data?.payout?.totalCount ?? 0,
+    },
+    {
+      name: name === "PayIn" ? "Success Amount" : "Success Amount",
+      payin: data?.payin?.successAmount ?? 0,
+      payout: data?.payout?.successAmount ?? 0,
+    },
+    {
+      name: name === "PayIn" ? "Success Count" : "Success Count",
+      payin: data?.payin?.successCount ?? 0,
+      payout: data?.payout?.successCount ?? 0,
+    },
+    {
+      name: name === "PayIn" ? "Failed Amount" : "Failed Amount",
+      payin: data?.payin?.failedAmount ?? 0,
+      payout: data?.payout?.failedAmount ?? 0,
+    },
+    {
+      name: name === "PayIn" ? "Failed Count" : "Failed Count",
+      payin: data?.payin?.failedCount ?? 0,
+      payout: data?.payout?.failedCount ?? 0,
+    },
+  ];
 
   return (
     <ResponsiveContainer width="100%" height={300}>
       <LineChart
-        data={LineChartData}
+        data={chartData}
         margin={{
           top: 5,
           right: 30,
@@ -47,14 +80,9 @@ export default function AnnualChart() {
         <Legend />
         <Line
           type="monotone"
-          dataKey="transactions"
+          dataKey={name === "PayIn" ? "payin" : "payout"}
           stroke="#8884d8"
           activeDot={{ r: 8 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="successFulTransaction"
-          stroke="#17C964"
         />
       </LineChart>
     </ResponsiveContainer>

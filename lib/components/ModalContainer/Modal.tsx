@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Modal,
   ModalContent,
@@ -12,27 +12,31 @@ import { Button } from "@nextui-org/button";
 interface ModalContainerProps {
   isOpen: boolean;
   handleModal: () => void;
-  title: string;
+  title?: string;
   content: React.ReactNode;
+  headerClassName?: string;
+  className?: string;
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
-const ModalContainer = ({ isOpen, handleModal, title, content }: ModalContainerProps) => {
+const ModalContainer = ({ isOpen, handleModal, title, content, headerClassName, size, className }: ModalContainerProps) => {
   return (
     <Modal
-      size="md"
+      size={size}
       isOpen={isOpen}
       onClose={handleModal}
       isDismissable={false}
       isKeyboardDismissDisabled={true}
+      className={className}
     >
       <ModalContent>
-        <ModalHeader className="text-secondary">{title}</ModalHeader>
-        <ModalBody>
+        <ModalHeader className={headerClassName}>{title}</ModalHeader>
+        <ModalBody onClick={(e) => e.stopPropagation()}>
           {content}
         </ModalBody>
-        {/* <ModalFooter>
+        <ModalFooter>
           <Button color="secondary" onClick={handleModal}>Close</Button>
-        </ModalFooter> */}
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

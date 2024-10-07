@@ -1,11 +1,12 @@
 /* global.css or component-specific CSS */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .flex-wrap {
   flex-wrap: wrap;
 }
-
-
 
 /*  */
 body {
@@ -32,18 +33,101 @@ nav a {
   /* Add any other custom styles here */
 }
 
-/* Adjust the styles for Popover */
-.popover-content {
-  /* Your custom styles for Popover content */
-}
 
-
-
-div{
+div {
   background-color: red($color: #000000);
 }
 
-span{
+th {
   text-align: center;
+  color: "!bg-purple-800";
+}
+
+[data-role="columnheader"] {
   color: red;
+}
+[data-key="id"] {
+  color: red;
+}
+
+.transactions-table-first-column {
+  @apply dark:bg-inherit dark:text-white;
+  th:first-child,
+  td:first-child {
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    background-color: white;
+    border-radius: 0px !important;
+    z-index: 50;
+  }
+}
+
+th:first-child::before {
+  padding: 0px !important;
+}
+
+th:first-child::after {
+  padding: 0px !important;
+}
+
+.transactions-table-last-column {
+  @apply dark:bg-inherit !important;
+  @apply dark:text-white !important;
+  th:last-child,
+  td:last-child {
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    position: sticky;
+    right: 0;
+    z-index: 20;
+    background-color: white;
+    border-radius: 0px !important;
+    @apply dark:bg-inherit dark:text-white;
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background-color: white;
+  @apply dark:bg-inherit !important;
+  @apply dark:text-white !important;
+}
+
+.overflow-x-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.sticky-left {
+  position: sticky;
+  left: 0;
+  z-index: 20;
+  background-color: white;
+}
+
+.sticky-right {
+  position: sticky;
+  right: 0;
+  z-index: 20;
+  background-color: white;
+}
+
+/* Ensure other columns don't overlap with fixed columns */
+.flex-shrink-0 {
+  flex-shrink: 0;
+  min-width: 150px; /* Adjust based on your content */
+}
+
+/* Adjust the width of fixed columns if needed */
+.sticky-left, .sticky-right {
+  min-width: 200px; /* Adjust based on your content */
 }

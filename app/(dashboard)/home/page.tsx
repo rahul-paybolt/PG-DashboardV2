@@ -1,14 +1,29 @@
 "use client";
-
-import { BalanceOverViewData, CountOverViewData } from "@/lib/constants/balance-overview.constants";
-import { BalanceOverviewProps as BalanceOverviewProps, CountCardProps } from "@/lib/interfaces/balance-overview";
 import { Card, CardBody } from "@nextui-org/card";
 import { TbDots } from "react-icons/tb";
 import AnnualChart from "@/lib/components/charts/AnnualChart";
 import ShowShortMessage from "@/lib/components/PopOver/PopOver";
 import { useState } from "react";
 import { Skeleton } from "@nextui-org/skeleton";
-import { formatAmount } from "@/lib/utils/utils";
+import {
+  formatAmount,
+  formatNumber,
+  isAdmin,
+  isMerchant,
+} from "@/lib/utils/utils";
+import {
+  getAdminDashboardData,
+  getMerchantDashboardData,
+} from "@/lib/hooks/useDashboardData";
+import { getFromLocalStorage } from "@/lib/utils/localStorage-utils";
+import { LocalStorageKeys, safeAny } from "@/lib/interfaces/global.interface";
+import {
+  DashboardApiResponse,
+  Data,
+  payin,
+} from "@/lib/interfaces/dashboard.interface";
+import { UseQueryResult } from "@tanstack/react-query";
+import { unstable_noStore } from "next/cache";
 
 const Simmer = () => {
   return (
@@ -18,115 +33,254 @@ const Simmer = () => {
           <Skeleton className="w-24 h-6 rounded-md dark:bg-default-200" />
           <Skeleton className="w-5 h-6 rounded-md dark:bg-default-200" />
         </div>
-        {/* <div className="flex flex-col items-start gap-2">
-          <Skeleton className="w-24 h-6 rounded-md dark:bg-default-200" />
-          <Skeleton className="w-40 h-6 rounded-md dark:bg-default-200" />
-        </div> */}
       </CardBody>
     </Card>
   );
 };
 
-const SummaryCard = (balData: BalanceOverviewProps) => {
+const SummaryCard = ({
+  title,
+  amount,
+}: {
+  title: string;
+  amount: number | null;
+}) => {
+  unstable_noStore();
   return (
     <Card className="min-w-[280px] w-full px-4 py-2 bg-background dark:bg-default-100 rounded-md">
       <CardBody>
         <div className="flex items-center justify-between mb-4">
           <p className="font-normal text-secondary dark:text-primary">
-            {balData.heading}
+            {title}
           </p>
           <ShowShortMessage
             Icon={TbDots}
-            header={balData.heading}
-            content={formatAmount(balData.amount)}
+            header={title}
+            content={formatAmount(amount ?? 0)}
           />
         </div>
-        <div className="flex flex-col items-start">
-          <div className="flex items-center gap-x-1 text-secondary dark:text-primary">
-            <p className="text-[24px] font-semibold">
-              {formatAmount(balData.amount)}
-            </p>
-          </div>
-          <div className="flex gap-x-4 items-center">
-            <span className="text-secondary-300 dark:text-primary-300 font-sans text-sm">
-              {balData.updated}
-            </span>
-          </div>
-        </div>
+        <p className="text-xl font-semibold">{formatAmount(amount ?? 0)}</p>
       </CardBody>
     </Card>
   );
 };
 
-const CountCard = ({ heading, count, updated }: CountCardProps) => {
+const SummaryCountCard = ({
+  title,
+  count,
+}: {
+  title: string;
+  count: number | null;
+}) => {
+  unstable_noStore();
   return (
     <Card className="min-w-[280px] w-full px-4 py-2 bg-background dark:bg-default-100 rounded-md">
       <CardBody>
         <div className="flex items-center justify-between mb-4">
           <p className="font-normal text-secondary dark:text-primary">
-            {heading}
+            {title}
           </p>
+          <ShowShortMessage
+            Icon={TbDots}
+            header={title}
+            content={formatNumber(count ?? 0)}
+          />
         </div>
-        <div className="flex flex-col items-start">
-          <div className="flex items-center gap-x-1 text-secondary dark:text-primary">
-            <p className="text-[24px] font-semibold">{count}</p>
-          </div>
-          <div className="flex gap-x-4 items-center">
-            <span className="text-secondary-300 dark:text-primary-300 font-sans text-sm">
-              {updated}
-            </span>
-          </div>
-        </div>
+        <p className="text-xl font-semibold">{formatNumber(count ?? 0)}</p>
       </CardBody>
     </Card>
   );
 };
 
 export default function Home() {
+  unstable_noStore();
+
   const [isLoading, setIsLoading] = useState(false);
+
+  let renderMerchantData: Data = {
+    payin: {
+      totalAmount: 0,
+      totalCount: 0,
+      successAmount: null,
+      successCount: 0,
+      failedAmount: null,
+      failedCount: 0,
+    },
+    payout: {
+      totalAmount: 0,
+      totalCount: 0,
+      successAmount: null,
+      successCount: 0,
+      failedAmount: null,
+      failedCount: 0,
+    },
+  };
+  const role = getFromLocalStorage(LocalStorageKeys.ROLE) as string;
+
+  if (isMerchant(role)) {
+    const { data, isLoading: isLoading } =
+      getMerchantDashboardData() as UseQueryResult<
+        DashboardApiResponse[] | null,
+        Error
+      >; // Adjusted type assertion
+    renderMerchantData = data && (data?.[0]?.data as safeAny); // Optional chaining to handle undefined
+  } else if (isAdmin(role)) {
+    const { data } = getAdminDashboardData() as UseQueryResult<
+      DashboardApiResponse[] | null,
+      Error
+    >; // Adjusted type assertion
+    renderMerchantData = data && (data?.[0]?.data as safeAny);
+  }
 
   return (
     <>
       <section className="flex flex-wrap items-start justify-between gap-5 px-5">
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-          {isLoading ? (
-            <>
-              <Simmer />
-              <Simmer />
-              <Simmer />
-              <Simmer />
-            </>
-          ) : (
-            BalanceOverViewData.map((balData: BalanceOverviewProps, idx) => (
-              <SummaryCard key={idx} {...balData} />
-            ))
-          )}
-        </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-          {CountOverViewData.map((countData: CountCardProps, idx) => (
-            <CountCard key={idx} {...countData} />
-          ))}
-        </div>
-        {/* <div className="flex flex-wrap items-center gap-5 pb-5 w-full min-h-[300px]">
-          <div className="flex-1 text-foreground box-border outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium transition-transform-background motion-reduce:transition-none min-w-[280px] w-full px-4 py-8 bg-background dark:bg-default-100 rounded-md">
+        <Card className="w-full px-8 py-8 mb-8">
+          <h1 className="text-2xl font-bold mb-2 text-purple-600">
+            Total Collections(PayIn)
+          </h1>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {isLoading ? (
-              <div className="w-full h-[300px]">
-                <Skeleton className="w-full h-full dark:bg-default-200 rounded-md" />
-              </div>
+              <>
+                <Simmer />
+                <Simmer />
+                <Simmer />
+                <Simmer />
+              </>
             ) : (
-              <AnnualChart />
+              <>
+                <SummaryCard
+                  title="Total initiated volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.totalAmount ?? 0
+                      : renderMerchantData?.payin?.totalAmount ?? 0
+                  }
+                />
+                <SummaryCard
+                  title="Total success Volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.successAmount ?? 0
+                      : renderMerchantData?.payin?.successAmount ?? 0
+                  }
+                />
+                <SummaryCard
+                  title="Total failed Volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.failedAmount ?? 0
+                      : renderMerchantData?.payin?.failedAmount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total Initiated count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.totalCount ?? 0
+                      : renderMerchantData?.payin?.totalCount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total success count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.successCount ?? 0
+                      : renderMerchantData?.payin?.successCount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total failed count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payin?.failedCount ?? 0
+                      : renderMerchantData?.payin?.failedCount ?? 0
+                  }
+                />
+              </>
             )}
           </div>
-          <div className="flex-1 text-foreground box-border outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium transition-transform-background motion-reduce:transition-none min-w-[280px] w-full px-4 py-8 bg-background dark:bg-default-100 rounded-md">
+          {/* <div className="mt-5  py-4">
+            <Card  className="flex items-center justify-between space-x-4">
+              <CardBody className="flex items-center  space-x-4 ">  
+                <AnnualChart data={renderMerchantData} name="PayIn" />
+              </CardBody>
+            </Card>
+          </div> */}
+        </Card>
+        <Card className="w-full px-8 py-8">
+          <h1 className="text-2xl font-bold mb-2 text-purple-600">
+            Total Payouts(PayOut)
+          </h1>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {isLoading ? (
-              <div className="w-full h-[300px]">
-                <Skeleton className="w-full h-full dark:bg-default-200 rounded-md" />
-              </div>
+              <>
+                <Simmer />
+                <Simmer />
+                <Simmer />
+                <Simmer />
+              </>
             ) : (
-              <AnnualChart />
+              <>
+                <SummaryCard
+                  title="Total initiated volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.totalAmount ?? 0
+                      : renderMerchantData?.payout?.totalAmount ?? 0
+                  }
+                />
+                <SummaryCard
+                  title="Total success Volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.successAmount ?? 0
+                      : renderMerchantData?.payout?.successAmount ?? 0
+                  }
+                />
+                <SummaryCard
+                  title="Total failed Volume"
+                  amount={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.failedAmount ?? 0
+                      : renderMerchantData?.payout?.failedAmount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total Initiated count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.totalCount ?? 0
+                      : renderMerchantData?.payout?.totalCount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total success count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.successCount ?? 0
+                      : renderMerchantData?.payout?.successCount ?? 0
+                  }
+                />
+                <SummaryCountCard
+                  title="Total failed count"
+                  count={
+                    isAdmin(role)
+                      ? renderMerchantData?.payout?.failedCount ?? 0
+                      : renderMerchantData?.payout?.failedCount ?? 0
+                  }
+                />
+              </>
             )}
           </div>
-        </div> */}
+          {/* <div className="mt-5  py-4">
+            <Card  className="flex items-center justify-between space-x-4">
+              <CardBody className="flex items-center justify-between space-x-4">  
+                <AnnualChart data={renderMerchantData} name="PayOut" />
+              </CardBody>
+            </Card>
+          </div> */}
+        </Card>
       </section>
     </>
   );

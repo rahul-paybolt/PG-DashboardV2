@@ -2,26 +2,35 @@
 
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
-import { doSocialLogin } from "../actions";
+// import { doSocialLogin } from "../actions";
 import Link from "next/link";
 import logo from "@public/logo/color-full.svg";
 import { useState } from "react";
 import { UserLogin } from "@/lib/interfaces/authentication.interface";
 import { useToast } from "@/lib/components/Toast/ToastContext";
-import { logInWithMobile } from "@/lib/hooks/auth-verification";
+// import { logInWithMobile } from "@/lib/hooks/auth-verification";
 import React from "react";
 import { PHONE_REGEX } from "@/shared/regular-expressions";
 import CustomInput from "@/lib/components/InputContainer/Input";
 import { useRouter } from "next/navigation";
+import { useLogin } from "@/lib/hooks/auth-verification";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { EyeSlashFilledIcon } from "@/public/assests/Icon/EyeSlashedIcon";
+import { EyeFilledIcon } from "@/public/assests/Icon/EyeFilledIcon";
 
-const LoginForm = ({onNext} : {onNext: () => void}) => {
+const LoginForm = () => {
   const [mobile, setMobile] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const router = useRouter();
 
   const { showToast } = useToast();
 
-  const {mutate} = logInWithMobile();
+  // const {mutate} = logInWithMobile();
+
+  const {mutate} = useLogin();
+
+  const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const handleSubmit = async () => {
     const userData: UserLogin = {
@@ -39,8 +48,8 @@ const LoginForm = ({onNext} : {onNext: () => void}) => {
 
     mutate(userData, {
       onSuccess: (data: any) => {
-        const [response, error] = data;
 
+        const [response, error] = data;
         if (error) {
           showToast(error?.message, "error");
           return;
@@ -50,11 +59,11 @@ const LoginForm = ({onNext} : {onNext: () => void}) => {
           showToast(response?.message, "success");
           router.push("/home");
           return;
-        }
+        } 
       }
     })
   }
-
+    
   const validatePhone = (value: string) => value.match(PHONE_REGEX);
 
   const validationState = React.useMemo(() => {
@@ -73,11 +82,11 @@ const LoginForm = ({onNext} : {onNext: () => void}) => {
           alt="page not found"
           className="flex items-center justify-center"
         />
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Link href="/sign-up" className="text-primary">
             Create a new account?
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="self-center w-full mt-40">
         <h1 className="text-center text-6xl font-extrabold leading-8 sm:text-3xl sm:font-semibold mb-2">
@@ -111,27 +120,37 @@ const LoginForm = ({onNext} : {onNext: () => void}) => {
               name="mobile"
               placeholder="Enter your mobile number"
               label="Mobile Number"
-              className="w-[380px] mb-6 rounded-md bg-white"
+              className="w-[380px] mb-6 rounded-md bg-white data-[invalid=true]:border-red-500 data-[invalid=true]:bg-none"
               value={mobile}
               onValueChange={setMobile}
+              
               errorMessage={
                 validationState === "invalid" &&
                 "Please enter a valid mobile number"
               }
-              // validationState={validationState}
+              validationState={validationState}
               isRequired={true}
               onClear={() => setMobile("")}
-              // isInvalid={validationState === "invalid"}
+              isInvalid={validationState === "invalid"}
+              
             />
           <CustomInput
-            type="password"
+            type={isVisible ? "text" : "password"} // Update type based on isVisible state
             placeholder="Enter your password"
             label="Password"
             value={password}
             onValueChange={setPassword}
             isRequired={true}
-            onClear={() => setPassword("")}
             className="w-[380px] mb-6 rounded-md bg-white"
+            endContent={
+              <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+                {isVisible ? (
+                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
           />
           <Button
             className="w-[380px] cursor-pointer bg-blue-500"

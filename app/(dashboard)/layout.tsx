@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="flex max-h-screen">
+    <div>
       <Sidebar isCollapsed={isCollapsed} toggleNavbar={toggleNavbar} />
       <div
         className={clsx("flex-1 transition-all bg-zinc-50 dark:bg-default-50", {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           "pl-64": !isCollapsed,
         })}
       >
-        <main className="h-dvh overflow-y-scroll">
+        <main className="overflow-y-scroll">
           <Header isCollapsed={isCollapsed} />
           {children}
         </main>

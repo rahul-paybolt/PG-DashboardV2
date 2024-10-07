@@ -7,8 +7,8 @@ export default function TransactionLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col  gap-4 py-8 md:py-10">
-      <TabsComponent tabsData={TransactionsTabs} />
+    <section>
+      {/* <TabsComponent tabsData={TransactionsTabs} /> */}
       {children}
     </section>
   );

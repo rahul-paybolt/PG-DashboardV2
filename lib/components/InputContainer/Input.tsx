@@ -1,6 +1,7 @@
 import { extendVariants, Input } from "@nextui-org/react";
+import { useEffect } from "react";
 
-const CustomInput = extendVariants(Input, {
+const CustomInputBe = extendVariants(Input, {
   variants: {
     // <- modify/add variants
     color: {
@@ -22,6 +23,8 @@ const CustomInput = extendVariants(Input, {
           "white:border-primary-600",
           "white:data-[hover=true]:bg-white",
           "white:focus-within:bg-white",
+          "data-[invalid=true]:border-red-500",
+          "data-[invalid=true]:bg-none",
           // dark theme
           // "dark:bg-zinc-900",
           // "dark:border-zinc-800",
@@ -36,6 +39,8 @@ const CustomInput = extendVariants(Input, {
           // white theme
           "white:text-black",
           "white:placeholder:text-black",
+          "autofill:text-black", // Change this to desired text color
+          "autofill:bg-white",
           // dark theme
           // "dark:text-zinc-400",
           // "dark:placeholder:text-zinc-600",
@@ -104,5 +109,33 @@ const CustomInput = extendVariants(Input, {
     variant: "flat",
   },
 });
+
+const autofillStyles = `
+  input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px #ffffff inset; /* Change to input background color */
+      -webkit-text-fill-color: #000000; /* Change to desired text color */
+  }
+
+  input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 30px #ffffff inset; /* Maintain background when focused */
+      -webkit-text-fill-color: #000000; /* Ensure text color is visible */
+  }
+`;
+
+
+const CustomInput = (props: any) => {
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.appendChild(document.createTextNode(autofillStyles));
+    document.head.appendChild(style);
+
+    // Clean up by removing the style element on component unmount
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []); // Empty dependency array to run only once after mount
+
+  return <CustomInputBe {...props} />;
+};
 
 export default CustomInput;
