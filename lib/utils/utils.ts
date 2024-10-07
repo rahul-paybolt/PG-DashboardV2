@@ -36,3 +36,12 @@ export const isOps = (role: string) => {
 
 export const getFormattedTime = (value?: Date | undefined) =>
   dayjs(value).format("DD MMM, YYYY hh:mm A");
+
+
+export const formatStatus = (status: string) => {
+  return status
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

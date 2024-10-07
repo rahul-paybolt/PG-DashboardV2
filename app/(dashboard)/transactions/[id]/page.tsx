@@ -24,7 +24,11 @@ import {
 import { UseQueryResult } from "@tanstack/react-query";
 import TransactionDetails from "@/lib/components/transactionDetails/page";
 import MerchantDetails from "@/lib/components/MerchantDetails/MerchantDetails";
-import { formatAmount, getFormattedTime } from "@/lib/utils/utils";
+import {
+  formatAmount,
+  formatStatus,
+  getFormattedTime,
+} from "@/lib/utils/utils";
 
 const TransactionDetailsPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -78,9 +82,9 @@ const TransactionDetailsPage: React.FC = () => {
         case "netPayableAmount":
           return formatAmount(item.netPayableAmount) || "-";
         case "status":
-          return item.status || "-";
+          return formatStatus(item.status) || "-";
         case "settlementStatus":
-          return item.settlementStatus || "-";
+          return formatStatus(item.settlementStatus) || "-";
         case "txnRefId":
           return item.txnRefId || "-";
         case "view-details":

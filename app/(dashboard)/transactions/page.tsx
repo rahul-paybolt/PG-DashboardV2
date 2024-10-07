@@ -29,6 +29,8 @@ import {
   formatNumber,
   isAdmin,
   isMerchant,
+  getFormattedTime,
+  formatStatus
 } from "@/lib/utils/utils";
 import { DateRangePicker } from "@nextui-org/date-picker";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
@@ -209,36 +211,27 @@ const RecentTransactions = () => {
         const merchantItem = item as MerchantCollectionsData;
         switch (columnKey) {
           case "createdAt":
-            return merchantItem.createdAt
-              ? new Date(merchantItem.createdAt)
-                  .toLocaleString("en-GB", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "2-digit",
-                  })
-                  .replace(",", "")
-              : "-";
+            return getFormattedTime(new Date(merchantItem.createdAt)) || "-";
+            // merchantItem.createdAt
+            //   ? new Date(merchantItem.createdAt)
+            //       .toLocaleString("en-GB", {
+            //         day: "2-digit",
+            //         month: "2-digit",
+            //         year: "2-digit",
+            //       })
+            //       .replace(",", "")
+            //   : "-";
           case "orderId":
             return merchantItem.orderId || "-";
           case "amount":
-            return merchantItem.amount || "-";
+            return formatAmount(merchantItem.amount) || "-";
 
           case "netPayableAmount":
-            return merchantItem.netPayableAmount || "-";
+            return formatAmount(merchantItem.netPayableAmount) || "-";
           case "settlementStatus":
-            return merchantItem.settlementStatus || "-";
-          case "createdAt":
-            return merchantItem.createdAt
-              ? new Date(merchantItem.createdAt)
-                  .toLocaleString("en-GB", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "2-digit",
-                  })
-                  .replace(",", "")
-              : "-";
+            return formatStatus(merchantItem.settlementStatus) || "-";
           case "status":
-            return merchantItem.status || "-";
+            return formatStatus(merchantItem.status) || "-";
           case "txnRefId":
             return merchantItem.txnRefId || "-";
           case "view-details":

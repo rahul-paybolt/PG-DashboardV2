@@ -6,7 +6,11 @@ import { getAdminCollectionDetailsByPayInId } from "@/lib/hooks/use-collections"
 import { MerchantDetailsRes } from "@/lib/interfaces/transactions.interface";
 import { safeAny } from "@/lib/interfaces/global.interface";
 import { Skeleton } from "@nextui-org/skeleton";
-import { formatAmount, getFormattedTime } from "@/lib/utils/utils";
+import {
+  formatAmount,
+  formatStatus,
+  getFormattedTime,
+} from "@/lib/utils/utils";
 
 const MerchantDetails = ({
   userId,
@@ -164,7 +168,7 @@ const MerchantDetails = ({
                     },
                     { label: "Amount", value: formatAmount(amount) },
                     { label: "Order Id", value: orderId },
-                    { label: "Status", value: status },
+                    { label: "Status", value: formatStatus(status) },
                     {
                       label: "Net Payable Amount",
                       value: formatAmount(netPayableAmount),
