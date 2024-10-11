@@ -10,7 +10,7 @@ export interface GetWhitelistIpsResponse {
 
 export interface WhitelistIpsResponse {
     id: string;
-    createdAt: string;
     ipAddress: string;
+    createdAt: string;
     updatedAt: string;
 }
