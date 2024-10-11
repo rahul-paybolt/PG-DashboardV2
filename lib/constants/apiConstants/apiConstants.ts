@@ -30,6 +30,18 @@ export const MERCHANT_GENERATE_SECRET_KEY = "api/v1/users/secret";
 export const DELETE_SECRET_KEY = "api/v1/users/secret";
 
 
+
+// Whitelist-api's
+
+export const WHITELIST_API = "/api/v1/users/whitelist-ips";
+export const GET_WHITELIST_IPS = "/api/v1/users/whitelist-ips";
+export const DELETE_WHITELIST_IPS = "/api/v1/users/whitelist-ips/";
+
+
+
+
+
+
 // Genrate webhopok urls
 export const GENERATE_WEBHOOK_URL = "api/v1/users/webhook-url";
 export const GET_WEBHOOK_URL = "api/v1/users/webhook-url";
@@ -57,7 +69,7 @@ export const DOWNLOAD_ADMIN_TRANSACTION_CSV = "api/v1/transactions/download-csv/
 export const GET_STATS_ADMIN = "api/v1/transactions/stats/admin";
 export const GET_STATS_MERCHANT = "api/v1/transactions/stats";
 
-// Transactttion's api for merchant
+// Transaction's api for merchant
 
 export const VALIDATE_API_KEY= 'api/v1/users/api-key';
 export const VIEW_SPECIFIC_TRANSACTIONS_MERCHANT = "api/v1/transactions/admin/merchant";
