@@ -1,8 +1,7 @@
 "use client"
 import { Card, CardBody } from "@nextui-org/card";
-
-import { Button } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { Button, Pagination, Table, TableColumn, TableCell, TableHeader, TableRow, TableBody } from "@nextui-org/react";
+import { useCallback, useEffect, useState } from "react";
 import { Snippet } from "@nextui-org/snippet";
 import { FaCopy } from "react-icons/fa";
 import CustomInput from "@/lib/components/InputContainer/Input";
@@ -10,35 +9,53 @@ import { useAdminGenerateSecretKey, useMerchantGenerateSecretKey, useUpdateWebho
 import { getFromLocalStorage } from "@/lib/utils/localStorage-utils";
 import { LocalStorageKeys, safeAny } from "@/lib/interfaces/global.interface";
 import { useToast } from "@/lib/components/Toast/ToastContext";
-import { isAdmin } from "@/lib/utils/utils";
+import { getFormattedTime, isAdmin } from "@/lib/utils/utils";
 import { queryClient } from "@/app/api/query-client";
-import { SecretApiRequest } from "@/lib/interfaces/secret.interface";
 import { callgetWebhookUrl, callValidateApiKey } from "@/lib/services/transaction-service";
+import { getListOfWhitelistIps, useAddWhitelistIps, useDeleteWhitelistIps } from "@/lib/hooks/use-whitelistIps";
 import { unstable_noStore } from "next/cache";
-
 import { Spinner } from "@nextui-org/react";
+import { GetWhitelistIpsResponse, WhitelistIpsResponse } from "@/lib/interfaces/white-list.interface";
+import { CustomButton } from "@/lib/components/ButtonComponent/CustomButton";
+import { IpListColumns } from "@/lib/constants/ipListColumns/ipListColumns";
+import { UseQueryResult } from "@tanstack/react-query";
+
 const DeveloperSection = () => {
   unstable_noStore();
 
+  const [whitelistIps, setWhitelistIps] = useState<WhitelistIpsResponse[]>([]);
+  const [addWhitelistIp, setAddWhitelistIp] = useState("");
+  const [whitelistLoading, setWhitelistLoading] = useState(true);
   const [clientId, setClientId] = useState("your_actual_client_id");
   const [clientSecret, setClientSecret] = useState("your_actual_client_secret");
   const [mobile, setMobile] = useState("");
   const [updatePayoutWebhookUrl, setUpdatePayoutWebhookUrl] = useState("");
   const [updatePayInWebhookUrl, setUpdatePayInWebhookUrl] = useState("");
   const [isSecretVisible, setIsSecretVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
   const { showToast } = useToast();
   const role = getFromLocalStorage(LocalStorageKeys.ROLE) as string;
 
-  useEffect(() => {
-    getValidateApiKey();
-    getWebhookUrl();
-  }, []);
-
   const { mutate: mutateMerchant } = useMerchantGenerateSecretKey();
   const { mutate: mutateAdmin } = useAdminGenerateSecretKey();
   const { mutate: mutateUpdateWebhookUrl } = useUpdateWebhookUrl();
+
+  const { mutate: mutateAddWhitelistIps } = useAddWhitelistIps();
+  const { mutate: mutateDeleteWhitelistIps } = useDeleteWhitelistIps();
+  const listOfWhitelistIps = getListOfWhitelistIps() as UseQueryResult<GetWhitelistIpsResponse | null, Error>;
+
+  useEffect(() => {
+    setWhitelistLoading(true);
+    if (Array.isArray(listOfWhitelistIps?.data) && listOfWhitelistIps?.data.length > 0) {
+      setWhitelistIps(listOfWhitelistIps?.data[0]?.data || []);
+    }
+    setWhitelistLoading(false);
+    getValidateApiKey();
+    getWebhookUrl();
+  }, [listOfWhitelistIps.data]);
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -88,6 +105,41 @@ const DeveloperSection = () => {
     });
   };
 
+  const handleAddWhitelistIps = () => {
+    mutateAddWhitelistIps({ ipAddress: addWhitelistIp }, {
+      onSuccess: (data: any) => {
+        const [response, error] = data;
+        if (error) {
+          showToast(error?.message, "error");
+          return;
+        }
+        if (response) {
+          showToast(response?.message, "success");
+          listOfWhitelistIps?.refetch();
+        }
+      },
+      onError: (error: safeAny) => {
+        showToast(error?.message || "An error occurred", "error");
+      },
+    });
+  };
+
+  const handleDeleteWhitelistIps = (ipAddress: string) => {
+    mutateDeleteWhitelistIps({ ipAddress }, {
+      onSuccess: (data: any) => {
+        const [response, error] = data;
+        if (error) {
+          showToast(error?.message, "error");
+          return;
+        }
+        if (response) {
+          showToast(response?.message, "success");
+          listOfWhitelistIps?.refetch();
+        }
+      }
+    });
+  };
+
   const getValidateApiKey = async () => {
     const [response, error] = await callValidateApiKey();
     if (error) {
@@ -98,7 +150,7 @@ const DeveloperSection = () => {
       setClientId(clientId);
       setClientSecret(clientSecret);
     }
-    setIsLoading(false); // Stop loading after the data is fetched
+    setIsLoading(false);
   };
 
   const getWebhookUrl = async () => {
@@ -111,12 +163,41 @@ const DeveloperSection = () => {
       setUpdatePayInWebhookUrl(payInWebhookUrl);
       setUpdatePayoutWebhookUrl(payOutWebhookUrl);
     }
-    setIsLoading(false); // Stop loading after the data is fetched
+    setIsLoading(false);
   };
 
+  const renderCell = useCallback(
+    (item: WhitelistIpsResponse, columnKey: React.Key) => {
+      switch (columnKey) {
+        case "ipAddress":
+          return <span>{item.ipAddress || "-"}</span>;
+        case "createdAt":
+          return <span>{item.createdAt ? getFormattedTime(new Date(item.createdAt)) : "-"}</span>;
+        case "updatedAt":
+          return <span>{item.updatedAt ? getFormattedTime(new Date(item.updatedAt)) : "-"}</span>;
+        case "view-details":
+          return (
+            <div className="flex items-center gap-x-8 justify-center">
+              <CustomButton
+                size="md"
+                className="bg-purple-600 text-white"
+                onClick={() => item && handleDeleteWhitelistIps(item.ipAddress)}
+              >
+                Delete
+              </CustomButton>
+            </div>
+          );
+        default:
+          return null;
+      }
+    },
+    []
+  );
+
   if (isLoading) {
-    return <Spinner />; // Render a loader while data is being fetched
+    return <Spinner />;
   }
+
 
   return (
     <>
@@ -155,11 +236,10 @@ const DeveloperSection = () => {
               </Button>
             </div>
           </div>
-          {/* Horizontal Line */}
           <hr className="border-t-2 border-purple-400 mt-4" />
         </CardBody>
       </Card>
-      <Card className="flex items-center justify-center bg-purple-50 dark:bg-default-100 rounded-lg w-[70%]">
+      <Card className="flex items-center justify-center bg-purple-50 dark:bg-default-100 rounded-lg w-[70%] mb-8">
         <CardBody>
           <div className="flex items-center justify-between mb-6 px-8 py-8">
             <div className="w-full">
@@ -188,9 +268,96 @@ const DeveloperSection = () => {
                   </Button>
                 </div>
               </div>
-              {/* Horizontal Line */}
               <hr className="border-t-2 border-purple-400 mt-4" />
             </div>
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="flex items-center justify-center bg-purple-50 dark:bg-default-100 rounded-lg w-[70%]">
+        <CardBody>
+          <div className="flex flex-col items-center justify-between mb-6 px-8 py-8">
+            <div className="w-full">
+              <h2 className="text-lg font-semibold">WhiteList Ip's</h2>
+              <p className="text-sm text-gray-500">Add or remove IP's from the whitelist.</p>
+              <hr className="border-t-2 border-purple-400 mt-4" />
+
+              <div className="flex items-center justify-center mt-6 space-x-4">
+                <div className="w-[70%]">
+                  <CustomInput
+                    value={addWhitelistIp}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddWhitelistIp(e.target.value)}
+                    placeholder="Enter your IP Address"
+                    label="IP Address"
+                  />
+                </div>
+                <div className="w-[30%]">
+                  <Button className="bg-purple-400 text-white w-full h-10" onPress={handleAddWhitelistIps}>
+                    Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {whitelistLoading ? (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <Spinner
+                  label="Loading"
+                  color="secondary"
+                  size="lg"
+                  labelColor="secondary"
+                  classNames={{ circle1: "bg-white-600 text-purple-800" }}
+                />
+              </div>
+            ) : (
+              <Table
+                classNames={{
+                  wrapper: "h-[calc(100vh-180px)] overflow-y-auto relative",
+                }}
+                isHeaderSticky
+                aria-label="Collections-Table"
+                className="mx-4 my-4"
+                // bottomContent={
+                //   <div className="flex justify-center fixed bottom-[16px] left-1/2 -translate-x-1/2">
+                //     <Pagination
+                //       isCompact
+                //       showControls
+                //       showShadow
+                //       page={page}
+                //       initialPage={1}
+                //       total={10}
+                //       onChange={currPage => setPage(currPage)}
+                //       classNames={{
+                //         wrapper:
+                //           "bg-white dark:bg-default-200/60 rounded-xl !w-[400px] !h-[40px]",
+                //       }}
+                //       color="warning"
+                //     />
+                //   </div>
+                // }
+              >
+                <TableHeader columns={IpListColumns}>
+                  {column => (
+                    <TableColumn
+                      key={column.key}
+                      align={column.key === "view-details" ? "center" : "start"}>
+                      {column.label}
+                    </TableColumn>
+                  )}
+                </TableHeader>
+                <TableBody items={whitelistIps || []} loadingContent={<Spinner />}>
+                  {item => (
+                    <TableRow key={item.id}>
+                      {columnKey => (
+                        <TableCell className="whitespace-nowrap">
+                          {renderCell(item, columnKey)}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            )}
           </div>
         </CardBody>
       </Card>

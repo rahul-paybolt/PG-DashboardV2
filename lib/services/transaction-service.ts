@@ -1,7 +1,7 @@
 import axios from "@/app/api/axios";
 import { PBBaseResponse, safeAny } from "../interfaces/global.interface";
   
-import {  ADMIN_GENERATE_SECRET_KEY, ADMIN_TRANSACTION_DETAILS, CHANGE_PASSWORD, DOWNLOAD_ADMIN_TRANSACTION_CSV, DOWNLOAD_MERCHANT_TRANSACTION_CSV, GENERATE_WEBHOOK_URL, GET_WEBHOOK_URL, MERCHANT_GENERATE_SECRET_KEY, MERCHANT_TRANSACTION_DETAILS, VALIDATE_API_KEY, VIEW_TRANSACTIONS_ADMIN, VIEW_TRANSACTIONS_MERCHANT } from "@/lib/constants/apiConstants/apiConstants";
+import {  ADMIN_GENERATE_SECRET_KEY, ADMIN_TRANSACTION_DETAILS, CHANGE_PASSWORD, DELETE_WHITELIST_IPS, DOWNLOAD_ADMIN_TRANSACTION_CSV, DOWNLOAD_MERCHANT_TRANSACTION_CSV, GENERATE_WEBHOOK_URL, GET_WEBHOOK_URL, GET_WHITELIST_IPS, MERCHANT_GENERATE_SECRET_KEY, MERCHANT_TRANSACTION_DETAILS, VALIDATE_API_KEY, VIEW_TRANSACTIONS_ADMIN, VIEW_TRANSACTIONS_MERCHANT, WHITELIST_API } from "@/lib/constants/apiConstants/apiConstants";
 import { resolvePBApi } from "../utils/common-utils";
 import { ApiKeyData, SecretApiRequest, SecretAPIResponse } from "../interfaces/secret.interface";
 import { WebhookApiRequest, WebhookApiResponse } from "../interfaces/webhook.interface";
@@ -9,6 +9,7 @@ import { ResetPasswordApiRequest } from "../interfaces/reset-password.interface"
 import { TransactionApiResponse } from "../interfaces/transactions.interface";
 import { DownloadTransactionAttachmentRequest } from "../interfaces/download.interface";
 import { TransactionDetailsApiResponse } from "../interfaces/transaction-details.interface";
+import { GetWhitelistIpsResponse, WhitelistIpsRequest } from "../interfaces/white-list.interface";
   
 const baseUrl = process.env.NEXT_PUBLIC_DEV_PB_BASE_URL;
 
@@ -142,3 +143,40 @@ export const getTransactionDetails = async (id: string) => {
   }
 };
 
+
+
+
+// Whitelist-api's
+
+
+export const callAddWhitelistIps = async (whitelistIps: WhitelistIpsRequest): Promise<[PBBaseResponse[] | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<PBBaseResponse[]>(
+      () => axios.post<PBBaseResponse[]>(`${baseUrl}${WHITELIST_API}`,whitelistIps),
+      false,
+      true,
+      false
+  );
+  return [response, error]; 
+}
+
+export const callGetWhitelistIps = async (): Promise<[GetWhitelistIpsResponse | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<GetWhitelistIpsResponse>(
+      () => axios.get<GetWhitelistIpsResponse>(`${baseUrl}${GET_WHITELIST_IPS}`),
+      false,
+      true,
+      false
+  );
+  return [response, error];
+}
+
+
+
+export const callDeleteWhitelistIps = async (whitelistIps:WhitelistIpsRequest): Promise<[PBBaseResponse[] | null, safeAny]> => {
+  const [response, error] = await resolvePBApi<PBBaseResponse[]>(
+      () => axios.delete<PBBaseResponse[]>(`${baseUrl}${DELETE_WHITELIST_IPS}${whitelistIps.ipAddress}`),
+      false,
+      true,
+      false
+  );
+  return [response, error];
+}
