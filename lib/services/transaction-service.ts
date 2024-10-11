@@ -172,7 +172,6 @@ export const callGetWhitelistIps = async (): Promise<[GetWhitelistIpsResponse | 
 
 
 export const callDeleteWhitelistIps = async (whitelistIps:WhitelistIpsRequest): Promise<[PBBaseResponse[] | null, safeAny]> => {
-  console.log("whitelistIps===============", whitelistIps);
   const [response, error] = await resolvePBApi<PBBaseResponse[]>(
       () => axios.delete<PBBaseResponse[]>(`${baseUrl}${DELETE_WHITELIST_IPS}${whitelistIps.ipAddress}`),
       false,
